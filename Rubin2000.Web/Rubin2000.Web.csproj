@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Rubin2000.Data\Rubin2000.Data.csproj" />
+  </ItemGroup>
+
 </Project>
