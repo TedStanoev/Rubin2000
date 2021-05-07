@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Rubin2000.Models.Enums
 {
-    public enum Gender
+    public enum Occupation
     {
-        Male = 10,
-        Female = 20,
+        HairStylist = 10,
+        Manicurist = 20
     }
 }

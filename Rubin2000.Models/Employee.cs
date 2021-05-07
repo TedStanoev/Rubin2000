@@ -2,12 +2,13 @@
 using Rubin2000.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Rubin2000.Models
 {
-    public class HairStylist
+    public class Employee
     {
-        public HairStylist()
+        public Employee()
         {
             this.Schedules = new HashSet<Schedule>();
         }
@@ -17,6 +18,8 @@ namespace Rubin2000.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public Occupation Occupation { get; set; }
 
         public Gender Gender { get; set; }
 
@@ -29,6 +32,5 @@ namespace Rubin2000.Models
         public int UserId { get; set; }
 
         public IdentityUser User { get; set; }
-
     }
 }
