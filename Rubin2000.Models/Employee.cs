@@ -29,7 +29,7 @@ namespace Rubin2000.Models
 
         public decimal BudgetPercentage { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public IdentityUser User { get; set; }
     }
