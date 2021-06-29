@@ -5,9 +5,9 @@ using Rubin2000.Models;
 
 namespace Rubin2000.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class Rubin2000DbContext : IdentityDbContext<IdentityUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public Rubin2000DbContext(DbContextOptions<Rubin2000DbContext> options)
             : base(options)
         {
 

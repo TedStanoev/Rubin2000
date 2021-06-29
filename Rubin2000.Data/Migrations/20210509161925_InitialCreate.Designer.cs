@@ -9,7 +9,7 @@ using Rubin2000.Data;
 
 namespace Rubin2000.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(Rubin2000DbContext))]
     [Migration("20210509161925_InitialCreate")]
     partial class InitialCreate
     {

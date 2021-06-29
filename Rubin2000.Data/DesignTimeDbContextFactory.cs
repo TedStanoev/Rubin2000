@@ -8,19 +8,19 @@ using System.Text;
 
 namespace Rubin2000.Data
 {
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<Rubin2000DbContext>
     {
-        public ApplicationDbContext CreateDbContext(string[] args)
+        public Rubin2000DbContext CreateDbContext(string[] args)
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<Rubin2000DbContext>();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
 
-            return new ApplicationDbContext(optionsBuilder.Options);
+            return new Rubin2000DbContext(optionsBuilder.Options);
         }
     }
 }
