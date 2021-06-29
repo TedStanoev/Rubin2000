@@ -1,7 +1,4 @@
-﻿using Rubin2000.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Rubin2000.Models
 {
