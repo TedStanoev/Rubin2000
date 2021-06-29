@@ -2,15 +2,10 @@
 {
     public enum Duration
     {
-        HalfAnHour = 1,
-        Hour = 2,
-        HourAndAHalf = 3,
-        TwoHours = 4,
-        TwoHoursAndAHalf = 5,
-        ThreeHours = 6,
-        ThreeHoursAndAHalf = 7,
-        FourHours = 8,
-        FourHoursAndAHalf = 9,
-        FiveHours = 10
+        OneHour = 1,
+        TwoHours = 2,
+        ThreeHours = 3,
+        FourHours = 4,
+        FiveHours = 5,
     }
 }

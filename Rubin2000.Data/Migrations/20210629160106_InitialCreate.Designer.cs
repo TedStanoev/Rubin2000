@@ -10,7 +10,7 @@ using Rubin2000.Data;
 namespace Rubin2000.Data.Migrations
 {
     [DbContext(typeof(Rubin2000DbContext))]
-    [Migration("20210509161925_InitialCreate")]
+    [Migration("20210629160106_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,6 +84,10 @@ namespace Rubin2000.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -135,6 +139,8 @@ namespace Rubin2000.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -217,71 +223,121 @@ namespace Rubin2000.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Rubin2000.Models.Client", b =>
+            modelBuilder.Entity("Rubin2000.Models.Appointment", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
 
-                    b.Property<string>("ClientAdditionalInfo")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DateAndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(120)")
+                        .HasMaxLength(120);
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients");
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("Rubin2000.Models.AppointmentProcedure", b =>
+                {
+                    b.Property<string>("AppointmentId")
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("ProcedureId")
+                        .HasColumnType("nvarchar(40)");
+
+                    b.HasKey("AppointmentId", "ProcedureId");
+
+                    b.HasIndex("ProcedureId");
+
+                    b.ToTable("AppointmentProcedures");
+                });
+
+            modelBuilder.Entity("Rubin2000.Models.AppointmentSchedule", b =>
+                {
+                    b.Property<string>("AppointmentId")
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("ScheduleId")
+                        .HasColumnType("nvarchar(40)");
+
+                    b.HasKey("AppointmentId", "ScheduleId");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.ToTable("AppointmentSchedules");
                 });
 
             modelBuilder.Entity("Rubin2000.Models.Employee", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
 
-                    b.Property<decimal>("BudgetPercentage")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Occupation")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("WorkDays")
-                        .HasColumnType("int");
+                    b.Property<string>("OccupationId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("OccupationId");
 
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Rubin2000.Models.Procedure", b =>
+            modelBuilder.Entity("Rubin2000.Models.Occupation", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Occupations");
+                });
+
+            modelBuilder.Entity("Rubin2000.Models.Procedure", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
+
+                    b.Property<string>("AppointmentId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Occupation")
+                    b.Property<int>("Duration")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("OccupationId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<decimal?>("PercantageDiscount")
                         .HasColumnType("decimal(18,2)");
@@ -291,49 +347,90 @@ namespace Rubin2000.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OccupationId");
+
                     b.ToTable("Procedures");
+                });
+
+            modelBuilder.Entity("Rubin2000.Models.Product", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<decimal?>("PercantageDiscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Rubin2000.Models.Schedule", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Appointment")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(120)")
+                        .HasMaxLength(120);
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
+                    b.Property<string>("EmployeeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(40)");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("EndsAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<decimal?>("PriceIncrease")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("ProcedureId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<DateTime>("StartsAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
-
                     b.HasIndex("EmployeeId");
 
-                    b.HasIndex("ProcedureId");
-
                     b.ToTable("Schedules");
+                });
+
+            modelBuilder.Entity("Rubin2000.Models.AppUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.HasDiscriminator().HasValue("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -387,30 +484,70 @@ namespace Rubin2000.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Rubin2000.Models.Appointment", b =>
+                {
+                    b.HasOne("Rubin2000.Models.AppUser", "Client")
+                        .WithMany("Appointments")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Rubin2000.Models.AppointmentProcedure", b =>
+                {
+                    b.HasOne("Rubin2000.Models.Procedure", "Procedure")
+                        .WithMany("Appointments")
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Rubin2000.Models.Appointment", "Appointment")
+                        .WithMany("Procedures")
+                        .HasForeignKey("ProcedureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Rubin2000.Models.AppointmentSchedule", b =>
+                {
+                    b.HasOne("Rubin2000.Models.Schedule", "Schedule")
+                        .WithMany("Appointments")
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Rubin2000.Models.Appointment", "Appointment")
+                        .WithMany("Schedules")
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Rubin2000.Models.Employee", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                    b.HasOne("Rubin2000.Models.Occupation", "Occupation")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("OccupationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Rubin2000.Models.Procedure", b =>
+                {
+                    b.HasOne("Rubin2000.Models.Occupation", "Occupation")
+                        .WithMany("Procedures")
+                        .HasForeignKey("OccupationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Rubin2000.Models.Schedule", b =>
                 {
-                    b.HasOne("Rubin2000.Models.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Rubin2000.Models.Employee", "Employee")
                         .WithMany("Schedules")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Rubin2000.Models.Procedure", "Procedure")
-                        .WithMany()
-                        .HasForeignKey("ProcedureId");
                 });
 #pragma warning restore 612, 618
         }

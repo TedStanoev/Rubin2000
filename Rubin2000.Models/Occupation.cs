@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 using static Rubin2000.Models.DataConstants.EFAttributeConstants;
 
 namespace Rubin2000.Models
 {
-    public class Employee
+    public class Occupation
     {
-        public Employee()
+        public Occupation()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Schedules = new HashSet<Schedule>();
+            this.Procedures = new HashSet<Procedure>();
         }
 
         [Key]
@@ -19,12 +20,9 @@ namespace Rubin2000.Models
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(NameDefaultLength)]
+        [MaxLength(OccupationNameDefaultLength)]
         public string Name { get; set; }
 
-        [Required]
-        public Occupation Occupation { get; set; }
-
-        public ICollection<Schedule> Schedules { get; set; }
+        public ICollection<Procedure> Procedures { get; set; }
     }
 }

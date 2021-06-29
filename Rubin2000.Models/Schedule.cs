@@ -1,30 +1,36 @@
-﻿using Rubin2000.Models.Enums;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+using static Rubin2000.Models.DataConstants.EFAttributeConstants;
 
 namespace Rubin2000.Models
 {
     public class Schedule
     {
-        public int Id { get; set; }
+        public Schedule()
+        {
+            this.Id = Guid.NewGuid().ToString();
+            this.Appointments = new HashSet<AppointmentSchedule>();
+        }
 
+        [Key]
+        [Required]
+        [MaxLength(IdDefaultLength)]
+        public string Id { get; set; }
+
+        [MaxLength(DescriptionDefaultLength)]
         public string Description { get; set; }
 
-        public DateTime Appointment { get; set; }
+        public DateTime StartsAt { get; set; }
 
-        public Duration Duration { get; set; }
+        public DateTime EndsAt { get; set; }
 
-        public Procedure Procedure { get; set; }
-
-        public decimal? PriceIncrease { get; set; }
-
-        public decimal TotalPrice { get; set; }
-
-        public int ClientId { get; set; }
-
-        public Client Client { get; set; }
-
-        public int EmployeeId { get; set; }
+        [Required]
+        public string EmployeeId { get; set; }
 
         public Employee Employee { get; set; }
+
+        public ICollection<AppointmentSchedule> Appointments { get; set; }
     }
 }
