@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Rubin2000.Data\Rubin2000.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\NewFolder\" />
+  </ItemGroup>
+
 </Project>
