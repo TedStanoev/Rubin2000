@@ -8,5 +8,15 @@ namespace Rubin2000.Web.Controllers
         {
             return View();
         }
+
+        public IActionResult Hair()
+        {
+            return View();
+        }
+
+        public IActionResult Nails()
+        {
+            return View();
+        }
     }
 }
