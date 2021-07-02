@@ -4,7 +4,7 @@ namespace Rubin2000.Web.Controllers
 {
     public class AppointmentsController : Controller
     {
-        public IActionResult Index()
+        public IActionResult MyAppointments()
         {
             return View();
         }
