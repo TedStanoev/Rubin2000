@@ -12,7 +12,7 @@ namespace Rubin2000.Models
         public Procedure()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Appointments = new HashSet<AppointmentProcedure>();
+            this.Appointments = new HashSet<Appointment>();
         }
 
         [Key]
@@ -35,8 +35,6 @@ namespace Rubin2000.Models
 
         public Occupation Occupation { get; set; }
 
-        public string AppointmentId { get; set; }
-
-        public ICollection<AppointmentProcedure> Appointments { get; set; }
+        public ICollection<Appointment> Appointments { get; set; }
     }
 }

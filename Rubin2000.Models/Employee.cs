@@ -10,7 +10,6 @@ namespace Rubin2000.Models
         public Employee()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Schedules = new HashSet<Schedule>();
         }
 
         [Key]
@@ -25,6 +24,6 @@ namespace Rubin2000.Models
         [Required]
         public Occupation Occupation { get; set; }
 
-        public ICollection<Schedule> Schedules { get; set; }
+        public Schedule Schedule { get; set; }
     }
 }

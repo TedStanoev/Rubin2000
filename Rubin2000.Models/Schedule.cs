@@ -11,7 +11,7 @@ namespace Rubin2000.Models
         public Schedule()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Appointments = new HashSet<AppointmentSchedule>();
+            this.Appointments = new HashSet<Appointment>();
         }
 
         [Key]
@@ -31,6 +31,6 @@ namespace Rubin2000.Models
 
         public Employee Employee { get; set; }
 
-        public ICollection<AppointmentSchedule> Appointments { get; set; }
+        public ICollection<Appointment> Appointments { get; set; }
     }
 }
