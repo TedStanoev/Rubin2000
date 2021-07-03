@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Rubin2000.Data;
 using Rubin2000.Models;
+using Rubin2000.Web.Services.ForOccupations;
 
 namespace Rubin2000.Web
 {
@@ -40,6 +41,8 @@ namespace Rubin2000.Web
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredUniqueChars = 0;
             });
+
+            services.AddTransient<IOccupationService, OccupationService>();
                 
         }
 

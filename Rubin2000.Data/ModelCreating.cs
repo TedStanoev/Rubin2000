@@ -12,5 +12,13 @@ namespace Rubin2000.Data
                 .WithMany(k => k.Appointments)
                 .HasForeignKey(k => k.ClientId);
         }
+
+        public static void SetProcedureCategoryKeys(ModelBuilder builder)
+        {
+            builder.Entity<ProcedureCategory>()
+                .HasMany(pc => pc.Procedures)
+                .WithOne(p => p.Category)
+                .HasForeignKey(p => p.CategoryId);
+        }
     }
 }

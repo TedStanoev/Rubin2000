@@ -1,7 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Rubin2000.Data\Rubin2000.Data.csproj" />
+    <ProjectReference Include="..\Rubin2000.Models\Rubin2000.Models.csproj" />
+  </ItemGroup>
 
 </Project>

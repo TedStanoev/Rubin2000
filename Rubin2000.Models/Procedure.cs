@@ -35,6 +35,10 @@ namespace Rubin2000.Models
 
         public Occupation Occupation { get; set; }
 
+        public string CategoryId { get; set; }
+
+        public ProcedureCategory Category { get; set; }
+
         public ICollection<Appointment> Appointments { get; set; }
     }
 }
