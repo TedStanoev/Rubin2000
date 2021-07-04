@@ -25,6 +25,8 @@ namespace Rubin2000.Data
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<ProcedureCategory> ProcedureCategories { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
