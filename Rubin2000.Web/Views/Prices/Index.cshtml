@@ -1,1 +1,12 @@
-﻿<h1>All prices</h1>
+﻿@using Rubin2000.Web.Models.Procedures;
+@model IEnumerable<ProcedureListViewModel>
+<h1>All prices:</h1>
+<ul>
+    @foreach (var procedure in Model)
+    {
+        <li style="list-style-type: none;">
+            <h3>@procedure.Name</h3>
+            <p>Price: @procedure.Price</p>
+        </li>
+    }
+</ul>

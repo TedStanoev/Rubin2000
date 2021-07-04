@@ -64,12 +64,18 @@ namespace Rubin2000.Web.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
+            [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
             [Required]
+            [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
             public string Gender { get; set; }
+
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -90,6 +96,7 @@ namespace Rubin2000.Web.Areas.Identity.Pages.Account
                     Email = Input.Email, 
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
+                    PhoneNumber = Input.PhoneNumber,
                     Gender = Enum.Parse<Gender>(Input.Gender)
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);

@@ -9,7 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Rubin2000.Data;
 using Rubin2000.Models;
-using Rubin2000.Web.Services.ForOccupations;
+using Rubin2000.Services.ForOccupations;
+using Rubin2000.Services.ForProcedures;
 
 namespace Rubin2000.Web
 {
@@ -29,6 +30,7 @@ namespace Rubin2000.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddDefaultTokenProviders()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<Rubin2000DbContext>()
                 .AddDefaultUI();
@@ -43,6 +45,7 @@ namespace Rubin2000.Web
             });
 
             services.AddTransient<IOccupationService, OccupationService>();
+            services.AddTransient<IProcedureService, ProcedureService>();
                 
         }
 

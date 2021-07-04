@@ -1,6 +1,5 @@
 ﻿using Rubin2000.Models.Enums;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using static Rubin2000.Models.DataConstants.EFAttributeConstants;
