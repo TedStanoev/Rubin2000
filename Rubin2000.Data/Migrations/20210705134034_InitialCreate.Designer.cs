@@ -10,7 +10,7 @@ using Rubin2000.Data;
 namespace Rubin2000.Data.Migrations
 {
     [DbContext(typeof(Rubin2000DbContext))]
-    [Migration("20210705114057_InitialCreate")]
+    [Migration("20210705134034_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -297,12 +297,24 @@ namespace Rubin2000.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
                     b.ToTable("Occupations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "6c064f87-4735-445c-8cf0-6b0e74482d96",
+                            Name = "HairStyler"
+                        },
+                        new
+                        {
+                            Id = "28451ba3-d888-4762-a085-c2c0a6a241e0",
+                            Name = "Manicurist"
+                        });
                 });
 
             modelBuilder.Entity("Rubin2000.Models.Procedure", b =>
@@ -319,8 +331,8 @@ namespace Rubin2000.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("OccupationId")
                         .IsRequired()
@@ -339,6 +351,71 @@ namespace Rubin2000.Data.Migrations
                     b.HasIndex("OccupationId");
 
                     b.ToTable("Procedures");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a1c889f7-0373-4cd0-ad68-11ccb61789ca",
+                            CategoryId = "24ccefef-e726-4ecd-88d1-94b7832a9223",
+                            Duration = 1,
+                            Name = "Gentlemen's Haircut",
+                            OccupationId = "6c064f87-4735-445c-8cf0-6b0e74482d96",
+                            Price = 10m
+                        },
+                        new
+                        {
+                            Id = "0e4696c8-5fbb-40fb-a107-91c2c847aa22",
+                            CategoryId = "a39dc7ca-6365-4647-bdab-db4d18b7dcca",
+                            Duration = 1,
+                            Name = "Short and Long Hair",
+                            OccupationId = "6c064f87-4735-445c-8cf0-6b0e74482d96",
+                            Price = 17m
+                        },
+                        new
+                        {
+                            Id = "510aeb22-67ce-4e93-909c-472a9acd5dc3",
+                            CategoryId = "c8f647e6-4fa7-450c-a919-8d0e10fccaa4",
+                            Duration = 2,
+                            Name = "Wedding Hairstyle",
+                            OccupationId = "6c064f87-4735-445c-8cf0-6b0e74482d96",
+                            Price = 60m
+                        },
+                        new
+                        {
+                            Id = "9a4f6f72-1d9d-4a48-9687-a268b7585ec5",
+                            CategoryId = "9f7669e3-e781-4f2a-a3b4-105ddd492a81",
+                            Duration = 2,
+                            Name = "Short hair color with client's dye",
+                            OccupationId = "6c064f87-4735-445c-8cf0-6b0e74482d96",
+                            Price = 14m
+                        },
+                        new
+                        {
+                            Id = "be072ef4-c95c-4756-8f5e-c3787b425e09",
+                            CategoryId = "222287f0-7c00-47cf-8a69-bc95fecd8bd6",
+                            Duration = 1,
+                            Name = "Gel Manicure with BlueSky",
+                            OccupationId = "28451ba3-d888-4762-a085-c2c0a6a241e0",
+                            Price = 25m
+                        },
+                        new
+                        {
+                            Id = "2aed528d-ad6c-4831-89c5-e972c2947095",
+                            CategoryId = "e4119485-ebfe-4781-8c41-839865596ce4",
+                            Duration = 1,
+                            Name = "Gel Pedicure with BlueSky",
+                            OccupationId = "28451ba3-d888-4762-a085-c2c0a6a241e0",
+                            Price = 37m
+                        },
+                        new
+                        {
+                            Id = "82517ee7-ee22-452f-88c8-4f4dd4f4ba21",
+                            CategoryId = "24ccefef-e726-4ecd-88d1-94b7832a9223",
+                            Duration = 1,
+                            Name = "Ladies' Haircut",
+                            OccupationId = "6c064f87-4735-445c-8cf0-6b0e74482d96",
+                            Price = 12m
+                        });
                 });
 
             modelBuilder.Entity("Rubin2000.Models.ProcedureCategory", b =>
@@ -353,6 +430,38 @@ namespace Rubin2000.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProcedureCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "24ccefef-e726-4ecd-88d1-94b7832a9223",
+                            Name = "Haircut"
+                        },
+                        new
+                        {
+                            Id = "c8f647e6-4fa7-450c-a919-8d0e10fccaa4",
+                            Name = "Formal Hairstyles"
+                        },
+                        new
+                        {
+                            Id = "a39dc7ca-6365-4647-bdab-db4d18b7dcca",
+                            Name = "Blow Dry with styling products"
+                        },
+                        new
+                        {
+                            Id = "9f7669e3-e781-4f2a-a3b4-105ddd492a81",
+                            Name = "Hair Color"
+                        },
+                        new
+                        {
+                            Id = "222287f0-7c00-47cf-8a69-bc95fecd8bd6",
+                            Name = "Manicure"
+                        },
+                        new
+                        {
+                            Id = "e4119485-ebfe-4781-8c41-839865596ce4",
+                            Name = "Pedicure"
+                        });
                 });
 
             modelBuilder.Entity("Rubin2000.Models.Product", b =>
@@ -363,8 +472,8 @@ namespace Rubin2000.Data.Migrations
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -372,8 +481,8 @@ namespace Rubin2000.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<decimal?>("PercantageDiscount")
                         .HasColumnType("decimal(18,2)");

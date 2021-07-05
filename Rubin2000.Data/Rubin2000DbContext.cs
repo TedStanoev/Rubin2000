@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Rubin2000.Models;
+using Rubin2000.Data.ModelCreating;
+using Rubin2000.Data.DataSeeding;
 
 namespace Rubin2000.Data
 {
@@ -32,10 +34,8 @@ namespace Rubin2000.Data
         {
             base.OnModelCreating(builder);
 
-            ModelCreating.SetAppointmentKeys(builder);
-            //ModelCreating.SetEmployeeKeys(builder);
-            ModelCreating.SetScheduleKeys(builder);
-            ModelCreating.SetProcedureCategoryKeys(builder);
+            ModelCreator.SetModelKeys(builder);
+            DataSeeder.SeedData(builder);
         }
     }
 }

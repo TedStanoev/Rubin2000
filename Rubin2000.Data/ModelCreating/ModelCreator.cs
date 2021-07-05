@@ -1,11 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Rubin2000.Models;
 
-namespace Rubin2000.Data
+namespace Rubin2000.Data.ModelCreating
 {
-    public static class ModelCreating
+    public static class ModelCreator
     {
-        public static void SetAppointmentKeys(ModelBuilder builder)
+        public static void SetModelKeys(ModelBuilder builder)
+        {
+            SetAppointmentKeys(builder);
+            SetScheduleKeys(builder);
+            SetProcedureCategoryKeys(builder);
+        }
+
+        private static void SetAppointmentKeys(ModelBuilder builder)
         {
             builder.Entity<Appointment>()
                 .HasOne(k => k.Client)
@@ -13,15 +20,7 @@ namespace Rubin2000.Data
                 .HasForeignKey(k => k.ClientId);
         }
 
-        public static void SetEmployeeKeys(ModelBuilder builder)
-        {
-            builder.Entity<Employee>()
-                .HasOne(e => e.Schedule)
-                .WithOne(e => e.Employee)
-                .HasForeignKey<Schedule>(s => s.EmployeeId);
-        }
-
-        public static void SetScheduleKeys(ModelBuilder builder)
+        private static void SetScheduleKeys(ModelBuilder builder)
         {
             builder.Entity<Schedule>()
                 .HasOne(e => e.Employee)
@@ -29,7 +28,7 @@ namespace Rubin2000.Data
                 .HasForeignKey<Employee>(s => s.ScheduleId);
         }
 
-        public static void SetProcedureCategoryKeys(ModelBuilder builder)
+        private static void SetProcedureCategoryKeys(ModelBuilder builder)
         {
             builder.Entity<ProcedureCategory>()
                 .HasMany(pc => pc.Procedures)

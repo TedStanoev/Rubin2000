@@ -30,7 +30,8 @@ namespace Rubin2000.Web.Controllers
             {
                 var categoryViewModel = new CategoryViewModel
                 {
-                    Name = category.Name
+                    Name = category.Name,
+                    OccupationName = "HairStyler"
                 };
 
                 foreach (var procedure in allProcedures)
@@ -46,11 +47,17 @@ namespace Rubin2000.Web.Controllers
                             CategoryName = procedure.Category.Name,
                             OccupationName = procedure.Occupation.Name
                         });
+
+                        categoryViewModel.OccupationName = procedure.Occupation.Name;
                     }
                 }
 
                 categoryViewModelList.Add(categoryViewModel);
             }
+
+            categoryViewModelList = categoryViewModelList
+                .OrderBy(c => c.OccupationName)
+                .ToList();
 
             return View(categoryViewModelList);
         }

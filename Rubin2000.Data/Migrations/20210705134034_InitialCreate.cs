@@ -55,7 +55,7 @@ namespace Rubin2000.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(maxLength: 40, nullable: false),
-                    Name = table.Column<string>(maxLength: 30, nullable: false)
+                    Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,8 +79,8 @@ namespace Rubin2000.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(maxLength: 40, nullable: false),
-                    Name = table.Column<string>(maxLength: 30, nullable: false),
-                    CompanyName = table.Column<string>(maxLength: 30, nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    CompanyName = table.Column<string>(maxLength: 50, nullable: false),
                     Status = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
                     PercantageDiscount = table.Column<decimal>(nullable: true),
@@ -217,7 +217,7 @@ namespace Rubin2000.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(maxLength: 40, nullable: false),
-                    Name = table.Column<string>(maxLength: 30, nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
                     Duration = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
                     PercantageDiscount = table.Column<decimal>(nullable: true),
@@ -300,6 +300,42 @@ namespace Rubin2000.Data.Migrations
                         principalTable: "Schedules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Occupations",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { "6c064f87-4735-445c-8cf0-6b0e74482d96", "HairStyler" },
+                    { "28451ba3-d888-4762-a085-c2c0a6a241e0", "Manicurist" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProcedureCategories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { "24ccefef-e726-4ecd-88d1-94b7832a9223", "Haircut" },
+                    { "c8f647e6-4fa7-450c-a919-8d0e10fccaa4", "Formal Hairstyles" },
+                    { "a39dc7ca-6365-4647-bdab-db4d18b7dcca", "Blow Dry with styling products" },
+                    { "9f7669e3-e781-4f2a-a3b4-105ddd492a81", "Hair Color" },
+                    { "222287f0-7c00-47cf-8a69-bc95fecd8bd6", "Manicure" },
+                    { "e4119485-ebfe-4781-8c41-839865596ce4", "Pedicure" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Procedures",
+                columns: new[] { "Id", "CategoryId", "Duration", "Name", "OccupationId", "PercantageDiscount", "Price" },
+                values: new object[,]
+                {
+                    { "a1c889f7-0373-4cd0-ad68-11ccb61789ca", "24ccefef-e726-4ecd-88d1-94b7832a9223", 1, "Gentlemen's Haircut", "6c064f87-4735-445c-8cf0-6b0e74482d96", null, 10m },
+                    { "82517ee7-ee22-452f-88c8-4f4dd4f4ba21", "24ccefef-e726-4ecd-88d1-94b7832a9223", 1, "Ladies' Haircut", "6c064f87-4735-445c-8cf0-6b0e74482d96", null, 12m },
+                    { "510aeb22-67ce-4e93-909c-472a9acd5dc3", "c8f647e6-4fa7-450c-a919-8d0e10fccaa4", 2, "Wedding Hairstyle", "6c064f87-4735-445c-8cf0-6b0e74482d96", null, 60m },
+                    { "0e4696c8-5fbb-40fb-a107-91c2c847aa22", "a39dc7ca-6365-4647-bdab-db4d18b7dcca", 1, "Short and Long Hair", "6c064f87-4735-445c-8cf0-6b0e74482d96", null, 17m },
+                    { "9a4f6f72-1d9d-4a48-9687-a268b7585ec5", "9f7669e3-e781-4f2a-a3b4-105ddd492a81", 2, "Short hair color with client's dye", "6c064f87-4735-445c-8cf0-6b0e74482d96", null, 14m },
+                    { "be072ef4-c95c-4756-8f5e-c3787b425e09", "222287f0-7c00-47cf-8a69-bc95fecd8bd6", 1, "Gel Manicure with BlueSky", "28451ba3-d888-4762-a085-c2c0a6a241e0", null, 25m },
+                    { "2aed528d-ad6c-4831-89c5-e972c2947095", "e4119485-ebfe-4781-8c41-839865596ce4", 1, "Gel Pedicure with BlueSky", "28451ba3-d888-4762-a085-c2c0a6a241e0", null, 37m }
                 });
 
             migrationBuilder.CreateIndex(

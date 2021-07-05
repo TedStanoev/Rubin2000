@@ -12,6 +12,6 @@ namespace Rubin2000.Models.DataConstants
 
         public const int NameDefaultLength = 20;
 
-        public const int OccupationNameDefaultLength = 30;
+        public const int OccupationNameDefaultLength = 50;
     }
 }

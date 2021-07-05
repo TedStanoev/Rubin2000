@@ -12,6 +12,8 @@ namespace Rubin2000.Web.Models.Categories
 
         public string Name { get; set; }
 
+        public string OccupationName { get; set; }
+
         public ICollection<ProcedureListViewModel> Procedures { get; set; }
     }
 }
