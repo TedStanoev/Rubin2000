@@ -1,40 +1,48 @@
 ﻿@using Rubin2000.Web.Models.Appointments
 @model IEnumerable<AppointmentListViewModel>
 <h1>These are my appointments:</h1>
-<table>
-    <thead>
-        <tr>
-            <td>
-                Procedure Name
-            </td>
-            <td>
-                Date
-            </td>
-            <td>
-                Time
-            </td>
-            <td>
-                Status
-            </td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var appointment in Model)
-        {
+@if (!Model.Any())
+{
+    <h2><a asp-controller="Appointments" asp-action="MakeAppointment">Make your first appointment!</a></h2>
+}
+else
+{
+    <table>
+        <thead>
             <tr>
                 <td>
-                    @appointment.ProcedureName
+                    Procedure Name
                 </td>
                 <td>
-                    @appointment.Date
+                    Date
                 </td>
                 <td>
-                    @appointment.Time
+                    Time
                 </td>
                 <td>
-                    @appointment.Status
+                    Status
                 </td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model)
+            {
+                <tr>
+                    <td>
+                        @appointment.ProcedureName
+                    </td>
+                    <td>
+                        @appointment.Date
+                    </td>
+                    <td>
+                        @appointment.Time
+                    </td>
+                    <td>
+                        @appointment.Status
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

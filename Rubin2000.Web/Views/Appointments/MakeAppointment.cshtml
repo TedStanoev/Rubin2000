@@ -1,0 +1,22 @@
+﻿@using Rubin2000.Web.Models.Appointments
+@model AppointmentInputViewModel
+
+<form method="post">
+    <label asp-for="ProcedureName">Procedure</label><br>
+    <input type="text" id="procedureName" asp-for="ProcedureName" placeholder="Procedure"><br>
+
+    <label asp-for="DateAndTime">Select the date and time:</label><br>
+    <input type="datetime-local" id="dateAndTime" asp-for="DateAndTime"><br><br>
+
+    <label asp-for="Description">Info: </label><br>
+    <input type="text" id="description" asp-for="Description" placeholder="Add some information for the appointment[Optional]"><br>
+
+    <label asp-for="EmployeeName">Pick the HairStylist/Manicurist</label><br />
+
+    <select asp-for="EmployeeName" id="employeeName">
+        <option value="Albena">Albena</option>
+    </select>
+
+    <button type="submit">Submit your appointment</button>
+
+</form>

@@ -38,5 +38,16 @@ namespace Rubin2000.Web.Controllers
 
             return View(userAppointmentsViewModel);
         }
+
+        public IActionResult MakeAppointment()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult MakeAppointment(AppointmentInputViewModel model)
+        {
+            return Redirect("/Appointments/MyAppointments");
+        }
     }
 }
