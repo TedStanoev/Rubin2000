@@ -12,6 +12,7 @@ using Rubin2000.Models;
 using Rubin2000.Services.ForOccupations;
 using Rubin2000.Services.ForProcedures;
 using Rubin2000.Services.ForCategories;
+using Rubin2000.Services.ForAppointments;
 
 namespace Rubin2000.Web
 {
@@ -48,6 +49,7 @@ namespace Rubin2000.Web
             services.AddTransient<IOccupationService, OccupationService>();
             services.AddTransient<IProcedureService, ProcedureService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IAppointmentService, AppointmentService>();
                 
         }
 

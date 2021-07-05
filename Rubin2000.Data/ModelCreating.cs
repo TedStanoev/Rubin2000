@@ -13,6 +13,22 @@ namespace Rubin2000.Data
                 .HasForeignKey(k => k.ClientId);
         }
 
+        public static void SetEmployeeKeys(ModelBuilder builder)
+        {
+            builder.Entity<Employee>()
+                .HasOne(e => e.Schedule)
+                .WithOne(e => e.Employee)
+                .HasForeignKey<Schedule>(s => s.EmployeeId);
+        }
+
+        public static void SetScheduleKeys(ModelBuilder builder)
+        {
+            builder.Entity<Schedule>()
+                .HasOne(e => e.Employee)
+                .WithOne(e => e.Schedule)
+                .HasForeignKey<Employee>(s => s.ScheduleId);
+        }
+
         public static void SetProcedureCategoryKeys(ModelBuilder builder)
         {
             builder.Entity<ProcedureCategory>()

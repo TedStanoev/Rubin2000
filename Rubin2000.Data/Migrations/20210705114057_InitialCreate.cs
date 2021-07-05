@@ -63,6 +63,18 @@ namespace Rubin2000.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProcedureCategories",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 40, nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProcedureCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -77,6 +89,21 @@ namespace Rubin2000.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Schedules",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 40, nullable: false),
+                    Description = table.Column<string>(maxLength: 120, nullable: true),
+                    StartsAt = table.Column<DateTime>(nullable: false),
+                    EndsAt = table.Column<DateTime>(nullable: false),
+                    EmployeeId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Schedules", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,27 +123,6 @@ namespace Rubin2000.Data.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Appointments",
-                columns: table => new
-                {
-                    Id = table.Column<string>(maxLength: 40, nullable: false),
-                    DateAndTime = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(maxLength: 120, nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    ClientId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Appointments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Appointments_AspNetUsers_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -207,12 +213,42 @@ namespace Rubin2000.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Procedures",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 40, nullable: false),
+                    Name = table.Column<string>(maxLength: 30, nullable: false),
+                    Duration = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
+                    PercantageDiscount = table.Column<decimal>(nullable: true),
+                    OccupationId = table.Column<string>(nullable: false),
+                    CategoryId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Procedures", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Procedures_ProcedureCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "ProcedureCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Procedures_Occupations_OccupationId",
+                        column: x => x.OccupationId,
+                        principalTable: "Occupations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
                 {
                     Id = table.Column<string>(maxLength: 40, nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: false),
-                    OccupationId = table.Column<string>(nullable: false)
+                    OccupationId = table.Column<string>(nullable: false),
+                    ScheduleId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -223,104 +259,48 @@ namespace Rubin2000.Data.Migrations
                         principalTable: "Occupations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Procedures",
-                columns: table => new
-                {
-                    Id = table.Column<string>(maxLength: 40, nullable: false),
-                    Name = table.Column<string>(maxLength: 30, nullable: false),
-                    Duration = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false),
-                    PercantageDiscount = table.Column<decimal>(nullable: true),
-                    OccupationId = table.Column<string>(nullable: false),
-                    AppointmentId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Procedures", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Procedures_Occupations_OccupationId",
-                        column: x => x.OccupationId,
-                        principalTable: "Occupations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Schedules",
-                columns: table => new
-                {
-                    Id = table.Column<string>(maxLength: 40, nullable: false),
-                    Description = table.Column<string>(maxLength: 120, nullable: true),
-                    StartsAt = table.Column<DateTime>(nullable: false),
-                    EndsAt = table.Column<DateTime>(nullable: false),
-                    EmployeeId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Schedules", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Schedules_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AppointmentProcedures",
-                columns: table => new
-                {
-                    AppointmentId = table.Column<string>(nullable: false),
-                    ProcedureId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppointmentProcedures", x => new { x.AppointmentId, x.ProcedureId });
-                    table.ForeignKey(
-                        name: "FK_AppointmentProcedures_Procedures_AppointmentId",
-                        column: x => x.AppointmentId,
-                        principalTable: "Procedures",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AppointmentProcedures_Appointments_ProcedureId",
-                        column: x => x.ProcedureId,
-                        principalTable: "Appointments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AppointmentSchedules",
-                columns: table => new
-                {
-                    AppointmentId = table.Column<string>(nullable: false),
-                    ScheduleId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppointmentSchedules", x => new { x.AppointmentId, x.ScheduleId });
-                    table.ForeignKey(
-                        name: "FK_AppointmentSchedules_Schedules_AppointmentId",
-                        column: x => x.AppointmentId,
+                        name: "FK_Employees_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
                         principalTable: "Schedules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AppointmentSchedules_Appointments_ScheduleId",
-                        column: x => x.ScheduleId,
-                        principalTable: "Appointments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_AppointmentProcedures_ProcedureId",
-                table: "AppointmentProcedures",
-                column: "ProcedureId");
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 40, nullable: false),
+                    DateAndTime = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(maxLength: 120, nullable: true),
+                    Status = table.Column<int>(nullable: false),
+                    ClientId = table.Column<string>(nullable: false),
+                    ScheduleId = table.Column<string>(nullable: true),
+                    ProcedureId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_AspNetUsers_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Procedures_ProcedureId",
+                        column: x => x.ProcedureId,
+                        principalTable: "Procedures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_ClientId",
@@ -328,8 +308,13 @@ namespace Rubin2000.Data.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppointmentSchedules_ScheduleId",
-                table: "AppointmentSchedules",
+                name: "IX_Appointments_ProcedureId",
+                table: "Appointments",
+                column: "ProcedureId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_ScheduleId",
+                table: "Appointments",
                 column: "ScheduleId");
 
             migrationBuilder.CreateIndex(
@@ -377,23 +362,26 @@ namespace Rubin2000.Data.Migrations
                 column: "OccupationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employees_ScheduleId",
+                table: "Employees",
+                column: "ScheduleId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Procedures_CategoryId",
+                table: "Procedures",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Procedures_OccupationId",
                 table: "Procedures",
                 column: "OccupationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_EmployeeId",
-                table: "Schedules",
-                column: "EmployeeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AppointmentProcedures");
-
-            migrationBuilder.DropTable(
-                name: "AppointmentSchedules");
+                name: "Appointments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -411,25 +399,25 @@ namespace Rubin2000.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Employees");
+
+            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Procedures");
 
             migrationBuilder.DropTable(
-                name: "Schedules");
-
-            migrationBuilder.DropTable(
-                name: "Appointments");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Employees");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Schedules");
+
+            migrationBuilder.DropTable(
+                name: "ProcedureCategories");
 
             migrationBuilder.DropTable(
                 name: "Occupations");

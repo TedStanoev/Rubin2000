@@ -1,1 +1,40 @@
-﻿<h1>These are my appointments:</h1>
+﻿@using Rubin2000.Web.Models.Appointments
+@model IEnumerable<AppointmentListViewModel>
+<h1>These are my appointments:</h1>
+<table>
+    <thead>
+        <tr>
+            <td>
+                Procedure Name
+            </td>
+            <td>
+                Date
+            </td>
+            <td>
+                Time
+            </td>
+            <td>
+                Status
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in Model)
+        {
+            <tr>
+                <td>
+                    @appointment.ProcedureName
+                </td>
+                <td>
+                    @appointment.Date
+                </td>
+                <td>
+                    @appointment.Time
+                </td>
+                <td>
+                    @appointment.Status
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -10,8 +10,8 @@ using Rubin2000.Data;
 namespace Rubin2000.Data.Migrations
 {
     [DbContext(typeof(Rubin2000DbContext))]
-    [Migration("20210702130540_RemoveManyToManyTables")]
-    partial class RemoveManyToManyTables
+    [Migration("20210705114057_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -275,9 +275,16 @@ namespace Rubin2000.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<string>("ScheduleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(40)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OccupationId");
+
+                    b.HasIndex("ScheduleId")
+                        .IsUnique();
 
                     b.ToTable("Employees");
                 });
@@ -304,6 +311,9 @@ namespace Rubin2000.Data.Migrations
                         .HasColumnType("nvarchar(40)")
                         .HasMaxLength(40);
 
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
@@ -324,9 +334,25 @@ namespace Rubin2000.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("OccupationId");
 
                     b.ToTable("Procedures");
+                });
+
+            modelBuilder.Entity("Rubin2000.Models.ProcedureCategory", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProcedureCategories");
                 });
 
             modelBuilder.Entity("Rubin2000.Models.Product", b =>
@@ -375,7 +401,7 @@ namespace Rubin2000.Data.Migrations
 
                     b.Property<string>("EmployeeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndsAt")
                         .HasColumnType("datetime2");
@@ -384,9 +410,6 @@ namespace Rubin2000.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique();
 
                     b.ToTable("Schedules");
                 });
@@ -486,22 +509,23 @@ namespace Rubin2000.Data.Migrations
                         .HasForeignKey("OccupationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Rubin2000.Models.Procedure", b =>
-                {
-                    b.HasOne("Rubin2000.Models.Occupation", "Occupation")
-                        .WithMany("Procedures")
-                        .HasForeignKey("OccupationId")
+                    b.HasOne("Rubin2000.Models.Schedule", "Schedule")
+                        .WithOne("Employee")
+                        .HasForeignKey("Rubin2000.Models.Employee", "ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Rubin2000.Models.Schedule", b =>
+            modelBuilder.Entity("Rubin2000.Models.Procedure", b =>
                 {
-                    b.HasOne("Rubin2000.Models.Employee", "Employee")
-                        .WithOne("Schedule")
-                        .HasForeignKey("Rubin2000.Models.Schedule", "EmployeeId")
+                    b.HasOne("Rubin2000.Models.ProcedureCategory", "Category")
+                        .WithMany("Procedures")
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("Rubin2000.Models.Occupation", "Occupation")
+                        .WithMany("Procedures")
+                        .HasForeignKey("OccupationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

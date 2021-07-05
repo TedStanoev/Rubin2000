@@ -10,9 +10,7 @@ namespace Rubin2000.Services.ForCategories
         private readonly Rubin2000DbContext data;
 
         public CategoryService(Rubin2000DbContext data)
-        {
-            this.data = data;
-        }
+            => this.data = data;
 
         public IEnumerable<ProcedureCategory> GetAllProcedureCategories()
             => this.data.ProcedureCategories

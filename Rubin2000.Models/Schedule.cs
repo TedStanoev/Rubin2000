@@ -29,6 +29,7 @@ namespace Rubin2000.Models
         [Required]
         public string EmployeeId { get; set; }
 
+        [Required]
         public Employee Employee { get; set; }
 
         public ICollection<Appointment> Appointments { get; set; }

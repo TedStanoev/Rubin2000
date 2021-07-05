@@ -33,6 +33,9 @@ namespace Rubin2000.Data
             base.OnModelCreating(builder);
 
             ModelCreating.SetAppointmentKeys(builder);
+            //ModelCreating.SetEmployeeKeys(builder);
+            ModelCreating.SetScheduleKeys(builder);
+            ModelCreating.SetProcedureCategoryKeys(builder);
         }
     }
 }

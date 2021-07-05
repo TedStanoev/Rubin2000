@@ -22,8 +22,15 @@ namespace Rubin2000.Models
         public string Name { get; set; }
 
         [Required]
+        public string OccupationId { get; set; }
+
+        [Required]
         public Occupation Occupation { get; set; }
 
+        [Required]
+        public string ScheduleId { get; set; }
+
+        [Required]
         public Schedule Schedule { get; set; }
     }
 }
