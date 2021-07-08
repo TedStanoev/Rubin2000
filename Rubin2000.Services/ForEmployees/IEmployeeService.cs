@@ -7,6 +7,6 @@ namespace Rubin2000.Services.ForEmployees
     {
         IEnumerable<Employee> GetEmployees();
 
-        IEnumerable<Employee> GetEmployeesByProcedure(string occupationId);
+        IEnumerable<Employee> GetEmployeesByProcedure(string procedureName);
     }
 }

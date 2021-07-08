@@ -18,9 +18,9 @@ namespace Rubin2000.Services.ForEmployees
             => this.data.Employees
                 .ToList();
 
-        public IEnumerable<Employee> GetEmployeesByProcedure(string procedureId)
+        public IEnumerable<Employee> GetEmployeesByProcedure(string procedureName)
         {
-            var occupation = this.data.Occupations.FirstOrDefault(o => o.Procedures.Any(p => p.Id == procedureId));
+            var occupation = this.data.Occupations.FirstOrDefault(o => o.Procedures.Any(p => p.Name == procedureName));
 
             return this.GetEmployees()
                     .Where(e => e.Occupation == occupation)

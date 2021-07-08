@@ -26,14 +26,13 @@ namespace Rubin2000.Data.DataSeeding
                         Name = "Albena",
                         OccupationId = "6c064f87-4735-445c-8cf0-6b0e74482d96",
                         ScheduleId = "2ef564a7-a15a-4b17-8407-9bc37a9ae985"
-                    //},
-                    //new Employee 
-                    //{
-                    //    Id = "ba190cb1-6a32-4884-a7bc-3d86e597d5c5",
-                    //    Name = "Eli",
-                    //    OccupationId = "28451ba3-d888-4762-a085-c2c0a6a241e0",
-                    //    ScheduleId = "70561545-f07c-4e18-a255-fe4fff6e9e19"
-                    //
+                    },
+                    new Employee
+                    {
+                        Id = "ba190cb1-6a32-4884-a7bc-3d86e597d5c5",
+                        Name = "Eli",
+                        OccupationId = "28451ba3-d888-4762-a085-c2c0a6a241e0",
+                        ScheduleId = "70561545-f07c-4e18-a255-fe4fff6e9e19"
                     });
         }
 
@@ -47,6 +46,13 @@ namespace Rubin2000.Data.DataSeeding
                         StartsAt = new DateTime(2021, 4, 17, 10, 0, 0),
                         EndsAt = new DateTime(2021, 4, 17, 19, 0, 0),
                         EmployeeId = "0caaa666-41f5-4f73-93b1-8c8cce3c60d3"
+                    },
+                    new Schedule
+                    {
+                        Id = "70561545-f07c-4e18-a255-fe4fff6e9e19",
+                        StartsAt = new DateTime(2021, 4, 17, 10, 0, 0),
+                        EndsAt = new DateTime(2021, 4, 17, 19, 0, 0),
+                        EmployeeId = "ba190cb1-6a32-4884-a7bc-3d86e597d5c5"
                     });
         }
 

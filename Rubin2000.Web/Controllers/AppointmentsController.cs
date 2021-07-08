@@ -49,7 +49,7 @@ namespace Rubin2000.Web.Controllers
             var appointmentViewModel = new AppointmentInputViewModel
             {
                 ProcedureName = id,
-                Employees = employeeService.GetEmployees()
+                Employees = employeeService.GetEmployeesByProcedure(id)
                     .Select(e => new SelectListItem 
                     {
                         Text = e.Name,
