@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using Rubin2000.Web.Models.Appointments;
 using Rubin2000.Models.Enums;
+using Rubin2000.Services.ForEmployees;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Rubin2000.Web.Controllers
 {
@@ -14,12 +16,14 @@ namespace Rubin2000.Web.Controllers
     public class AppointmentsController : Controller
     {
         private readonly IAppointmentService appointmentService;
+        private readonly IEmployeeService employeeService;
         private readonly UserManager<AppUser> userManager;
 
-        public AppointmentsController(IAppointmentService appointmentService, UserManager<AppUser> userManager)
+        public AppointmentsController(IAppointmentService appointmentService, UserManager<AppUser> userManager, IEmployeeService employeeService)
         {
             this.appointmentService = appointmentService;
             this.userManager = userManager;
+            this.employeeService = employeeService;
         }
 
         public IActionResult MyAppointments()
@@ -39,9 +43,22 @@ namespace Rubin2000.Web.Controllers
             return View(userAppointmentsViewModel);
         }
 
-        public IActionResult MakeAppointment()
+        public IActionResult MakeAppointment(string id)
         {
-            return View();
+
+            var appointmentViewModel = new AppointmentInputViewModel
+            {
+                ProcedureName = id,
+                Employees = employeeService.GetEmployees()
+                    .Select(e => new SelectListItem 
+                    {
+                        Text = e.Name,
+                        Value = e.Id
+                    })
+                    .ToList()
+            };
+
+            return View(appointmentViewModel);
         }
 
         [HttpPost]

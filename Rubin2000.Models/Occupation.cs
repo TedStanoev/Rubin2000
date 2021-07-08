@@ -12,6 +12,7 @@ namespace Rubin2000.Models
         {
             this.Id = Guid.NewGuid().ToString();
             this.Procedures = new HashSet<Procedure>();
+            this.Employees = new HashSet<Employee>();
         }
 
         [Key]
@@ -24,5 +25,7 @@ namespace Rubin2000.Models
         public string Name { get; set; }
 
         public ICollection<Procedure> Procedures { get; set; }
+
+        public ICollection<Employee> Employees { get; set; }
     }
 }

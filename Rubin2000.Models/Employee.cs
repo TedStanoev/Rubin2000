@@ -27,10 +27,8 @@ namespace Rubin2000.Models
         [Required]
         public Occupation Occupation { get; set; }
 
-        [Required]
         public string ScheduleId { get; set; }
 
-        [Required]
         public Schedule Schedule { get; set; }
     }
 }
