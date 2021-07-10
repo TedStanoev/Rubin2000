@@ -14,6 +14,8 @@ using Rubin2000.Services.ForProcedures;
 using Rubin2000.Services.ForCategories;
 using Rubin2000.Services.ForAppointments;
 using Rubin2000.Services.ForEmployees;
+using Rubin2000.Services.ForClients;
+using Rubin2000.Services.ForSchedules;
 
 namespace Rubin2000.Web
 {
@@ -52,6 +54,8 @@ namespace Rubin2000.Web
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IScheduleService, ScheduleService>();
                 
         }
 

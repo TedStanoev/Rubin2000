@@ -1,0 +1,24 @@
+﻿@using Rubin2000.Web.Models.Procedures;
+@model IEnumerable<ProcedureListViewModel>
+<h1>Hair prices:</h1>
+<ul>
+    @foreach (var category in Model.Select(m => m.CategoryName).Distinct().OrderByDescending(c => c))
+    {
+        <li>
+            <h2>@category</h2>
+            <ul>
+                @foreach (var procedure in Model.Where(p => p.CategoryName == category))
+                {
+                    <li style="list-style-type: none;">
+                        <h3>@procedure.Name</h3>
+                        <p>Price: @procedure.Price</p>
+                        <a class="badge-success" asp-controller="Appointments" asp-action="MakeAppointment" asp-route-id="@procedure.Name">
+                            Select service
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+    }
+
+</ul>

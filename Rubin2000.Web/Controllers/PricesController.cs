@@ -3,6 +3,7 @@ using Rubin2000.Services.ForCategories;
 using Rubin2000.Services.ForProcedures;
 using Rubin2000.Web.Models.Categories;
 using Rubin2000.Web.Models.Procedures;
+using Rubin2000.GlobalConstants;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,8 +11,8 @@ namespace Rubin2000.Web.Controllers
 {
     public class PricesController : Controller
     {
-        private IProcedureService procedureService;
-        private ICategoryService categoryService;
+        private readonly IProcedureService procedureService;
+        private readonly ICategoryService categoryService;
 
         public PricesController(IProcedureService procedureService, ICategoryService categoryService)
         {
@@ -31,12 +32,12 @@ namespace Rubin2000.Web.Controllers
                 var categoryViewModel = new CategoryViewModel
                 {
                     Name = category.Name,
-                    OccupationName = "HairStyler"
+                    OccupationName = OccupationConstants.HairStyler
                 };
 
                 foreach (var procedure in allProcedures)
                 {
-                    if (procedure.Category.Name == category.Name)
+                    if (procedure.Category.Name.ToLower() == category.Name)
                     {
                         categoryViewModel.Procedures.Add(new ProcedureListViewModel
                         {
@@ -60,44 +61,6 @@ namespace Rubin2000.Web.Controllers
                 .ToList();
 
             return View(categoryViewModelList);
-        }
-
-        public IActionResult Hair()
-        {
-            var hairProcedures = procedureService.GetHairProcedures();
-
-            var hairProceduresViewModel = hairProcedures
-                .Select(p => new ProcedureListViewModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    DiscountPercentage = p.PercantageDiscount ?? 0,
-                    CategoryName = p.Category.Name,
-                    OccupationName = p.Occupation.Name
-                })
-                .ToList();
-
-            return View(hairProceduresViewModel);
-        }
-
-        public IActionResult Nails()
-        {
-            var nailsProcedures = procedureService.GetNailsProcedures();
-
-            var nailsProceduresViewModel = nailsProcedures
-                .Select(p => new ProcedureListViewModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    DiscountPercentage = p.PercantageDiscount ?? 0,
-                    CategoryName = p.Category.Name,
-                    OccupationName = p.Occupation.Name
-                })
-                .ToList();
-
-            return View(nailsProceduresViewModel);
         }
     }
 }

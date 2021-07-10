@@ -8,7 +8,7 @@ namespace Rubin2000.Services.ForOccupations
 {
     public class OccupationService : IOccupationService
     {
-        private Rubin2000DbContext data;
+        private readonly Rubin2000DbContext data;
 
         public OccupationService(Rubin2000DbContext data)
         {

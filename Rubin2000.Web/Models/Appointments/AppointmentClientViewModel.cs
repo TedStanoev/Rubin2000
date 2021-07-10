@@ -1,6 +1,6 @@
 ﻿namespace Rubin2000.Web.Models.Appointments
 {
-    public class AppointmentListViewModel
+    public class AppointmentClientViewModel
     {
         public string ProcedureName { get; set; }
 

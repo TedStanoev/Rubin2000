@@ -1,1 +1,12 @@
-﻿<h1>Choose an employee:</h1>
+﻿@using Rubin2000.Web.Models.Employees;
+@model IEnumerable<EmployeeScheduleViewModel>
+<h1>Choose an employee:</h1>
+<ul>
+    @foreach (var employee in Model)
+    {
+    <li style="list-style-type: none;">
+        <a asp-controller="Schedules" asp-action="EmployeeSchedule" asp-route-id="@employee.ScheduleId">@employee.Name</a>
+    </li>
+    }
+</ul>
+

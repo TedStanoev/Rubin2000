@@ -1,4 +1,4 @@
-﻿namespace Rubin2000.Services.Constants
+﻿namespace Rubin2000.GlobalConstants
 {
     public class ProcedureConstants
     {

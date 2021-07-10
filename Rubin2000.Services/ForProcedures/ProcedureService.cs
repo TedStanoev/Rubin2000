@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Rubin2000.Data;
 using Rubin2000.Models;
-using Rubin2000.Services.Constants;
+using Rubin2000.GlobalConstants;
 using System.Collections.Generic;
 using System.Linq;
 

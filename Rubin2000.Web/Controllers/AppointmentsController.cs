@@ -31,7 +31,7 @@ namespace Rubin2000.Web.Controllers
             var userAppointments = appointmentService.GetUserAppointments(this.userManager.GetUserId(this.User));
 
             var userAppointmentsViewModel = userAppointments
-                .Select(a => new AppointmentListViewModel
+                .Select(a => new AppointmentClientViewModel
                 {
                     ProcedureName = a.Procedure.Name,
                     Date = a.DateAndTime.ToShortDateString(),

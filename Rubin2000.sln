@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubin2000.Web", "Rubin2000.Web\Rubin2000.Web.csproj", "{4EB9438E-74B0-4953-9514-965A318FC59C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubin2000.Web", "Rubin2000.Web\Rubin2000.Web.csproj", "{4EB9438E-74B0-4953-9514-965A318FC59C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubin2000.Models", "Rubin2000.Models\Rubin2000.Models.csproj", "{23C132C7-54EF-4FF3-BEE9-E1CD209EE43B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubin2000.Models", "Rubin2000.Models\Rubin2000.Models.csproj", "{23C132C7-54EF-4FF3-BEE9-E1CD209EE43B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubin2000.Data", "Rubin2000.Data\Rubin2000.Data.csproj", "{245536E8-29E6-46CE-B811-330F3536DC6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubin2000.Data", "Rubin2000.Data\Rubin2000.Data.csproj", "{245536E8-29E6-46CE-B811-330F3536DC6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubin2000.Services", "Rubin2000.Services\Rubin2000.Services.csproj", "{503FF840-81D2-4BED-8894-B7E69263C3AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubin2000.Services", "Rubin2000.Services\Rubin2000.Services.csproj", "{503FF840-81D2-4BED-8894-B7E69263C3AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubin2000.ConsoleUI", "Rubin2000.ConsoleUI\Rubin2000.ConsoleUI.csproj", "{9C3B93F9-0EEA-4806-93C7-EF29FBFBF38D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubin2000.ConsoleUI", "Rubin2000.ConsoleUI\Rubin2000.ConsoleUI.csproj", "{9C3B93F9-0EEA-4806-93C7-EF29FBFBF38D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubin2000.GlobalConstants", "Rubin2000.GlobalConstants\Rubin2000.GlobalConstants.csproj", "{C06EA4A9-E572-4639-9A63-DC79CFEA8F87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{9C3B93F9-0EEA-4806-93C7-EF29FBFBF38D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C3B93F9-0EEA-4806-93C7-EF29FBFBF38D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C3B93F9-0EEA-4806-93C7-EF29FBFBF38D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C06EA4A9-E572-4639-9A63-DC79CFEA8F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C06EA4A9-E572-4639-9A63-DC79CFEA8F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C06EA4A9-E572-4639-9A63-DC79CFEA8F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C06EA4A9-E572-4639-9A63-DC79CFEA8F87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

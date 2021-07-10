@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Rubin2000.Data\Rubin2000.Data.csproj" />
+    <ProjectReference Include="..\Rubin2000.GlobalConstants\Rubin2000.GlobalConstants.csproj" />
     <ProjectReference Include="..\Rubin2000.Models\Rubin2000.Models.csproj" />
   </ItemGroup>
 
