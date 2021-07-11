@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Rubin2000.Data;
 using Rubin2000.Models;
+using Rubin2000.Services.ForOccupations;
+using Rubin2000.Services.ForSchedules;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,10 +11,12 @@ namespace Rubin2000.Services.ForEmployees
     public class EmployeeService : IEmployeeService
     {
         private readonly Rubin2000DbContext data;
+        private readonly IOccupationService occupationService;
 
-        public EmployeeService(Rubin2000DbContext data)
+        public EmployeeService(Rubin2000DbContext data, IOccupationService occupationService)
         {
             this.data = data;
+            this.occupationService = occupationService;
         }
 
         public IEnumerable<Employee> GetEmployees()
@@ -24,9 +28,10 @@ namespace Rubin2000.Services.ForEmployees
                 .Include(e => e.Occupation)
                 .ToList();
 
-        public IEnumerable<Employee> GetEmployeesByProcedure(string procedureName)
+        public IEnumerable<Employee> GetEmployeesByProcedure(string procedureId)
         {
-            var occupation = this.data.Occupations.FirstOrDefault(o => o.Procedures.Any(p => p.Name == procedureName));
+            var occupation = this.data.Occupations
+                .FirstOrDefault(o => o.Procedures.Any(p => p.Id == procedureId));
 
             return this.GetEmployees()
                     .Where(e => e.Occupation == occupation)
@@ -39,9 +44,29 @@ namespace Rubin2000.Services.ForEmployees
                 .FirstOrDefault();
 
         public Employee GetEmployeeByScheduleId(string scheduleId)
-        => this.data.Schedules
+            => this.data.Schedules
                 .Where(s => s.Id == scheduleId)
                 .Select(s => s.Employee)
                 .FirstOrDefault();
+
+        public bool EmployeeExists(string id)
+            => this.data.Employees
+                .Any(e => e.Id == id);
+
+        public bool EmployeeCanDoProcedure(string employeeId, string procedureId)
+        {
+            var employeeOccupation = occupationService.GetEmployeeOccupation(employeeId);
+            var procedureOccupation = occupationService.GetProcedureOccupation(procedureId);
+
+            if (employeeOccupation == procedureOccupation
+                && employeeOccupation != null
+                && procedureOccupation != null)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
     }
 }

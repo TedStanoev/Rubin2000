@@ -14,6 +14,11 @@ namespace Rubin2000.Services.ForSchedules
             this.data = data;
         }
 
+        public Schedule GetEmployeeScheduleByEmployeeId(string employeeId)
+            => this.data.Schedules
+                .Where(s => s.EmployeeId == employeeId)
+                .FirstOrDefault();
+
         public Schedule GetEmployeeScheduleWithAppointments(string scheduleId)
             => this.data.Schedules
                 .Include(s => s.Appointments)

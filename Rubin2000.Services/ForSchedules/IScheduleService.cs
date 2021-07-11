@@ -5,5 +5,7 @@ namespace Rubin2000.Services.ForSchedules
     public interface IScheduleService
     {
         Schedule GetEmployeeScheduleWithAppointments(string scheduleId);
+
+        Schedule GetEmployeeScheduleByEmployeeId(string employeeId);
     }
 }

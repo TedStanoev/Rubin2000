@@ -11,5 +11,9 @@ namespace Rubin2000.Services.ForOccupations
         IEnumerable<Occupation> GetAllOccupations();
 
         Occupation GetOccupation(string id);
+
+        Occupation GetEmployeeOccupation(string employeeId);
+
+        Occupation GetProcedureOccupation(string procedureId);
     }
 }

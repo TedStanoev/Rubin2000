@@ -23,5 +23,15 @@ namespace Rubin2000.Services.ForOccupations
             => this.data.Occupations
                 .Where(o => o.Id == id)
                 .FirstOrDefault();
+
+        public Occupation GetEmployeeOccupation(string employeeId)
+            => this.data.Occupations
+                .Where(o => o.Employees.Any(e => e.Id == employeeId))
+                .FirstOrDefault();
+
+        public Occupation GetProcedureOccupation(string procedureId)
+            => this.data.Occupations
+                .Where(o => o.Procedures.Any(p => p.Id == procedureId))
+                .FirstOrDefault();
     }
 }

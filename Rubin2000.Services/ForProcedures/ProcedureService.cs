@@ -38,7 +38,16 @@ namespace Rubin2000.Services.ForProcedures
 
         public Procedure GetProcedure(string id)
             => this.data.Procedures
-            .Where(p => p.Id == id)
-            .FirstOrDefault();
+                .Where(p => p.Id == id)
+                .FirstOrDefault();
+
+        public Procedure GetProcedureByName(string name)
+            => this.data.Procedures
+                .Where(p => p.Name == name)
+                .FirstOrDefault();
+
+        public bool ProcedureExists(string id)
+            => this.data.Procedures
+                .Any(p => p.Id == id);
     }
 }

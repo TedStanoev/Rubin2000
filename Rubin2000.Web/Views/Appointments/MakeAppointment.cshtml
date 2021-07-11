@@ -8,6 +8,7 @@
 
     <label asp-for="Date">Select date:</label><br>
     <input type="date" id="date" asp-for="Date">
+    <span asp-validation-for="Date" class="small text-danger"></span>
     <br>
 
     <label asp-for="Time">Select time:</label><br>
@@ -37,7 +38,11 @@
     <br>
 
     <label asp-for="EmployeeId">Pick the HairStylist/Manicurist</label><br />
-    <select asp-for="EmployeeId" asp-items="@Model.Employees" id="employeeName">
+    <select asp-for="EmployeeId" id="employeeName">
+        @foreach (var employee in Model.Employees)
+        {
+            <option value="@employee.Id">@employee.Name</option>
+        }
     </select>
 
     <button type="submit">Submit your appointment</button>

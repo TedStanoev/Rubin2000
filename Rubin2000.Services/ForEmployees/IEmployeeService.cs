@@ -5,6 +5,8 @@ namespace Rubin2000.Services.ForEmployees
 {
     public interface IEmployeeService
     {
+        bool EmployeeExists(string id);
+
         Employee GetEmployeeById(string id);
 
         Employee GetEmployeeByScheduleId(string scheduleId);
@@ -13,6 +15,8 @@ namespace Rubin2000.Services.ForEmployees
 
         IEnumerable<Employee> GetEmployeesWithOccupation();
 
-        IEnumerable<Employee> GetEmployeesByProcedure(string procedureName);
+        IEnumerable<Employee> GetEmployeesByProcedure(string procedureId);
+
+        bool EmployeeCanDoProcedure(string employeeId, string procedureId);
     }
 }

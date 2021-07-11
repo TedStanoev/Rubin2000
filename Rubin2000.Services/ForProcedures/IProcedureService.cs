@@ -9,8 +9,12 @@ namespace Rubin2000.Services.ForProcedures
 
         Procedure GetProcedure(string id);
 
+        Procedure GetProcedureByName(string name);
+
         IEnumerable<Procedure> GetHairProcedures();
 
         IEnumerable<Procedure> GetNailsProcedures();
+
+        bool ProcedureExists(string id);
     }
 }
