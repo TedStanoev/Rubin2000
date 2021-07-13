@@ -3,13 +3,14 @@
 
 <h1>@ViewBag.EmployeeName's Schedule</h1>
 
-<table>
+<table class="table">
     <tr>
         <td>Procedure</td>
         <td>Date</td>
         <td>Time</td>
         <td>Client's Name</td>
         <td>Status</td>
+        <td></td>
     </tr>
     @foreach (var appointment in Model)
     {
@@ -19,6 +20,13 @@
             <td>@appointment.Time</td>
             <td>@appointment.ClientName</td>
             <td>@appointment.Status</td>
+            <td>
+                <div>
+                    <a class="alert-success btn" asp-controller="Schedules" asp-action="Approve" asp-route-id="@appointment.AppointmentId">Approve</a>
+                    <button class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</button>
+                    <button class="alert-info btn" asp-controller="Schedules" asp-action="Edit" asp-route-id="@appointment.AppointmentId">Edit</button>
+                </div>
+            </td>
         </tr>
     }
 </table>
