@@ -37,7 +37,7 @@ namespace Rubin2000.Web.Controllers
 
                 foreach (var procedure in allProcedures)
                 {
-                    if (procedure.Category.Name.ToLower() == category.Name)
+                    if (procedure.Category.Name == category.Name)
                     {
                         categoryViewModel.Procedures.Add(new ProcedureListViewModel
                         {
