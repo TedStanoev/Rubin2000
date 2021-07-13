@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Rubin2000.GlobalConstants
+namespace Rubin2000.Global
 {
     public class DateAndTimeConstants
     {

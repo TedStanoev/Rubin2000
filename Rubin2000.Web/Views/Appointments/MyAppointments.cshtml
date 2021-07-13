@@ -1,4 +1,5 @@
 ﻿@using Rubin2000.Web.Models.Appointments
+@using Rubin2000.Models.Enums
 @model IEnumerable<AppointmentClientViewModel>
 <h1>These are my appointments:</h1>
 @if (!Model.Any())
@@ -22,6 +23,7 @@ else
                 <td>
                     Status
                 </td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
@@ -37,12 +39,41 @@ else
                     <td>
                         @appointment.Time
                     </td>
-                    <td>
-                        @appointment.Status
-                    </td>
+                    @if (appointment.Status == AppointmentStatus.Approved.ToString())
+                    {
+                        <td class="text-success">
+                            @appointment.Status
+                        </td>
+                        <td>
+                            <div>
+                                <a class="alert-danger btn">Decline</a>
+                            </div>
+                        </td>
+                    }
+                    else if (appointment.Status == AppointmentStatus.Declined.ToString())
+                    {
+                        <td class="text-danger">
+                            @appointment.Status
+                        </td>
+                    }
+                    else if (appointment.Status == AppointmentStatus.Pending.ToString())
+                    {
+                        <td class="text-info">
+                            @appointment.Status
+                        </td>
+                        <td>
+                            <div>
+                                <a class="alert-info btn">Edit</a>
+                                <a class="alert-danger btn">Decline</a>
+                            </div>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
     </table>
+    <div>
+        <p>Note: To edit approved appointments, please contact the salon via the <a asp-controller="Contacts" asp-action="Index">contacts</a> page.</p>
+    </div>
 }
 

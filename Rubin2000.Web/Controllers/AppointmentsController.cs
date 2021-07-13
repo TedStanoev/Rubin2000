@@ -9,7 +9,7 @@ using Rubin2000.Web.Models.Appointments;
 using Rubin2000.Models.Enums;
 using Rubin2000.Services.ForEmployees;
 using Rubin2000.Services.ForProcedures;
-using Rubin2000.GlobalConstants;
+using Rubin2000.Global;
 using System.Globalization;
 using Rubin2000.Services.ForSchedules;
 
@@ -120,5 +120,17 @@ namespace Rubin2000.Web.Controllers
 
             return Redirect("/Appointments/MyAppointments");
         }
+
+        public IActionResult Approve(string id)
+        {
+            var appointment = appointmentService.GetAppointment(id);
+
+            var status = AppointmentStatus.Approved;
+
+            appointmentService.ChangeAppointmentStatus(appointment, status);
+
+            return Redirect($"/Appointments/MyAppointments");
+        }
+
     }
 }

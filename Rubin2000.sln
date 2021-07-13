@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubin2000.Services", "Rubin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubin2000.ConsoleUI", "Rubin2000.ConsoleUI\Rubin2000.ConsoleUI.csproj", "{9C3B93F9-0EEA-4806-93C7-EF29FBFBF38D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubin2000.GlobalConstants", "Rubin2000.GlobalConstants\Rubin2000.GlobalConstants.csproj", "{C06EA4A9-E572-4639-9A63-DC79CFEA8F87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubin2000.Global", "Rubin2000.Global\Rubin2000.Global.csproj", "{C06EA4A9-E572-4639-9A63-DC79CFEA8F87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

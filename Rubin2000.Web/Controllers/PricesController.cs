@@ -3,7 +3,7 @@ using Rubin2000.Services.ForCategories;
 using Rubin2000.Services.ForProcedures;
 using Rubin2000.Web.Models.Categories;
 using Rubin2000.Web.Models.Procedures;
-using Rubin2000.GlobalConstants;
+using Rubin2000.Global;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -23,8 +23,8 @@
             <td>
                 <div>
                     <a class="alert-success btn" asp-controller="Schedules" asp-action="Approve" asp-route-id="@appointment.AppointmentId">Approve</a>
-                    <button class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</button>
-                    <button class="alert-info btn" asp-controller="Schedules" asp-action="Edit" asp-route-id="@appointment.AppointmentId">Edit</button>
+                    <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
+                    <a class="alert-info btn" asp-controller="Schedules" asp-action="Edit" asp-route-id="@appointment.AppointmentId">Edit</a>
                 </div>
             </td>
         </tr>

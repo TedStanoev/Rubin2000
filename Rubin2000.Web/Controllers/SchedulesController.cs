@@ -80,5 +80,45 @@ namespace Rubin2000.Web.Controllers
 
             return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
         }
+
+        public IActionResult Decline(string id)
+        {
+            var appointment = appointmentService.GetAppointment(id);
+
+            var status = AppointmentStatus.Declined;
+
+            appointmentService.ChangeAppointmentStatus(appointment, status);
+
+            var scheduleId = appointment.ScheduleId;
+
+            return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
+        }
+
+        public IActionResult Edit(string id)
+        {
+            var appointment = appointmentService.GetAppointment(id);
+
+            var appointmentViewModel = new AppointmentInputViewModel
+            {
+                ProcedureName = procedureService.GetProcedure(appointment.ProcedureId).Name,
+                Date = appointment.DateAndTime.Date.ToString("yyyy-MM-dd"),
+                Time = appointment.DateAndTime.TimeOfDay.ToString(),
+                Description = appointment.Description,
+                Employees = employeeService.GetEmployeesByProcedure(appointment.ProcedureId).ToList()
+            };
+
+            return View(appointmentViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(AppointmentInputViewModel appointment)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                View(appointment);
+            }
+
+
+        }
     }
 }
