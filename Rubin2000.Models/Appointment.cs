@@ -11,6 +11,8 @@ namespace Rubin2000.Models
         public Appointment()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.IsDeletedToUser = false;
+            this.IsEdited = false;
         }
 
         [Key]
@@ -24,6 +26,10 @@ namespace Rubin2000.Models
         public string Description { get; set; }
 
         public AppointmentStatus Status { get; set; }
+
+        public bool IsDeletedToUser { get; set; }
+
+        public bool IsEdited { get; set; }
 
         [Required]
         public string ClientId { get; set; }
