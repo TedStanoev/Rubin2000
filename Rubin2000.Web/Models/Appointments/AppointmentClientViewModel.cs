@@ -2,6 +2,8 @@
 {
     public class AppointmentClientViewModel
     {
+        public string AppointmentId { get; set; }
+
         public string ProcedureName { get; set; }
 
         public string Date { get; set; }

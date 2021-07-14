@@ -46,7 +46,7 @@ else
                         </td>
                         <td>
                             <div>
-                                <a class="alert-danger btn">Decline</a>
+                                <a class="alert-danger btn" asp-controller="Appointments" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
                             </div>
                         </td>
                     }
@@ -63,8 +63,8 @@ else
                         </td>
                         <td>
                             <div>
-                                <a class="alert-info btn">Edit</a>
-                                <a class="alert-danger btn">Decline</a>
+                                <a class="alert-warning btn">Edit</a>
+                                <a class="alert-danger btn" asp-controller="Appointments" asp-action="Decline">Decline</a>
                             </div>
                         </td>
                     }
@@ -73,7 +73,7 @@ else
         </tbody>
     </table>
     <div>
-        <p>Note: To edit approved appointments, please contact the salon via the <a asp-controller="Contacts" asp-action="Index">contacts</a> page.</p>
+        <p>Note: If you want to choose another time or date for an approved appointment, please contact the salon via the <a asp-controller="Contacts" asp-action="Index">contacts</a> page.</p>
     </div>
 }
 

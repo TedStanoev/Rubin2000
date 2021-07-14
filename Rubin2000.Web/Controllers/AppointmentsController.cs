@@ -41,6 +41,7 @@ namespace Rubin2000.Web.Controllers
                 .Select(a => new AppointmentClientViewModel
                 {
                     ProcedureName = a.Procedure.Name,
+                    AppointmentId = a.Id,
                     Date = a.DateAndTime.ToShortDateString(),
                     Time = a.DateAndTime.ToShortTimeString(),
                     Status = Enum.GetName<AppointmentStatus>(a.Status)
@@ -121,11 +122,11 @@ namespace Rubin2000.Web.Controllers
             return Redirect("/Appointments/MyAppointments");
         }
 
-        public IActionResult Approve(string id)
+        public IActionResult Decline(string id)
         {
             var appointment = appointmentService.GetAppointment(id);
 
-            var status = AppointmentStatus.Approved;
+            var status = AppointmentStatus.Declined;
 
             appointmentService.ChangeAppointmentStatus(appointment, status);
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Rubin2000.Global;
 using Rubin2000.Models.Enums;
 using Rubin2000.Services.ForAppointments;
 using Rubin2000.Services.ForClients;
@@ -8,6 +9,7 @@ using Rubin2000.Services.ForSchedules;
 using Rubin2000.Web.Models.Appointments;
 using Rubin2000.Web.Models.Employees;
 using System;
+using System.Globalization;
 using System.Linq;
 
 namespace Rubin2000.Web.Controllers
@@ -110,15 +112,47 @@ namespace Rubin2000.Web.Controllers
             return View(appointmentViewModel);
         }
 
-        [HttpPost]
-        public IActionResult Edit(AppointmentInputViewModel appointment)
+        [HttpPut]
+        public IActionResult Edit(AppointmentInputViewModel appointment, string id)
         {
+            if (!procedureService.ProcedureExists(id))
+            {
+                this.ModelState.AddModelError(nameof(appointment.ProcedureName), ErrorConstants.InvalidProcedure);
+            }
+
+            if (!DateTime.TryParseExact(appointment.Date, "yyyy-MM-dd", null, DateTimeStyles.None, out DateTime appointmentDate))
+            {
+                this.ModelState.AddModelError(nameof(appointment.Date), ErrorConstants.InvalidDate);
+            }
+
+            if (appointmentDate.Date < DateTime.UtcNow)
+            {
+                this.ModelState.AddModelError(nameof(appointment.Date), ErrorConstants.InvalidDatePassed);
+            }
+
+            if (!DateTime.TryParseExact(appointment.Time, "HH:mm", null, DateTimeStyles.None, out DateTime appointmentTime))
+            {
+                this.ModelState.AddModelError(nameof(appointment.Time), ErrorConstants.InvalidTime);
+            }
+
+            if (appointmentTime.TimeOfDay < DateAndTimeConstants.DefaultStartingHours
+                || appointmentTime.TimeOfDay > DateAndTimeConstants.DefaultEndingHours)
+            {
+                this.ModelState.AddModelError(nameof(appointment.Time), ErrorConstants.InvalidTime);
+            }
+
+            if (!employeeService.EmployeeExists(appointment.EmployeeId)
+                || !employeeService.EmployeeCanDoProcedure(appointment.EmployeeId, id))
+            {
+                this.ModelState.AddModelError(nameof(appointment.EmployeeId), ErrorConstants.InvalidEmployee);
+            }
+
             if (!this.ModelState.IsValid)
             {
                 View(appointment);
             }
 
-
+            return Redirect($"/Schedules/EmployeeSchedule/{appointment}");
         }
     }
 }
