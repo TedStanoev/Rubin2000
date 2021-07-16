@@ -4,29 +4,37 @@
 <h1>@ViewBag.EmployeeName's Schedule</h1>
 
 <table class="table">
-    <tr>
-        <td>Procedure</td>
-        <td>Date</td>
-        <td>Time</td>
-        <td>Client's Name</td>
-        <td>Status</td>
-        <td></td>
-    </tr>
-    @foreach (var appointment in Model)
-    {
+    <thead>
         <tr>
-            <td>@appointment.ProcedureName</td>
-            <td>@appointment.Date</td>
-            <td>@appointment.Time</td>
-            <td>@appointment.ClientName</td>
-            <td>@appointment.Status</td>
-            <td>
-                <div>
-                    <a class="alert-success btn" asp-controller="Schedules" asp-action="Approve" asp-route-id="@appointment.AppointmentId">Approve</a>
-                    <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
-                    <a class="alert-info btn" asp-controller="Schedules" asp-action="Edit" asp-route-id="@appointment.AppointmentId">Edit</a>
-                </div>
-            </td>
+            <td>Today</td>
         </tr>
-    }
+    </thead>
+    <tbody>
+        <tr>
+            <td>Procedure</td>
+            <td>Date</td>
+            <td>Time</td>
+            <td>Client's Name</td>
+            <td>Status</td>
+            <td></td>
+        </tr>
+        @foreach (var appointment in Model)
+        {
+            <tr>
+                <td>@appointment.ProcedureName</td>
+                <td>@appointment.Date</td>
+                <td>@appointment.Time</td>
+                <td>@appointment.ClientName</td>
+                <td>@appointment.Status</td>
+                <td>
+                    <div>
+                        <a class="alert-success btn" asp-controller="Schedules" asp-action="Approve" asp-route-id="@appointment.AppointmentId">Approve</a>
+                        <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
+                        <a class="alert-info btn" asp-controller="Schedules" asp-action="Edit" asp-route-id="@appointment.AppointmentId">Edit</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+    
 </table>

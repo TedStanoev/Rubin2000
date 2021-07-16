@@ -38,6 +38,7 @@ namespace Rubin2000.Web.Controllers
             var userAppointments = appointmentService.GetUserAppointments(this.userManager.GetUserId(this.User));
 
             var userAppointmentsViewModel = userAppointments
+                .OrderByDescending(a => a.DateAndTime)
                 .Select(a => new AppointmentClientViewModel
                 {
                     ProcedureName = a.Procedure.Name,
@@ -131,6 +132,11 @@ namespace Rubin2000.Web.Controllers
             appointmentService.ChangeAppointmentStatus(appointment, status);
 
             return Redirect($"/Appointments/MyAppointments");
+        }
+
+        public IActionResult Delete()
+        {
+            return View();
         }
 
     }

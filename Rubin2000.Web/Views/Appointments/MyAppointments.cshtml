@@ -47,6 +47,7 @@ else
                         <td>
                             <div>
                                 <a class="alert-danger btn" asp-controller="Appointments" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
+                                <a class="alert-danger btn delete-warning" asp-controller="Appointments" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
                             </div>
                         </td>
                     }

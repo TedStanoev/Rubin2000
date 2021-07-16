@@ -63,5 +63,10 @@ namespace Rubin2000.Services.ForAppointments
                 .ThenInclude(s => s.Employee)
                 .Where(a => a.ClientId == userId)
                 .ToList();
+
+        public void SetDeletedToUser(Appointment appointment)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
