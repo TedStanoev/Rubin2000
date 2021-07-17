@@ -2,6 +2,10 @@
 @using Rubin2000.Models.Enums;
 @model IEnumerable<AppointmentScheduleViewModel>
 
+@{ 
+    
+}
+
 <h1>@ViewBag.EmployeeName's Schedule</h1>
 
 <div style="margin-bottom: 60px">
@@ -22,7 +26,7 @@
                 <td style="width: 110px">Status</td>
                 <td style="width: fit-content"></td>
             </tr>
-            @foreach (var appointment in Model.Where(a => a.Date == DateTime.UtcNow.Date.ToString(DateViewFormat)))
+            @foreach (var appointment in Model.Where(a => CommonMethods.IsToday(a.Date) && CommonMethods.IsAppointmentApproved(a.Status)))
             {
                 <tr>
                     <td>@appointment.ProcedureName</td>
@@ -36,7 +40,7 @@
                         </td>
                         <td>
                             <div>
-                                <a class="alert-warning btn" asp-controller="Appointment" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
+                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
                                 <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
                                 <a class="alert-danger btn delete-warning" asp-controller="Schedules" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
                             </div>
@@ -49,7 +53,7 @@
                         </td>
                         <td>
                             <div>
-                                <a class="alert-warning btn" asp-controller="Appointment" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
+                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
                                 <a class="alert-danger btn delete-warning" asp-controller="Schedules" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
                             </div>
                         </td>
@@ -61,7 +65,7 @@
                         </td>
                         <td>
                             <div>
-                                <a class="alert-warning btn" asp-controller="Appointment" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
+                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
                                 <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
                             </div>
                         </td>
@@ -91,7 +95,7 @@
                 <td style="width: 110px">Status</td>
                 <td style="width: fit-content"></td>
             </tr>
-            @foreach (var appointment in Model.Where(a => !(a.Date == DateTime.UtcNow.Date.ToString(DateViewFormat))))
+            @foreach (var appointment in Model)
             {
                 <tr>
                     <td>@appointment.ProcedureName</td>
@@ -105,7 +109,7 @@
                         </td>
                         <td>
                             <div>
-                                <a class="alert-warning btn" asp-controller="Appointment" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
+                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
                                 <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
                                 <a class="alert-danger btn delete-warning" asp-controller="Schedules" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
                             </div>
@@ -118,7 +122,7 @@
                         </td>
                         <td>
                             <div>
-                                <a class="alert-warning btn" asp-controller="Appointment" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
+                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
                                 <a class="alert-danger btn delete-warning" asp-controller="Schedules" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
                             </div>
                         </td>
@@ -130,7 +134,7 @@
                         </td>
                         <td>
                             <div>
-                                <a class="alert-warning btn" asp-controller="Appointment" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
+                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
                                 <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
                             </div>
                         </td>

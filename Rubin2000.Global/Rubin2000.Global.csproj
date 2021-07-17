@@ -9,4 +9,8 @@
     <Folder Include="CustomValidationAttributes\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Rubin2000.Models\Rubin2000.Models.csproj" />
+  </ItemGroup>
+
 </Project>

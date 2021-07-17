@@ -1,0 +1,37 @@
+﻿@using Rubin2000.Web.Models.Appointments
+@using Rubin2000.Global
+@model AppointmentInfoViewModel
+
+<div>
+    <h1>Procedure: @Model.ProcedureName</h1>
+    <h2>Date: @Model.Date at @Model.Time</h2>
+
+    <div>
+        <h3>Client info:</h3>
+        <p>@Model.ClientFirstName @Model.ClientLastName</p>
+        <p>Gender: @Model.ClientGender</p>
+        <p>Phone Number: @Model.ClientPhoneNumber</p>
+    </div>
+
+    <div>
+        <h3>Procedure Details:</h3>
+        <p>Duration: @Model.ProcedureTime</p>
+        <p>Price: @Model.Price</p>
+        @if (Model.EmployeeOccupation.ToLower() == OccupationConstants.HairStyler)
+        {
+            <p>
+                Hair Styler: @Model.EmployeeName
+            </p>
+        }
+        else
+        {
+            <p>
+                Manicurist: @Model.EmployeeName
+            </p>
+        }
+        <h4>Description:</h4>
+        <article>@Model.Description</article>
+    </div>
+</div>
+
+

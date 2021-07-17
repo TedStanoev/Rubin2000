@@ -12,6 +12,8 @@ using Rubin2000.Services.ForProcedures;
 using Rubin2000.Global;
 using System.Globalization;
 using Rubin2000.Services.ForSchedules;
+using Rubin2000.Services.ForClients;
+using Rubin2000.Services.ForOccupations;
 
 using static Rubin2000.Global.GeneralConstants;
 
@@ -24,15 +26,19 @@ namespace Rubin2000.Web.Controllers
         private readonly IEmployeeService employeeService;
         private readonly IProcedureService procedureService;
         private readonly IScheduleService scheduleService;
+        private readonly IUserService userService;
+        private readonly IOccupationService occupationService;
         private readonly UserManager<AppUser> userManager;
 
-        public AppointmentsController(IAppointmentService appointmentService, UserManager<AppUser> userManager, IEmployeeService employeeService, IProcedureService procedureService, IScheduleService scheduleService)
+        public AppointmentsController(IAppointmentService appointmentService, UserManager<AppUser> userManager, IEmployeeService employeeService, IProcedureService procedureService, IScheduleService scheduleService, IUserService userService, IOccupationService occupationService)
         {
             this.appointmentService = appointmentService;
             this.userManager = userManager;
             this.employeeService = employeeService;
             this.procedureService = procedureService;
             this.scheduleService = scheduleService;
+            this.userService = userService;
+            this.occupationService = occupationService;
         }
 
         public IActionResult MyAppointments()
@@ -52,6 +58,33 @@ namespace Rubin2000.Web.Controllers
                 .ToList();
 
             return View(userAppointmentsViewModel);
+        }
+
+        public IActionResult Info(string id)
+        {
+            var appointment = appointmentService.GetAppointment(id);
+            var client = userService.GetUserById(appointment.ClientId);
+            var procedure = procedureService.GetProcedure(appointment.ProcedureId);
+            var employee = employeeService.GetEmployeeByScheduleId(appointment.ScheduleId);
+            var occupation = occupationService.GetEmployeeOccupation(employee.Id);
+
+            var appointmentViewModel = new AppointmentInfoViewModel
+            {
+                Date = appointment.DateAndTime.Date.ToString(DateViewFormat),
+                Time = appointment.DateAndTime.ToString(TimeViewFormat),
+                Description = appointment.Description,
+                ProcedureName = procedure.Name,
+                EmployeeName = employee.Name,
+                EmployeeOccupation = occupation.Name,
+                Price = procedure.Price.ToString() + " BGN",
+                ProcedureTime = procedure.Duration.ToString(),
+                ClientFirstName = client.FirstName,
+                ClientLastName = client.LastName,
+                ClientGender = client.Gender.ToString(),
+                ClientPhoneNumber = client.PhoneNumber
+            };
+
+            return View(appointmentViewModel);
         }
 
         [Authorize]

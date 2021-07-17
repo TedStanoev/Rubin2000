@@ -2,8 +2,8 @@
 {
     public enum AppointmentStatus
     {
-        Pending = 10,
-        Approved = 20,
-        Declined = 30,
+        Approved = 10,
+        Pending = 11,
+        Declined = 20,
     }
 }

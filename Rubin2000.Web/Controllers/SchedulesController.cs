@@ -55,12 +55,14 @@ namespace Rubin2000.Web.Controllers
             var schedule = scheduleService
                 .GetEmployeeScheduleWithAppointments(id)
                 .Appointments
+                .OrderBy(a => a.DateAndTime)
+                .ThenBy(a => (int)a.Status)
                     .Select(a => new AppointmentScheduleViewModel
                     {
                         AppointmentId = a.Id,
                         ProcedureName = procedureService.GetProcedure(a.ProcedureId).Name,
                         Date = a.DateAndTime.Date.ToString(DateViewFormat),
-                        Time = a.DateAndTime.ToString("HH:mm"),
+                        Time = a.DateAndTime.ToString(TimeViewFormat),
                         ClientId = a.ClientId,
                         ClientName = userService.GetUserById(a.ClientId).FirstName,
                         Status = Enum.GetName(a.Status)

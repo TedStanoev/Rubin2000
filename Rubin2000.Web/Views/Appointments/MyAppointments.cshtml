@@ -8,7 +8,7 @@
 }
 else
 {
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <td>
@@ -46,6 +46,7 @@ else
                         </td>
                         <td>
                             <div>
+                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info">Info</a>
                                 <a class="alert-danger btn" asp-controller="Appointments" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
                                 <a class="alert-danger btn delete-warning" asp-controller="Appointments" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
                             </div>
@@ -56,6 +57,12 @@ else
                         <td class="text-danger">
                             @appointment.Status
                         </td>
+                        <td>
+                            <div>
+                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info">Info</a>
+                                <a class="alert-danger btn delete-warning" asp-controller="Appointments" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
+                            </div>
+                        </td>
                     }
                     else if (appointment.Status == AppointmentStatus.Pending.ToString())
                     {
@@ -64,7 +71,7 @@ else
                         </td>
                         <td>
                             <div>
-                                <a class="alert-warning btn">Edit</a>
+                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info">Info</a>
                                 <a class="alert-danger btn" asp-controller="Appointments" asp-action="Decline">Decline</a>
                             </div>
                         </td>
