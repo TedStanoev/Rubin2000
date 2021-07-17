@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Globalization;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Rubin2000.Global;
 using Rubin2000.Models.Enums;
 using Rubin2000.Services.ForAppointments;
@@ -8,9 +11,8 @@ using Rubin2000.Services.ForProcedures;
 using Rubin2000.Services.ForSchedules;
 using Rubin2000.Web.Models.Appointments;
 using Rubin2000.Web.Models.Employees;
-using System;
-using System.Globalization;
-using System.Linq;
+
+using static Rubin2000.Global.GeneralConstants;
 
 namespace Rubin2000.Web.Controllers
 {
@@ -57,7 +59,7 @@ namespace Rubin2000.Web.Controllers
                     {
                         AppointmentId = a.Id,
                         ProcedureName = procedureService.GetProcedure(a.ProcedureId).Name,
-                        Date = a.DateAndTime.Date.ToShortDateString(),
+                        Date = a.DateAndTime.Date.ToString(DateViewFormat),
                         Time = a.DateAndTime.ToString("HH:mm"),
                         ClientId = a.ClientId,
                         ClientName = userService.GetUserById(a.ClientId).FirstName,

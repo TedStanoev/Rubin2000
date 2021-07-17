@@ -13,6 +13,8 @@ using Rubin2000.Global;
 using System.Globalization;
 using Rubin2000.Services.ForSchedules;
 
+using static Rubin2000.Global.GeneralConstants;
+
 namespace Rubin2000.Web.Controllers
 {
     [Authorize]
@@ -43,7 +45,7 @@ namespace Rubin2000.Web.Controllers
                 {
                     ProcedureName = a.Procedure.Name,
                     AppointmentId = a.Id,
-                    Date = a.DateAndTime.ToShortDateString(),
+                    Date = a.DateAndTime.ToString(DateViewFormat),
                     Time = a.DateAndTime.ToShortTimeString(),
                     Status = Enum.GetName<AppointmentStatus>(a.Status)
                 })
@@ -81,7 +83,7 @@ namespace Rubin2000.Web.Controllers
                 this.ModelState.AddModelError(nameof(appointment.Date), ErrorConstants.InvalidDate);
             }
 
-            if (appointmentDate.Date < DateTime.UtcNow)
+            if (appointmentDate.Date < DateTime.UtcNow.Date)
             {
                 this.ModelState.AddModelError(nameof(appointment.Date), ErrorConstants.InvalidDatePassed);
             }
