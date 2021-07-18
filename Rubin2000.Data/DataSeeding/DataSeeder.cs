@@ -84,7 +84,7 @@ namespace Rubin2000.Data.DataSeeding
                     {
                         Id = "a1c889f7-0373-4cd0-ad68-11ccb61789ca",
                         Name = "Gentlemen's Haircut",
-                        Duration = Duration.OneHour,
+                        Duration = Duration.One_Hour,
                         Price = 10,
                         PercantageDiscount = null,
                         OccupationId = "6c064f87-4735-445c-8cf0-6b0e74482d96",
@@ -94,7 +94,7 @@ namespace Rubin2000.Data.DataSeeding
                     {
                         Id = "0e4696c8-5fbb-40fb-a107-91c2c847aa22",
                         Name = "Short and Long Hair",
-                        Duration = Duration.OneHour,
+                        Duration = Duration.One_Hour,
                         Price = 17,
                         PercantageDiscount = null,
                         OccupationId = "6c064f87-4735-445c-8cf0-6b0e74482d96",
@@ -104,7 +104,7 @@ namespace Rubin2000.Data.DataSeeding
                     {
                         Id = "510aeb22-67ce-4e93-909c-472a9acd5dc3",
                         Name = "Wedding Hairstyle",
-                        Duration = Duration.TwoHours,
+                        Duration = Duration.Two_Hours,
                         Price = 60,
                         PercantageDiscount = null,
                         OccupationId = "6c064f87-4735-445c-8cf0-6b0e74482d96",
@@ -114,7 +114,7 @@ namespace Rubin2000.Data.DataSeeding
                     {
                         Id = "9a4f6f72-1d9d-4a48-9687-a268b7585ec5",
                         Name = "Short hair color with client's dye",
-                        Duration = Duration.TwoHours,
+                        Duration = Duration.Two_Hours,
                         Price = 14,
                         PercantageDiscount = null,
                         OccupationId = "6c064f87-4735-445c-8cf0-6b0e74482d96",
@@ -124,7 +124,7 @@ namespace Rubin2000.Data.DataSeeding
                     {
                         Id = "be072ef4-c95c-4756-8f5e-c3787b425e09",
                         Name = "Gel Manicure with BlueSky",
-                        Duration = Duration.OneHour,
+                        Duration = Duration.One_Hour,
                         Price = 25,
                         PercantageDiscount = null,
                         OccupationId = "28451ba3-d888-4762-a085-c2c0a6a241e0",
@@ -134,7 +134,7 @@ namespace Rubin2000.Data.DataSeeding
                     {
                         Id = "2aed528d-ad6c-4831-89c5-e972c2947095",
                         Name = "Gel Pedicure with BlueSky",
-                        Duration = Duration.OneHour,
+                        Duration = Duration.One_Hour,
                         Price = 37,
                         PercantageDiscount = null,
                         OccupationId = "28451ba3-d888-4762-a085-c2c0a6a241e0",
@@ -144,7 +144,7 @@ namespace Rubin2000.Data.DataSeeding
                     {
                         Id = "82517ee7-ee22-452f-88c8-4f4dd4f4ba21",
                         Name = "Ladies' Haircut",
-                        Duration = Duration.OneHour,
+                        Duration = Duration.One_Hour,
                         Price = 12,
                         PercantageDiscount = null,
                         OccupationId = "6c064f87-4735-445c-8cf0-6b0e74482d96",

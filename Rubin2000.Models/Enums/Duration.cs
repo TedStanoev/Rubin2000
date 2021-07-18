@@ -2,10 +2,10 @@
 {
     public enum Duration
     {
-        OneHour = 1,
-        TwoHours = 2,
-        ThreeHours = 3,
-        FourHours = 4,
-        FiveHours = 5,
+        One_Hour = 1,
+        Two_Hours = 2,
+        Three_Hours = 3,
+        Four_Hours = 4,
+        Five_Hours = 5,
     }
 }

@@ -1,5 +1,6 @@
 ﻿@using Rubin2000.Web.Models.Appointments
 @using Rubin2000.Global
+@using Rubin2000.Models.Enums
 @model AppointmentInfoViewModel
 
 <div>
@@ -32,6 +33,23 @@
         <h4>Description:</h4>
         <article>@Model.Description</article>
     </div>
+
+    <div>
+        @if (Model.Status == AppointmentStatus.Approved.ToString())
+        {
+            <h3>Status: <a class="text-success">@Model.Status</a></h3>
+        }
+        else if (Model.Status == AppointmentStatus.Declined.ToString())
+        {
+            <h3>Status: <a class="text-danger">@Model.Status</a></h3>
+        }
+        else if (Model.Status == AppointmentStatus.Pending.ToString())
+        {
+            <h3>Status: <a class="text-warning">@Model.Status</a></h3>
+        }
+    </div>
+
+    <a asp-controller="Schedules"></a>
 </div>
 
 

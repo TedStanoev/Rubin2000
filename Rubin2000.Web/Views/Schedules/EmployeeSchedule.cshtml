@@ -2,11 +2,10 @@
 @using Rubin2000.Models.Enums;
 @model IEnumerable<AppointmentScheduleViewModel>
 
-@{ 
-    
-}
-
-<h1>@ViewBag.EmployeeName's Schedule</h1>
+<h1>
+    @ViewBag.EmployeeName's Schedule
+<a class="alert-info btn d-inline" asp-controller="Schedules" asp-action="">See all</a>
+</h1>
 
 <div style="margin-bottom: 60px">
     <table class="table table-bordered">
@@ -19,57 +18,28 @@
         </thead>
         <tbody>
             <tr>
-                <td style="width: 320px">Procedure</td>
-                <td style="width: 130px">Date</td>
                 <td style="width: 80px">Time</td>
+                <td style="width: 320px">Procedure</td>
                 <td style="width: 160px">Client's Name</td>
                 <td style="width: 110px">Status</td>
                 <td style="width: fit-content"></td>
             </tr>
-            @foreach (var appointment in Model.Where(a => CommonMethods.IsToday(a.Date) && CommonMethods.IsAppointmentApproved(a.Status)))
+            @foreach (var appointment in Model.Where(a => CommonMethods.IsAppointmentApproved(a.Status)))
             {
                 <tr>
-                    <td>@appointment.ProcedureName</td>
-                    <td>@appointment.Date</td>
                     <td>@appointment.Time</td>
+                    <td>@appointment.ProcedureName</td>
                     <td>@appointment.ClientName</td>
-                    @if (appointment.Status == AppointmentStatus.Approved.ToString())
-                    {
-                        <td class="text-success">
-                            @appointment.Status
-                        </td>
-                        <td>
-                            <div>
-                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                                <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
-                                <a class="alert-danger btn delete-warning" asp-controller="Schedules" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
-                            </div>
-                        </td>
-                    }
-                    else if (appointment.Status == AppointmentStatus.Declined.ToString())
-                    {
-                        <td class="text-danger">
-                            @appointment.Status
-                        </td>
-                        <td>
-                            <div>
-                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                                <a class="alert-danger btn delete-warning" asp-controller="Schedules" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
-                            </div>
-                        </td>
-                    }
-                    else if (appointment.Status == AppointmentStatus.Pending.ToString())
-                    {
-                        <td class="text-warning">
-                            @appointment.Status
-                        </td>
-                        <td>
-                            <div>
-                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                                <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
-                            </div>
-                        </td>
-                    }
+                    <td class="text-success">
+                        @appointment.Status
+                    </td>
+                    <td>
+                        <div>
+                            <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
+                            <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
+                            <a class="alert-danger btn delete-warning" asp-controller="Schedules" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
+                        </div>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -82,7 +52,7 @@
         <thead>
             <tr>
                 <th colspan="6">
-                    <h4 style="text-align: center">OTHER DAYS</h4>
+                    <h4 style="text-align: center">PENDING AND DECLINED</h4>
                 </th>
             </tr>
         </thead>
@@ -95,27 +65,14 @@
                 <td style="width: 110px">Status</td>
                 <td style="width: fit-content"></td>
             </tr>
-            @foreach (var appointment in Model)
+            @foreach (var appointment in Model.Where(a => !CommonMethods.IsAppointmentApproved(a.Status)))
             {
                 <tr>
                     <td>@appointment.ProcedureName</td>
                     <td>@appointment.Date</td>
                     <td>@appointment.Time</td>
                     <td>@appointment.ClientName</td>
-                    @if (appointment.Status == AppointmentStatus.Approved.ToString())
-                    {
-                        <td class="text-success">
-                            @appointment.Status
-                        </td>
-                        <td>
-                            <div>
-                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                                <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
-                                <a class="alert-danger btn delete-warning" asp-controller="Schedules" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
-                            </div>
-                        </td>
-                    }
-                    else if (appointment.Status == AppointmentStatus.Declined.ToString())
+                    @if (appointment.Status == AppointmentStatus.Declined.ToString())
                     {
                         <td class="text-danger">
                             @appointment.Status
@@ -134,6 +91,7 @@
                         </td>
                         <td>
                             <div>
+                                <a class="alert-success btn" asp-controller="Schedules" asp-action="Approve" asp-route-id="@appointment.AppointmentId">Approve</a>
                                 <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
                                 <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
                             </div>
