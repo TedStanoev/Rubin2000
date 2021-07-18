@@ -15,19 +15,17 @@
         </thead>
         <tbody>
             <tr>
-                <td style="width: 320px">Procedure</td>
-                <td style="width: 130px">Date</td>
                 <td style="width: 80px">Time</td>
+                <td style="width: 320px">Procedure</td>
                 <td style="width: 160px">Client's Name</td>
                 <td style="width: 110px">Status</td>
                 <td style="width: fit-content"></td>
             </tr>
-            @foreach (var appointment in Model.Where(a => CommonMethods.IsAppointmentApproved(a.Status)))
+            @foreach (var appointment in Model)
             {
                 <tr>
-                    <td>@appointment.ProcedureName</td>
-                    <td>@appointment.Date</td>
                     <td>@appointment.Time</td>
+                    <td>@appointment.ProcedureName</td>
                     <td>@appointment.ClientName</td>
                     <td class="text-success">
                         @appointment.Status

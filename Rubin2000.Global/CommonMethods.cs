@@ -11,6 +11,9 @@ namespace Rubin2000.Global
             => date == DateTime.UtcNow.Date.ToString(DateViewFormat);
 
         public static bool IsAppointmentApproved(string status)
-         => status == AppointmentStatus.Approved.ToString();
+            => status == AppointmentStatus.Approved.ToString();
+
+        public static bool IsAppointmentPending(string status)
+            => status == AppointmentStatus.Pending.ToString();
     }
 }

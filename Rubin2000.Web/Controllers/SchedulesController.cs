@@ -71,6 +71,7 @@ namespace Rubin2000.Web.Controllers
                     .ToList();
 
             this.ViewBag.EmployeeName = employeeName;
+            this.ViewBag.ScheduleId = id;
 
             return View(schedule);
         }
@@ -97,6 +98,7 @@ namespace Rubin2000.Web.Controllers
                     .ToList();
 
             this.ViewBag.EmployeeName = employeeName;
+            this.ViewBag.ScheduleId = id;
 
             return View(schedule);
         }
