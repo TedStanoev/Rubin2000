@@ -36,7 +36,7 @@
                     <td>
                         <div>
                             <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                            <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
+                            <a class="alert-danger btn" asp-controller="Appointments" asp-action="EmployeeDecline" asp-route-id="@appointment.AppointmentId">Decline</a>
                             <a class="alert-danger btn delete-warning" asp-controller="Schedules" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
                         </div>
                     </td>
@@ -91,7 +91,7 @@
                             <div>
                                 <a class="alert-success btn" asp-controller="Schedules" asp-action="Approve" asp-route-id="@appointment.AppointmentId">Approve</a>
                                 <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                                <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
+                                <a class="alert-danger btn" asp-controller="Appointments" asp-action="EmployeeDecline" asp-route-id="@appointment.AppointmentId">Decline</a>
                             </div>
                         </td>
                     }

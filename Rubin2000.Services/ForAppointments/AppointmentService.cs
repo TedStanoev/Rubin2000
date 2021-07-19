@@ -28,6 +28,19 @@ namespace Rubin2000.Services.ForAppointments
             this.data.SaveChanges();
         }
 
+        public void ChangeDescription(Appointment appointment, string description)
+        {
+            this.data.Appointments.Remove(appointment);
+
+            this.data.SaveChanges();
+
+            appointment.Description = description;
+
+            this.data.Appointments.Add(appointment);
+
+            this.data.SaveChanges();
+        }
+
         public void CreateAppointment(Schedule schedule, Procedure procedure, AppUser client, string description, DateTime date, DateTime time)
         {
             var dateAndTime = date + time.TimeOfDay;

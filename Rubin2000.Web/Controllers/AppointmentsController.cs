@@ -159,15 +159,50 @@ namespace Rubin2000.Web.Controllers
             return Redirect("/Appointments/MyAppointments");
         }
 
-        public IActionResult Decline(string id)
+        public IActionResult ClientDecline(string id)
         {
-            var appointment = appointmentService.GetAppointment(id);
+            return View(new DeclineAppointmentViewModel { Id = id});
+        }
+
+        [HttpPost]
+        public IActionResult ClientDecline(DeclineAppointmentViewModel appointmentModel)
+        {
+            var appointment = appointmentService.GetAppointment(appointmentModel.Id);
 
             var status = AppointmentStatus.Declined;
 
             appointmentService.ChangeAppointmentStatus(appointment, status);
 
+            if (!string.IsNullOrWhiteSpace(appointmentModel.Description))
+            {
+                appointmentService.ChangeDescription(appointment, appointmentModel.Description);
+            }
+
             return Redirect($"/Appointments/MyAppointments");
+        }
+
+        public IActionResult EmployeeDecline(string id)
+        {
+            return View(new DeclineAppointmentViewModel { Id = id });
+        }
+
+        [HttpPost]
+        public IActionResult EmployeeDecline(DeclineAppointmentViewModel appointmentModel)
+        {
+            var appointment = appointmentService.GetAppointment(appointmentModel.Id);
+
+            var status = AppointmentStatus.Declined;
+
+            appointmentService.ChangeAppointmentStatus(appointment, status);
+
+            if (!string.IsNullOrWhiteSpace(appointmentModel.Description))
+            {
+                appointmentService.ChangeDescription(appointment, appointmentModel.Description);
+            }
+
+            var scheduleId = appointment.ScheduleId;
+
+            return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
         }
 
         public IActionResult Delete()

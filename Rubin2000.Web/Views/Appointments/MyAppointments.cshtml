@@ -47,7 +47,7 @@ else
                         <td>
                             <div>
                                 <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                                <a class="alert-danger btn" asp-controller="Appointments" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
+                                <a class="alert-danger btn" asp-controller="Appointments" asp-action="ClientDecline" asp-route-id="@appointment.AppointmentId">Decline</a>
                                 <a class="alert-danger btn delete-warning" asp-controller="Appointments" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
                             </div>
                         </td>
@@ -72,7 +72,7 @@ else
                         <td>
                             <div>
                                 <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                                <a class="alert-danger btn" asp-controller="Appointments" asp-action="Decline">Decline</a>
+                                <a class="alert-danger btn" asp-controller="Appointments" asp-action="ClientDecline">Decline</a>
                             </div>
                         </td>
                     }

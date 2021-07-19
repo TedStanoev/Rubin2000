@@ -116,19 +116,6 @@ namespace Rubin2000.Web.Controllers
             return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
         }
 
-        public IActionResult Decline(string id)
-        {
-            var appointment = appointmentService.GetAppointment(id);
-
-            var status = AppointmentStatus.Declined;
-
-            appointmentService.ChangeAppointmentStatus(appointment, status);
-
-            var scheduleId = appointment.ScheduleId;
-
-            return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
-        }
-
         public IActionResult Edit(string id)
         {
             var appointment = appointmentService.GetAppointment(id);

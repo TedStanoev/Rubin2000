@@ -1,0 +1,11 @@
+﻿@using Rubin2000.Web.Models.Appointments
+@model DeclineAppointmentViewModel
+
+<h1>Inform the client why you decliened the appointment:</h1>
+<form class="col" method="post">
+    <label asp-for="@Model.Description"></label>
+    <input type="text" asp-for="@Model.Description" value="We are sorry to inform you that the time you picked is currently unavailable. Please select another hour or pick a new date." />
+
+    <button type="submit">Decline appointment</button>
+</form>
+<a class="badge-danger btn" asp-controller="Schedules" asp-action="MyAppointments">Cancel</a>

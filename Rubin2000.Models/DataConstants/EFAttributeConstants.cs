@@ -8,7 +8,7 @@ namespace Rubin2000.Models.DataConstants
     {
         public const int IdDefaultLength = 40;
 
-        public const int DescriptionDefaultLength = 120;
+        public const int DescriptionDefaultLength = 200;
 
         public const int NameDefaultLength = 20;
 
