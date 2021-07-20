@@ -6,6 +6,11 @@
     <textarea readonly id="procedureName" asp-for="ProcedureName">@Model.ProcedureName</textarea>
     <br>
 
+    <label asp-for="ClientName">Enter name:</label><br>
+    <input type="text" asp-for="ClientName" />
+    <span asp-validation-for="ClientName" class="small text-danger"></span>
+    <br>
+
     <label asp-for="Date">Select date:</label><br>
     <input type="date" id="date" asp-for="Date">
     <span asp-validation-for="Date" class="small text-danger"></span>

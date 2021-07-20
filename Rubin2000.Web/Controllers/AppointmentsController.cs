@@ -62,31 +62,25 @@ namespace Rubin2000.Web.Controllers
 
         public IActionResult Info(string id)
         {
-            var appointment = appointmentService.GetAppointment(id);
-            var client = userService.GetUserById(appointment.CreatorId);
-            var procedure = procedureService.GetProcedure(appointment.ProcedureId);
-            var employee = employeeService.GetEmployeeByScheduleId(appointment.ScheduleId);
-            var occupation = occupationService.GetEmployeeOccupation(employee.Id);
+            var appointmentInfoModel = this.appointmentService.GetAppointmentInfo(id);
 
-            var appointmentViewModel = new AppointmentInfoViewModel
-            {
-                Date = appointment.DateAndTime.Date.ToString(DateViewFormat),
-                Time = appointment.DateAndTime.ToString(TimeViewFormat),
-                Status = appointment.Status.ToString(),
-                Description = appointment.Description,
-                ProcedureName = procedure.Name,
-                EmployeeName = employee.Name,
-                EmployeeOccupation = occupation.Name,
-                ScheduleId = employee.ScheduleId,
-                Price = procedure.Price.ToString() + " BGN",
-                ProcedureTime = procedure.Duration.ToString().Replace('_', ' '),
-                ClientFirstName = client.FirstName,
-                ClientLastName = client.LastName,
-                ClientGender = client.Gender.ToString(),
-                ClientPhoneNumber = client.PhoneNumber
-            };
-
-            return View(appointmentViewModel);
+            return View(new AppointmentInfoViewModel 
+            { 
+                ClientName = appointmentInfoModel.ClientName,
+                Date = appointmentInfoModel.Date,
+                Time = appointmentInfoModel.Time,
+                Status = appointmentInfoModel.Status,
+                UserFirstName = appointmentInfoModel.UserFirstName,
+                UserLastName = appointmentInfoModel.UserLastName,
+                ClientPhoneNumber = appointmentInfoModel.ClientPhoneNumber,
+                Description = appointmentInfoModel.Description,
+                ProcedureName = appointmentInfoModel.ProcedureName,
+                ProcedureTime = appointmentInfoModel.ProcedureTime,
+                Price = appointmentInfoModel.Price,
+                EmployeeName = appointmentInfoModel.EmployeeName,
+                EmployeeOccupation = appointmentInfoModel.EmployeeOccupation,
+                ScheduleId = appointmentInfoModel.ScheduleId
+            });
         }
 
         [Authorize]
@@ -149,13 +143,11 @@ namespace Rubin2000.Web.Controllers
                 return View(appointment);
             }
 
-            var procedure = procedureService.GetProcedure(id);
+            var employeeScheduleId = scheduleService
+                .GetEmployeeScheduleByEmployeeId(appointment.EmployeeId).Id;
 
-            var employeeSchedule = scheduleService
-                .GetEmployeeScheduleByEmployeeId(appointment.EmployeeId);
-
-            appointmentService.CreateAppointment(employeeSchedule, procedure, 
-                this.userManager.GetUserAsync(this.User).Result, appointment.Description, appointmentDate, appointmentTime);
+            appointmentService.CreateAppointment(employeeScheduleId, id,
+                appointment.ClientName, this.userService.GetUserId(this.User), appointment.Description, appointmentDate, appointmentTime);
 
             return Redirect("/Appointments/MyAppointments");
         }

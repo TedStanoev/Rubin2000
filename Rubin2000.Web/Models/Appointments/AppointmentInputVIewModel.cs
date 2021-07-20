@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Rubin2000.Models;
+using Rubin2000.Global;
+
 using static Rubin2000.Models.DataConstants.EFAttributeConstants;
 
 namespace Rubin2000.Web.Models.Appointments
@@ -10,6 +11,11 @@ namespace Rubin2000.Web.Models.Appointments
     {
         [Required]
         public string ProcedureName { get; set; }
+
+        [Required]
+        [Display(Name = "Name")]
+        [StringLength(NameDefaultLength, MinimumLength = 2, ErrorMessage = ErrorConstants.InvalidName)]
+        public string ClientName { get; set; }
 
         [Required]
         public string Date { get; set; }

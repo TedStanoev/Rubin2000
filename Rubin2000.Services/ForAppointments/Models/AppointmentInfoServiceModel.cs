@@ -1,6 +1,6 @@
-﻿namespace Rubin2000.Web.Models.Appointments
+﻿namespace Rubin2000.Services.ForAppointments.Models
 {
-    public class AppointmentInfoViewModel
+    public class AppointmentInfoServiceModel
     {
         public string Date { get; set; }
 

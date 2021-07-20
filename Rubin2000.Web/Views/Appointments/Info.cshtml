@@ -9,9 +9,13 @@
 
     <div>
         <h3>Client info:</h3>
-        <p>@Model.ClientFirstName @Model.ClientLastName</p>
-        <p>Gender: @Model.ClientGender</p>
+        <p>Name: @Model.ClientName</p>
         <p>Phone Number: @Model.ClientPhoneNumber</p>
+    </div>
+
+    <div>
+        <h3>Creator details:</h3>
+        <p>@Model.UserFirstName @Model.UserLastName</p>
     </div>
 
     <div>
@@ -50,7 +54,7 @@
     </div>
 
     <a class="badge-info btn" asp-controller="Schedules" asp-action="EmployeeSchedule" asp-route-id="@Model.ScheduleId">Back</a>
-    <a class="badge-warning btn" asp-controller="Appointment" asp-action="Edit">Edit</a>
+    <a class="badge-warning btn" asp-controller="Appointments" asp-action="Edit">Edit</a>
 </div>
 
 

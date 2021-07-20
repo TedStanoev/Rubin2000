@@ -14,18 +14,18 @@ namespace Rubin2000.Services.ForAppointments
 
         IEnumerable<ScheduleAppointmentServiceModel> GetAppointmentsByScheduleId(string scheduleId);
 
-        void CreateAppointment(Schedule schedule, Procedure procedure, AppUser client,
+        void CreateAppointment(string scheduleId, string procedureName, string clientName, string creatorId,
                                 string description, DateTime date, DateTime time);
 
         Appointment GetAppointment(string id);
+
+        AppointmentInfoServiceModel GetAppointmentInfo(string id);
 
         void SetDeletedToUser(Appointment appointment);
 
         void ChangeAppointmentStatus(Appointment appointment, AppointmentStatus status);
 
         void ChangeDescription(Appointment appointment, string description);
-
-        IEnumerable<AppointmentScheduleListServiceModel> GetAllAppointmentsForEmployeeSchedule();
 
         //void EditAppointment(Appointment appointment, Schedule schedule, Procedure procedure, AppUser client,
         //string description, DateTime date, DateTime time);

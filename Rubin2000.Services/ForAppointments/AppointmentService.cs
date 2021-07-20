@@ -44,17 +44,18 @@ namespace Rubin2000.Services.ForAppointments
             this.data.SaveChanges();
         }
 
-        public void CreateAppointment(Schedule schedule, Procedure procedure, AppUser client, string description, DateTime date, DateTime time)
+        public void CreateAppointment(string scheduleId, string procedureId, string clientName, string creatorId, string description, DateTime date, DateTime time)
         {
             var dateAndTime = date + time.TimeOfDay;
 
             var appointment = new Appointment
             {
+                ClientName = clientName,
                 Description = description,
                 DateAndTime = dateAndTime,
-                ProcedureId = procedure.Id,
-                ScheduleId = schedule.Id,
-                CreatorId = client.Id,
+                ProcedureId = procedureId,
+                ScheduleId = scheduleId,
+                CreatorId = creatorId,
                 Status = AppointmentStatus.Pending
             };
 
@@ -67,15 +68,37 @@ namespace Rubin2000.Services.ForAppointments
             => this.data.Appointments
                 .ToList();
 
-        public IEnumerable<AppointmentScheduleListServiceModel> GetAllAppointmentsForEmployeeSchedule()
-        {
-            throw new NotImplementedException();
-        }
-
         public Appointment GetAppointment(string id)
             => this.data.Appointments
                 .Where(a => a.Id == id)
                 .FirstOrDefault();
+
+        public AppointmentInfoServiceModel GetAppointmentInfo(string id)
+        {
+            var appointment = this.GetAppointment(id);
+            var user = (AppUser)this.data.Users.FirstOrDefault(u => u.Id == appointment.CreatorId);
+            var procedure = this.data.Procedures.FirstOrDefault(p => p.Id == appointment.ProcedureId);
+            var employee = this.data.Employees.FirstOrDefault(p => p.ScheduleId == appointment.ScheduleId);
+            var occupationName = this.data.Occupations.FirstOrDefault(o => o.Id == employee.OccupationId).Name;
+
+            return new AppointmentInfoServiceModel
+            {
+                Date = appointment.DateAndTime.Date.ToString(DateViewFormat),
+                Time = appointment.DateAndTime.ToString(TimeViewFormat),
+                Status = appointment.Status.ToString(),
+                Description = appointment.Description,
+                ProcedureName = procedure.Name,
+                EmployeeName = employee.Name,
+                EmployeeOccupation = occupationName,
+                ScheduleId = employee.ScheduleId,
+                Price = procedure.Price.ToString() + " BGN",
+                ProcedureTime = procedure.Duration.ToString().Replace('_', ' '),
+                UserFirstName = user.FirstName,
+                UserLastName = user.LastName,
+                ClientPhoneNumber = user.PhoneNumber,
+                ClientName = appointment.ClientName,
+            };
+        }
 
         public IEnumerable<ScheduleAppointmentServiceModel> GetAppointmentsByScheduleId(string scheduleId)
             => this.data.Schedules
@@ -96,6 +119,7 @@ namespace Rubin2000.Services.ForAppointments
                             ProcedureName = a.Procedure.Name,
                             Date = a.DateAndTime.Date.ToString(DateViewFormat),
                             Time = a.DateAndTime.ToString(TimeViewFormat),
+                            ClientName = a.ClientName,
                             CreatorId = a.CreatorId,
                             Status = Enum.GetName(a.Status)
                         })
