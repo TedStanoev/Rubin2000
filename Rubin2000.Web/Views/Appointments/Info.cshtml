@@ -49,7 +49,8 @@
         }
     </div>
 
-    <a asp-controller="Schedules"></a>
+    <a class="badge-info btn" asp-controller="Schedules" asp-action="EmployeeSchedule" asp-route-id="@Model.ScheduleId">Back</a>
+    <a class="badge-warning btn" asp-controller="Appointment" asp-action="Edit">Edit</a>
 </div>
 
 

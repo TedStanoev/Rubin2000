@@ -5,6 +5,7 @@
 <form class="col" method="post">
     <label asp-for="@Model.Description"></label>
     <input type="text" asp-for="@Model.Description" value="I am sorry but I can't make it."/>
+    <span class="small text-danger field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
 
     <button type="submit">Decline appointment</button>
 </form>

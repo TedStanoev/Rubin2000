@@ -79,28 +79,12 @@ namespace Rubin2000.Web.Controllers
         public IActionResult All(string id)
         {
             var employeeName = employeeService.GetEmployeeByScheduleId(id).Name;
-
-            var schedule = scheduleService
-                .GetEmployeeScheduleWithAppointments(id)
-                .Appointments
-                .OrderBy(a => (int)a.Status)
-                .ThenBy(a => a.DateAndTime)
-                    .Select(a => new AppointmentScheduleViewModel
-                    {
-                        AppointmentId = a.Id,
-                        ProcedureName = procedureService.GetProcedure(a.ProcedureId).Name,
-                        Date = a.DateAndTime.Date.ToString(DateViewFormat),
-                        Time = a.DateAndTime.ToString(TimeViewFormat),
-                        ClientId = a.ClientId,
-                        ClientName = userService.GetUserById(a.ClientId).FirstName,
-                        Status = Enum.GetName(a.Status)
-                    })
-                    .ToList();
+            var appointments = this.appointmentService.GetAppointmentsByScheduleId(id);
 
             this.ViewBag.EmployeeName = employeeName;
             this.ViewBag.ScheduleId = id;
 
-            return View(schedule);
+            return View(appointments);
         }
 
         public IActionResult Approve(string id)

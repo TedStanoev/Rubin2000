@@ -27,5 +27,7 @@
         public string EmployeeName { get; set; }
 
         public string EmployeeOccupation { get; set; }
+
+        public string ScheduleId { get; set; }
     }
 }

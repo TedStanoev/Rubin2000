@@ -2,9 +2,12 @@
 using Rubin2000.Data;
 using Rubin2000.Models;
 using Rubin2000.Models.Enums;
+using Rubin2000.Services.ForAppointments.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using static Rubin2000.Global.GeneralConstants;
 
 namespace Rubin2000.Services.ForAppointments
 {
@@ -52,7 +55,7 @@ namespace Rubin2000.Services.ForAppointments
                 ProcedureId = procedure.Id,
                 ScheduleId = schedule.Id,
                 ClientId = client.Id,
-                Status = Models.Enums.AppointmentStatus.Pending
+                Status = AppointmentStatus.Pending
             };
 
             this.data.Appointments.Add(appointment);
@@ -64,10 +67,39 @@ namespace Rubin2000.Services.ForAppointments
             => this.data.Appointments
                 .ToList();
 
+        public IEnumerable<AppointmentScheduleListServiceModel> GetAllAppointmentsForEmployeeSchedule()
+        {
+            throw new NotImplementedException();
+        }
+
         public Appointment GetAppointment(string id)
             => this.data.Appointments
                 .Where(a => a.Id == id)
                 .FirstOrDefault();
+
+        public IEnumerable<ScheduleAppointmentServiceModel> GetAppointmentsByScheduleId(string scheduleId)
+            => this.data.Schedules
+                    .Include(s => s.Appointments)
+                    .ThenInclude(a => a.Procedure)
+                    .Where(s => s.Id == scheduleId)
+                    .Select(a => new
+                    {
+                        a.Appointments
+                    })
+                    .FirstOrDefault()
+                        .Appointments
+                        .OrderBy(a => (int)a.Status)
+                        .ThenBy(a => a.DateAndTime)
+                        .Select(a => new ScheduleAppointmentServiceModel
+                        {
+                            AppointmentId = a.Id,
+                            ProcedureName = a.Procedure.Name,
+                            Date = a.DateAndTime.Date.ToString(DateViewFormat),
+                            Time = a.DateAndTime.ToString(TimeViewFormat),
+                            ClientId = a.ClientId,
+                            Status = Enum.GetName(a.Status)
+                        })
+                        .ToList();
 
         public IEnumerable<Appointment> GetUserAppointments(string userId)
             => this.data.Appointments

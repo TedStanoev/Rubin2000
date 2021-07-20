@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Rubin2000.Models\Rubin2000.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ForSchedules\Models\" />
+  </ItemGroup>
+
 </Project>

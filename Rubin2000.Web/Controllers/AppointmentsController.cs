@@ -77,6 +77,7 @@ namespace Rubin2000.Web.Controllers
                 ProcedureName = procedure.Name,
                 EmployeeName = employee.Name,
                 EmployeeOccupation = occupation.Name,
+                ScheduleId = employee.ScheduleId,
                 Price = procedure.Price.ToString() + " BGN",
                 ProcedureTime = procedure.Duration.ToString().Replace('_', ' '),
                 ClientFirstName = client.FirstName,

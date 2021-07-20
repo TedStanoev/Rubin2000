@@ -8,4 +8,4 @@
 
     <button type="submit">Decline appointment</button>
 </form>
-<a class="badge-danger btn" asp-controller="Schedules" asp-action="MyAppointments">Cancel</a>
+<a class="badge-danger btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@Model.Id">Cancel</a>
