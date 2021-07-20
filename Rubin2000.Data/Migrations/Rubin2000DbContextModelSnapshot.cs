@@ -227,7 +227,12 @@ namespace Rubin2000.Data.Migrations
                         .HasColumnType("nvarchar(40)")
                         .HasMaxLength(40);
 
-                    b.Property<string>("ClientId")
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("CreatorId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -255,7 +260,7 @@ namespace Rubin2000.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("CreatorId");
 
                     b.HasIndex("ProcedureId");
 
@@ -632,9 +637,9 @@ namespace Rubin2000.Data.Migrations
 
             modelBuilder.Entity("Rubin2000.Models.Appointment", b =>
                 {
-                    b.HasOne("Rubin2000.Models.AppUser", "Client")
+                    b.HasOne("Rubin2000.Models.AppUser", "Creator")
                         .WithMany("Appointments")
-                        .HasForeignKey("ClientId")
+                        .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

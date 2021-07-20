@@ -63,7 +63,7 @@ namespace Rubin2000.Web.Controllers
         public IActionResult Info(string id)
         {
             var appointment = appointmentService.GetAppointment(id);
-            var client = userService.GetUserById(appointment.ClientId);
+            var client = userService.GetUserById(appointment.CreatorId);
             var procedure = procedureService.GetProcedure(appointment.ProcedureId);
             var employee = employeeService.GetEmployeeByScheduleId(appointment.ScheduleId);
             var occupation = occupationService.GetEmployeeOccupation(employee.Id);

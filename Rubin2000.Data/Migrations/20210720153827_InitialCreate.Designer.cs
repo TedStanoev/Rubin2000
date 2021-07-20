@@ -10,8 +10,8 @@ using Rubin2000.Data;
 namespace Rubin2000.Data.Migrations
 {
     [DbContext(typeof(Rubin2000DbContext))]
-    [Migration("20210714121412_NewPropertiesToAppointmentIsDeletedAndIsEdited")]
-    partial class NewPropertiesToAppointmentIsDeletedAndIsEdited
+    [Migration("20210720153827_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -229,7 +229,12 @@ namespace Rubin2000.Data.Migrations
                         .HasColumnType("nvarchar(40)")
                         .HasMaxLength(40);
 
-                    b.Property<string>("ClientId")
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("CreatorId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -237,8 +242,8 @@ namespace Rubin2000.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(120)")
-                        .HasMaxLength(120);
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<bool>("IsDeletedToUser")
                         .HasColumnType("bit");
@@ -257,7 +262,7 @@ namespace Rubin2000.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("CreatorId");
 
                     b.HasIndex("ProcedureId");
 
@@ -527,8 +532,8 @@ namespace Rubin2000.Data.Migrations
                         .HasMaxLength(40);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(120)")
-                        .HasMaxLength(120);
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<string>("EmployeeId")
                         .IsRequired()
@@ -634,9 +639,9 @@ namespace Rubin2000.Data.Migrations
 
             modelBuilder.Entity("Rubin2000.Models.Appointment", b =>
                 {
-                    b.HasOne("Rubin2000.Models.AppUser", "Client")
+                    b.HasOne("Rubin2000.Models.AppUser", "Creator")
                         .WithMany("Appointments")
-                        .HasForeignKey("ClientId")
+                        .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

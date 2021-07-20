@@ -64,8 +64,8 @@ namespace Rubin2000.Web.Controllers
                         ProcedureName = procedureService.GetProcedure(a.ProcedureId).Name,
                         Date = a.DateAndTime.Date.ToString(DateViewFormat),
                         Time = a.DateAndTime.ToString(TimeViewFormat),
-                        ClientId = a.ClientId,
-                        ClientName = userService.GetUserById(a.ClientId).FirstName,
+                        CreatorId = a.CreatorId,
+                        ClientName = userService.GetUserById(a.CreatorId).FirstName,
                         Status = Enum.GetName(a.Status)
                     })
                     .ToList();

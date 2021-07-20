@@ -18,7 +18,7 @@
 
         public string ClientName { get; set; }
 
-        public string ClientId { get; set; }
+        public string CreatorId { get; set; }
 
         public string Status { get; set; }
     }

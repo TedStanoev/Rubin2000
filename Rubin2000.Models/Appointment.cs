@@ -22,6 +22,10 @@ namespace Rubin2000.Models
 
         public DateTime DateAndTime { get; set; }
 
+        [Required]
+        [MaxLength(NameDefaultLength)]
+        public string ClientName { get; set; }
+
         [MaxLength(DescriptionDefaultLength)]
         public string Description { get; set; }
 
@@ -32,9 +36,9 @@ namespace Rubin2000.Models
         public bool IsEdited { get; set; }
 
         [Required]
-        public string ClientId { get; set; }
+        public string CreatorId { get; set; }
 
-        public AppUser Client { get; set; }
+        public AppUser Creator { get; set; }
 
         public string ScheduleId { get; set; }
 

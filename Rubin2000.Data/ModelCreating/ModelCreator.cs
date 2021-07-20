@@ -15,9 +15,9 @@ namespace Rubin2000.Data.ModelCreating
         private static void SetAppointmentKeys(ModelBuilder builder)
         {
             builder.Entity<Appointment>()
-                .HasOne(k => k.Client)
+                .HasOne(k => k.Creator)
                 .WithMany(k => k.Appointments)
-                .HasForeignKey(k => k.ClientId);
+                .HasForeignKey(k => k.CreatorId);
         }
 
         private static void SetScheduleKeys(ModelBuilder builder)

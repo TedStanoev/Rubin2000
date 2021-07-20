@@ -54,7 +54,7 @@ namespace Rubin2000.Services.ForAppointments
                 DateAndTime = dateAndTime,
                 ProcedureId = procedure.Id,
                 ScheduleId = schedule.Id,
-                ClientId = client.Id,
+                CreatorId = client.Id,
                 Status = AppointmentStatus.Pending
             };
 
@@ -96,7 +96,7 @@ namespace Rubin2000.Services.ForAppointments
                             ProcedureName = a.Procedure.Name,
                             Date = a.DateAndTime.Date.ToString(DateViewFormat),
                             Time = a.DateAndTime.ToString(TimeViewFormat),
-                            ClientId = a.ClientId,
+                            CreatorId = a.CreatorId,
                             Status = Enum.GetName(a.Status)
                         })
                         .ToList();
@@ -106,7 +106,7 @@ namespace Rubin2000.Services.ForAppointments
                 .Include(a => a.Procedure)
                 .Include(a => a.Schedule)
                 .ThenInclude(s => s.Employee)
-                .Where(a => a.ClientId == userId)
+                .Where(a => a.CreatorId == userId)
                 .ToList();
 
         public void SetDeletedToUser(Appointment appointment)

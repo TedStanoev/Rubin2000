@@ -96,7 +96,7 @@ namespace Rubin2000.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(maxLength: 40, nullable: false),
-                    Description = table.Column<string>(maxLength: 120, nullable: true),
+                    Description = table.Column<string>(maxLength: 200, nullable: true),
                     StartsAt = table.Column<DateTime>(nullable: false),
                     EndsAt = table.Column<DateTime>(nullable: false),
                     EmployeeId = table.Column<string>(nullable: false)
@@ -248,7 +248,7 @@ namespace Rubin2000.Data.Migrations
                     Id = table.Column<string>(maxLength: 40, nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: false),
                     OccupationId = table.Column<string>(nullable: false),
-                    ScheduleId = table.Column<string>(nullable: false)
+                    ScheduleId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -264,7 +264,7 @@ namespace Rubin2000.Data.Migrations
                         column: x => x.ScheduleId,
                         principalTable: "Schedules",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -273,9 +273,12 @@ namespace Rubin2000.Data.Migrations
                 {
                     Id = table.Column<string>(maxLength: 40, nullable: false),
                     DateAndTime = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(maxLength: 120, nullable: true),
+                    ClientName = table.Column<string>(maxLength: 20, nullable: false),
+                    Description = table.Column<string>(maxLength: 200, nullable: true),
                     Status = table.Column<int>(nullable: false),
-                    ClientId = table.Column<string>(nullable: false),
+                    IsDeletedToUser = table.Column<bool>(nullable: false),
+                    IsEdited = table.Column<bool>(nullable: false),
+                    CreatorId = table.Column<string>(nullable: false),
                     ScheduleId = table.Column<string>(nullable: true),
                     ProcedureId = table.Column<string>(nullable: true)
                 },
@@ -283,8 +286,8 @@ namespace Rubin2000.Data.Migrations
                 {
                     table.PrimaryKey("PK_Appointments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Appointments_AspNetUsers_ClientId",
-                        column: x => x.ClientId,
+                        name: "FK_Appointments_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -325,6 +328,24 @@ namespace Rubin2000.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Schedules",
+                columns: new[] { "Id", "Description", "EmployeeId", "EndsAt", "StartsAt" },
+                values: new object[,]
+                {
+                    { "2ef564a7-a15a-4b17-8407-9bc37a9ae985", null, "0caaa666-41f5-4f73-93b1-8c8cce3c60d3", new DateTime(2021, 4, 17, 19, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 4, 17, 10, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "70561545-f07c-4e18-a255-fe4fff6e9e19", null, "ba190cb1-6a32-4884-a7bc-3d86e597d5c5", new DateTime(2021, 4, 17, 19, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 4, 17, 10, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "Id", "Name", "OccupationId", "ScheduleId" },
+                values: new object[,]
+                {
+                    { "0caaa666-41f5-4f73-93b1-8c8cce3c60d3", "Albena", "6c064f87-4735-445c-8cf0-6b0e74482d96", "2ef564a7-a15a-4b17-8407-9bc37a9ae985" },
+                    { "ba190cb1-6a32-4884-a7bc-3d86e597d5c5", "Eli", "28451ba3-d888-4762-a085-c2c0a6a241e0", "70561545-f07c-4e18-a255-fe4fff6e9e19" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Procedures",
                 columns: new[] { "Id", "CategoryId", "Duration", "Name", "OccupationId", "PercantageDiscount", "Price" },
                 values: new object[,]
@@ -339,9 +360,9 @@ namespace Rubin2000.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_ClientId",
+                name: "IX_Appointments_CreatorId",
                 table: "Appointments",
-                column: "ClientId");
+                column: "CreatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_ProcedureId",
@@ -401,7 +422,8 @@ namespace Rubin2000.Data.Migrations
                 name: "IX_Employees_ScheduleId",
                 table: "Employees",
                 column: "ScheduleId",
-                unique: true);
+                unique: true,
+                filter: "[ScheduleId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Procedures_CategoryId",
