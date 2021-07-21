@@ -128,6 +128,11 @@ namespace Rubin2000.Web.Controllers
                 this.ModelState.AddModelError(nameof(appointment.Time), ErrorConstants.InvalidTime);
             }
 
+            if (appointmentDate == DateTime.UtcNow.Date && appointmentTime.TimeOfDay <= DateTime.UtcNow.TimeOfDay)
+            {
+                this.ModelState.AddModelError(nameof(appointment.Time), ErrorConstants.InvalidTimePassed);
+            }
+
             if (!employeeService.EmployeeExists(appointment.EmployeeId)
                 || !employeeService.EmployeeCanDoProcedure(appointment.EmployeeId, id))
             {

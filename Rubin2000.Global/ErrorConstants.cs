@@ -12,6 +12,8 @@
 
         public const string InvalidTime = "Time must be between 10:00 and 19:00";
 
+        public const string InvalidTimePassed = "Please enter an hour that hasn't passed";
+
         public const string InvalidEmployee = "The employee is unavailable or is unable to perform the given service";
     }
 }
