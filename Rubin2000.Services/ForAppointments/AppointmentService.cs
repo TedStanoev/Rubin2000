@@ -100,7 +100,7 @@ namespace Rubin2000.Services.ForAppointments
             };
         }
 
-        public IEnumerable<ScheduleAppointmentServiceModel> GetAppointmentsByScheduleId(string scheduleId)
+        public IEnumerable<AppointmentScheduleServiceModel> GetAppointmentsByScheduleId(string scheduleId)
             => this.data.Schedules
                     .Include(s => s.Appointments)
                     .ThenInclude(a => a.Procedure)
@@ -113,7 +113,7 @@ namespace Rubin2000.Services.ForAppointments
                         .Appointments
                         .OrderBy(a => (int)a.Status)
                         .ThenBy(a => a.DateAndTime)
-                        .Select(a => new ScheduleAppointmentServiceModel
+                        .Select(a => new AppointmentScheduleServiceModel
                         {
                             AppointmentId = a.Id,
                             ProcedureName = a.Procedure.Name,

@@ -12,7 +12,7 @@ namespace Rubin2000.Services.ForAppointments
 
         IEnumerable<Appointment> GetUserAppointments(string userId);
 
-        IEnumerable<ScheduleAppointmentServiceModel> GetAppointmentsByScheduleId(string scheduleId);
+        IEnumerable<AppointmentScheduleServiceModel> GetAppointmentsByScheduleId(string scheduleId);
 
         void CreateAppointment(string scheduleId, string procedureName, string clientName, string creatorId,
                                 string description, DateTime date, DateTime time);
