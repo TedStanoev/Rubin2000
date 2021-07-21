@@ -1,9 +1,16 @@
-﻿@using Rubin2000.Web.Models.Appointments
-@model AppointmentInputViewModel
+﻿@using Rubin2000.Services.ForAppointments.Models
+@model AppointmentEditServiceModel
 
 <form method="post">
+    <input style="display: none" type="text" asp-for="ProcedureId" value="@Model.ProcedureId" />
+
     <label asp-for="ProcedureName">Procedure:</label><br>
     <textarea readonly id="procedureName" asp-for="ProcedureName">@Model.ProcedureName</textarea>
+    <br>
+
+    <label asp-for="ClientName">Enter name:</label><br>
+    <input type="text" asp-for="ClientName" />
+    <span asp-validation-for="ClientName" class="small text-danger"></span>
     <br>
 
     <label asp-for="Date">Select date:</label><br>
@@ -31,6 +38,7 @@
         <option>17:30</option>
         <option>18:00</option>
     </select>
+    <span asp-validation-for="Time" class="small text-danger"></span>
     <br>
 
     <label asp-for="Description">Info: </label><br>
@@ -45,7 +53,8 @@
         }
     </select>
 
-    <button type="submit">Complete edit</button>
+    <button type="submit">Submit your appointment</button>
 
 </form>
+
 

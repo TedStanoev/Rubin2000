@@ -2,6 +2,8 @@
 {
     public class AppointmentInfoServiceModel
     {
+        public string AppointmentId { get; set; }
+
         public string Date { get; set; }
 
         public string Time { get; set; }
@@ -17,6 +19,8 @@
         public string UserLastName { get; set; }
 
         public string ClientPhoneNumber { get; set; }
+
+        public string ProcedureId { get; set; }
 
         public string ProcedureName { get; set; }
 

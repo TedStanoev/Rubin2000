@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Rubin2000.Data;
 using Rubin2000.Models;
+using Rubin2000.Services.ForEmployees.Models;
 using Rubin2000.Services.ForOccupations;
 using Rubin2000.Services.ForSchedules;
 using System.Collections.Generic;
@@ -17,6 +18,25 @@ namespace Rubin2000.Services.ForEmployees
         {
             this.data = data;
             this.occupationService = occupationService;
+        }
+
+        public IEnumerable<EmployeeSelectServiceModel> GetEmployeesForSelect(string procedureId)
+        {
+            var procedure = this.data.Procedures
+                .Where(p => p.Id == procedureId)
+                .Select(p => new
+                {
+                    Employees = p.Occupation.Employees
+                })
+                .FirstOrDefault();
+
+            return procedure.Employees
+                    .Select(e => new EmployeeSelectServiceModel
+                    {
+                        Id = e.Id,
+                        Name = e.Name
+                    })
+                    .ToList();
         }
 
         public IEnumerable<Employee> GetEmployees()
@@ -68,5 +88,6 @@ namespace Rubin2000.Services.ForEmployees
             return false;
 
         }
+
     }
 }

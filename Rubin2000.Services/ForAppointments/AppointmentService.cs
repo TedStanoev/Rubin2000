@@ -3,6 +3,7 @@ using Rubin2000.Data;
 using Rubin2000.Models;
 using Rubin2000.Models.Enums;
 using Rubin2000.Services.ForAppointments.Models;
+using Rubin2000.Services.ForEmployees.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,6 +65,29 @@ namespace Rubin2000.Services.ForAppointments
             this.data.SaveChanges();
         }
 
+        public void EditAppointment(string appointmentId, string clientName, string description, DateTime date, DateTime time)
+        {
+            var appointment = this.GetAppointment(appointmentId);
+            var editedAppointment = new Appointment
+            {
+                Id = appointment.Id,
+                ClientName = clientName,
+                Description = appointment.Description != description ? description : appointment.Description,
+                CreatorId = appointment.CreatorId,
+                DateAndTime = date + time.TimeOfDay,
+                ProcedureId = appointment.ProcedureId,
+                ScheduleId = appointment.ScheduleId,
+                Status = appointment.Status,
+                IsEdited = true,
+                IsDeletedToUser = appointment.IsDeletedToUser
+            };
+
+            this.data.Appointments.Remove(appointment);
+            this.data.Appointments.Add(editedAppointment);
+
+            this.data.SaveChanges();
+        }
+
         public IEnumerable<Appointment> GetAllAppointments()
             => this.data.Appointments
                 .ToList();
@@ -71,6 +95,29 @@ namespace Rubin2000.Services.ForAppointments
         public Appointment GetAppointment(string id)
             => this.data.Appointments
                 .Where(a => a.Id == id)
+                .FirstOrDefault();
+
+        public AppointmentEditServiceModel GetAppointmentForEdit(string id)
+            => this.data.Appointments
+                .Where(a => a.Id == id)
+                .Select(a => new AppointmentEditServiceModel
+                {
+                    ProcedureId = a.ProcedureId,
+                    ProcedureName = a.Procedure.Name,
+                    Date = a.DateAndTime.Date.ToString(DateHtmlFormat),
+                    Time = a.DateAndTime.TimeOfDay.ToString(),
+                    ClientName = a.ClientName,
+                    Description = a.Description,
+                    Employees = a.Procedure
+                        .Occupation
+                        .Employees
+                            .Select(e => new EmployeeSelectServiceModel
+                            {
+                                Id = e.Id,
+                                Name = e.Name
+                            })
+                            .ToList()
+                })
                 .FirstOrDefault();
 
         public AppointmentInfoServiceModel GetAppointmentInfo(string id)
@@ -83,10 +130,12 @@ namespace Rubin2000.Services.ForAppointments
 
             return new AppointmentInfoServiceModel
             {
+                AppointmentId = appointment.Id,
                 Date = appointment.DateAndTime.Date.ToString(DateViewFormat),
                 Time = appointment.DateAndTime.ToString(TimeViewFormat),
                 Status = appointment.Status.ToString(),
                 Description = appointment.Description,
+                ProcedureId = procedure.Id,
                 ProcedureName = procedure.Name,
                 EmployeeName = employee.Name,
                 EmployeeOccupation = occupationName,

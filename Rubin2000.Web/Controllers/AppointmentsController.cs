@@ -16,6 +16,7 @@ using Rubin2000.Services.ForClients;
 using Rubin2000.Services.ForOccupations;
 
 using static Rubin2000.Global.GeneralConstants;
+using Rubin2000.Services.ForAppointments.Models;
 
 namespace Rubin2000.Web.Controllers
 {
@@ -64,23 +65,7 @@ namespace Rubin2000.Web.Controllers
         {
             var appointmentInfoModel = this.appointmentService.GetAppointmentInfo(id);
 
-            return View(new AppointmentInfoViewModel 
-            { 
-                ClientName = appointmentInfoModel.ClientName,
-                Date = appointmentInfoModel.Date,
-                Time = appointmentInfoModel.Time,
-                Status = appointmentInfoModel.Status,
-                UserFirstName = appointmentInfoModel.UserFirstName,
-                UserLastName = appointmentInfoModel.UserLastName,
-                ClientPhoneNumber = appointmentInfoModel.ClientPhoneNumber,
-                Description = appointmentInfoModel.Description,
-                ProcedureName = appointmentInfoModel.ProcedureName,
-                ProcedureTime = appointmentInfoModel.ProcedureTime,
-                Price = appointmentInfoModel.Price,
-                EmployeeName = appointmentInfoModel.EmployeeName,
-                EmployeeOccupation = appointmentInfoModel.EmployeeOccupation,
-                ScheduleId = appointmentInfoModel.ScheduleId
-            });
+            return View(appointmentInfoModel);
         }
 
         [Authorize]
@@ -201,6 +186,65 @@ namespace Rubin2000.Web.Controllers
             var scheduleId = appointment.ScheduleId;
 
             return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
+        }
+
+        public IActionResult Edit(string id)
+        {
+            var appointment = this.appointmentService.GetAppointmentForEdit(id);
+
+            return View(appointment);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(AppointmentEditServiceModel appointment, string id)
+        {
+            if (!procedureService.ProcedureExists(appointment.ProcedureId))
+            {
+                this.ModelState.AddModelError(nameof(appointment.ProcedureName), ErrorConstants.InvalidProcedure);
+            }
+
+            if (!DateTime.TryParseExact(appointment.Date, "yyyy-MM-dd", null, DateTimeStyles.None, out DateTime appointmentDate))
+            {
+                this.ModelState.AddModelError(nameof(appointment.Date), ErrorConstants.InvalidDate);
+            }
+
+            if (appointmentDate.Date < DateTime.UtcNow.Date)
+            {
+                this.ModelState.AddModelError(nameof(appointment.Date), ErrorConstants.InvalidDatePassed);
+            }
+
+            if (!DateTime.TryParseExact(appointment.Time, "HH:mm", null, DateTimeStyles.None, out DateTime appointmentTime))
+            {
+                this.ModelState.AddModelError(nameof(appointment.Time), ErrorConstants.InvalidTime);
+            }
+
+            if (appointmentTime.TimeOfDay < DateAndTimeConstants.DefaultStartingHours
+                || appointmentTime.TimeOfDay > DateAndTimeConstants.DefaultEndingHours)
+            {
+                this.ModelState.AddModelError(nameof(appointment.Time), ErrorConstants.InvalidTime);
+            }
+
+            if (appointmentDate == DateTime.UtcNow.Date && appointmentTime.TimeOfDay <= DateTime.Now.TimeOfDay)
+            {
+                this.ModelState.AddModelError(nameof(appointment.Time), ErrorConstants.InvalidTimePassed);
+            }
+
+            if (!employeeService.EmployeeExists(appointment.EmployeeId)
+                || !employeeService.EmployeeCanDoProcedure(appointment.EmployeeId, appointment.ProcedureId))
+            {
+                this.ModelState.AddModelError(nameof(appointment.EmployeeId), ErrorConstants.InvalidEmployee);
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                appointment.Employees = this.employeeService.GetEmployeesForSelect(appointment.ProcedureId);
+                return View(appointment);
+            }
+
+            this.appointmentService.EditAppointment(id, appointment.ClientName, 
+                            appointment.Description, appointmentDate, appointmentTime);
+
+            return Redirect("/Appointments/MyAppointments");
         }
 
         public IActionResult Delete()

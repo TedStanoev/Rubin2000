@@ -1,7 +1,7 @@
-﻿@using Rubin2000.Web.Models.Appointments
+﻿@using Rubin2000.Services.ForAppointments.Models
 @using Rubin2000.Global
 @using Rubin2000.Models.Enums
-@model AppointmentInfoViewModel
+@model AppointmentInfoServiceModel
 
 <div>
     <h1>Procedure: @Model.ProcedureName</h1>
@@ -54,7 +54,7 @@
     </div>
 
     <a class="badge-info btn" asp-controller="Schedules" asp-action="EmployeeSchedule" asp-route-id="@Model.ScheduleId">Back</a>
-    <a class="badge-warning btn" asp-controller="Appointments" asp-action="Edit">Edit</a>
+    <a class="badge-warning btn" asp-controller="Appointments" asp-action="Edit" asp-route-id="@Model.AppointmentId">Edit</a>
 </div>
 
 

@@ -19,6 +19,8 @@ namespace Rubin2000.Services.ForAppointments
 
         Appointment GetAppointment(string id);
 
+        AppointmentEditServiceModel GetAppointmentForEdit(string id);
+
         AppointmentInfoServiceModel GetAppointmentInfo(string id);
 
         void SetDeletedToUser(Appointment appointment);
@@ -26,6 +28,8 @@ namespace Rubin2000.Services.ForAppointments
         void ChangeAppointmentStatus(Appointment appointment, AppointmentStatus status);
 
         void ChangeDescription(Appointment appointment, string description);
+
+        void EditAppointment(string appointmentId, string clientName, string description, DateTime date, DateTime time);
 
         //void EditAppointment(Appointment appointment, Schedule schedule, Procedure procedure, AppUser client,
         //string description, DateTime date, DateTime time);

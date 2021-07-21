@@ -6,6 +6,8 @@
 
         public const string DateViewFormat = "dd.MM.yyyy";
 
+        public const string DateHtmlFormat = "yyyy-MM-dd";
+
         public const string TimeViewFormat = "HH:mm";
 
         public const string SalonA1PhoneNumber = "0885804169";
