@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Rubin2000.Models.DataConstants
+﻿namespace Rubin2000.Models.DataConstants
 {
     public class EFAttributeConstants
     {

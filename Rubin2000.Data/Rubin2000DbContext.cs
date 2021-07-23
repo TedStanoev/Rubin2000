@@ -25,8 +25,6 @@ namespace Rubin2000.Data
 
         public DbSet<Occupation> Occupations { get; set; }
 
-        public DbSet<Product> Products { get; set; }
-
         public DbSet<ProcedureCategory> ProcedureCategories { get; set; }
 
 
