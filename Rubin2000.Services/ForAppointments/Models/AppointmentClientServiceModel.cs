@@ -1,10 +1,10 @@
-﻿namespace Rubin2000.Web.Models.Appointments
+﻿namespace Rubin2000.Services.ForAppointments.Models
 {
-    public class AppointmentClientViewModel
+    public class UserAppointmentServiceModel
     {
-        public string AppointmentId { get; set; }
-
         public string ProcedureName { get; set; }
+
+        public string AppointmentId { get; set; }
 
         public string Date { get; set; }
 

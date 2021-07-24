@@ -1,21 +1,16 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
 using Rubin2000.Services.ForAppointments;
-using Rubin2000.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using Rubin2000.Web.Models.Appointments;
-using Rubin2000.Models.Enums;
 using Rubin2000.Services.ForEmployees;
 using Rubin2000.Services.ForProcedures;
 using Rubin2000.Global;
 using System.Globalization;
 using Rubin2000.Services.ForSchedules;
 using Rubin2000.Services.ForClients;
-using Rubin2000.Services.ForOccupations;
 
-using static Rubin2000.Global.GeneralConstants;
 using Rubin2000.Services.ForAppointments.Models;
 
 namespace Rubin2000.Web.Controllers
@@ -28,37 +23,22 @@ namespace Rubin2000.Web.Controllers
         private readonly IProcedureService procedureService;
         private readonly IScheduleService scheduleService;
         private readonly IUserService userService;
-        private readonly IOccupationService occupationService;
-        private readonly UserManager<AppUser> userManager;
 
-        public AppointmentsController(IAppointmentService appointmentService, UserManager<AppUser> userManager, IEmployeeService employeeService, IProcedureService procedureService, IScheduleService scheduleService, IUserService userService, IOccupationService occupationService)
+        public AppointmentsController(IAppointmentService appointmentService, IEmployeeService employeeService, IProcedureService procedureService, IScheduleService scheduleService, IUserService userService)
         {
             this.appointmentService = appointmentService;
-            this.userManager = userManager;
             this.employeeService = employeeService;
             this.procedureService = procedureService;
             this.scheduleService = scheduleService;
             this.userService = userService;
-            this.occupationService = occupationService;
         }
 
         public IActionResult MyAppointments()
         {
-            var userAppointments = appointmentService.GetUserAppointments(this.userManager.GetUserId(this.User));
+            appointmentService.CheckForExpired();
+            var userAppointments = appointmentService.GetUserAppointments(this.userService.GetUserId(this.User));
 
-            var userAppointmentsViewModel = userAppointments
-                .OrderByDescending(a => a.DateAndTime)
-                .Select(a => new AppointmentClientViewModel
-                {
-                    ProcedureName = a.Procedure.Name,
-                    AppointmentId = a.Id,
-                    Date = a.DateAndTime.ToString(DateViewFormat),
-                    Time = a.DateAndTime.ToShortTimeString(),
-                    Status = Enum.GetName<AppointmentStatus>(a.Status)
-                })
-                .ToList();
-
-            return View(userAppointmentsViewModel);
+            return View(userAppointments);
         }
 
         public IActionResult Info(string id)
@@ -150,16 +130,7 @@ namespace Rubin2000.Web.Controllers
         [HttpPost]
         public IActionResult ClientDecline(DeclineAppointmentViewModel appointmentModel)
         {
-            var appointment = appointmentService.GetAppointment(appointmentModel.Id);
-
-            var status = AppointmentStatus.Declined;
-
-            appointmentService.ChangeAppointmentStatus(appointment, status);
-
-            if (!string.IsNullOrWhiteSpace(appointmentModel.Description))
-            {
-                appointmentService.ChangeDescription(appointment, appointmentModel.Description);
-            }
+            appointmentService.DeclineAppointment(appointmentModel.Id, appointmentModel.Description);
 
             return Redirect($"/Appointments/MyAppointments");
         }
@@ -174,14 +145,7 @@ namespace Rubin2000.Web.Controllers
         {
             var appointment = appointmentService.GetAppointment(appointmentModel.Id);
 
-            var status = AppointmentStatus.Declined;
-
-            appointmentService.ChangeAppointmentStatus(appointment, status);
-
-            if (!string.IsNullOrWhiteSpace(appointmentModel.Description))
-            {
-                appointmentService.ChangeDescription(appointment, appointmentModel.Description);
-            }
+            appointmentService.DeclineAppointment(appointment.Id, appointmentModel.Description);
 
             var scheduleId = appointment.ScheduleId;
 
@@ -191,6 +155,11 @@ namespace Rubin2000.Web.Controllers
         public IActionResult Edit(string id)
         {
             var appointment = this.appointmentService.GetAppointmentForEdit(id);
+
+            if (DateTime.Parse(appointment.Date).Date < DateTime.UtcNow.Date)
+            {
+                return Forbid();
+            }
 
             return View(appointment);
         }
@@ -247,9 +216,18 @@ namespace Rubin2000.Web.Controllers
             return Redirect("/Appointments/MyAppointments");
         }
 
-        public IActionResult Delete()
+        public IActionResult UserDelete(string id)
         {
-            return View();
+            var userId = this.userService.GetUserId(this.User);
+
+            if (!this.appointmentService.BelongsToUser(userId, id)) 
+            {
+                return Unauthorized();
+            }
+
+            appointmentService.SetDeletedToUser(id, userId);
+
+            return Redirect("/Appointments/MyAppointments");
         }
 
     }

@@ -1,6 +1,6 @@
-﻿@using Rubin2000.Web.Models.Appointments
+﻿@using Rubin2000.Services.ForAppointments.Models
 @using Rubin2000.Models.Enums
-@model IEnumerable<AppointmentClientViewModel>
+@model IEnumerable<UserAppointmentServiceModel>
 <h1>These are my appointments:</h1>
 @if (!Model.Any())
 {
@@ -48,7 +48,7 @@ else
                             <div>
                                 <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
                                 <a class="alert-danger btn" asp-controller="Appointments" asp-action="ClientDecline" asp-route-id="@appointment.AppointmentId">Decline</a>
-                                <a class="alert-danger btn delete-warning" asp-controller="Appointments" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
+                                <a class="alert-danger btn delete-warning" asp-controller="Appointments" asp-action="UserDelete" asp-route-id="@appointment.AppointmentId">Clear</a>
                             </div>
                         </td>
                     }
@@ -60,7 +60,7 @@ else
                         <td>
                             <div>
                                 <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                                <a class="alert-danger btn delete-warning" asp-controller="Appointments" asp-action="Delete" asp-route-id="@appointment.AppointmentId">Clear</a>
+                                <a class="alert-danger btn delete-warning" asp-controller="Appointments" asp-action="UserDelete" asp-route-id="@appointment.AppointmentId">Clear</a>
                             </div>
                         </td>
                     }
@@ -73,6 +73,18 @@ else
                             <div>
                                 <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
                                 <a class="alert-danger btn" asp-controller="Appointments" asp-action="ClientDecline">Decline</a>
+                            </div>
+                        </td>
+                    }
+                    else if (appointment.Status == AppointmentStatus.Expired.ToString())
+                    {
+                        <td class="text-dark">
+                            @appointment.Status
+                        </td>
+                        <td>
+                            <div>
+                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
+                                <a class="alert-danger btn" asp-controller="Appointments" asp-action="UserDelete" asp-route-id="@appointment.AppointmentId">Clear</a>
                             </div>
                         </td>
                     }

@@ -10,12 +10,16 @@ namespace Rubin2000.Services.ForAppointments
     {
         IEnumerable<Appointment> GetAllAppointments();
 
-        IEnumerable<Appointment> GetUserAppointments(string userId);
+        IEnumerable<UserAppointmentServiceModel> GetUserAppointments(string userId);
 
         IEnumerable<AppointmentScheduleServiceModel> GetAppointmentsByScheduleId(string scheduleId);
 
         void CreateAppointment(string scheduleId, string procedureName, string clientName, string creatorId,
                                 string description, DateTime date, DateTime time);
+
+        void DeclineAppointment(string appointmentId, string appointmentDescription);
+
+        void CheckForExpired();
 
         Appointment GetAppointment(string id);
 
@@ -23,7 +27,7 @@ namespace Rubin2000.Services.ForAppointments
 
         AppointmentInfoServiceModel GetAppointmentInfo(string id);
 
-        void SetDeletedToUser(Appointment appointment);
+        void SetDeletedToUser(string appointmentId, string userId);
 
         void ChangeAppointmentStatus(Appointment appointment, AppointmentStatus status);
 
@@ -31,7 +35,6 @@ namespace Rubin2000.Services.ForAppointments
 
         void EditAppointment(string appointmentId, string clientName, string description, DateTime date, DateTime time);
 
-        //void EditAppointment(Appointment appointment, Schedule schedule, Procedure procedure, AppUser client,
-        //string description, DateTime date, DateTime time);
+        bool BelongsToUser(string userId, string appointmentId);
     }
 }

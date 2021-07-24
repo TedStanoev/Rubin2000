@@ -2,6 +2,17 @@
 @using Rubin2000.Models.Enums;
 @model IEnumerable<AppointmentScheduleServiceModel>
 
+@{
+    var previousPage = ViewBag.CurrentPage - 1;
+    var nextPage = ViewBag.CurrentPage + 1;
+    var lastPage = Math.Ceiling(((double)ViewBag.TotalAppointments / (double)AppointmentScheduleServiceModel.AppointmentsPerPage));
+    if (previousPage < 0)
+    {
+        previousPage = 1;
+    }
+
+}
+
 <h1>@ViewBag.EmployeeName's Schedule</h1>
 
 <div style="margin-bottom: 60px">
@@ -9,7 +20,10 @@
         <thead>
             <tr>
                 <th colspan="6">
-                    <h4 style="text-align: center">@DateTime.UtcNow.Date.ToString(DateViewFormat)</h4>
+                    <div style="text-align: center">
+                        <a class="badge-info btn @(ViewBag.CurrentPage == 1 ? "disabled" : string.Empty) " asp-controller="Schedules" asp-action="All" asp-route-currentPage="@previousPage"><<</a>
+                        <a class="badge-info btn @(nextPage > lastPage ? "disabled" : string.Empty)" asp-controller="Schedules" asp-action="All" asp-route-currentPage="@nextPage">>></a>
+                    </div>
                 </th>
             </tr>
         </thead>
@@ -62,6 +76,18 @@
                                 <a class="alert-success btn" asp-controller="Schedules" asp-action="Approve" asp-route-id="@appointment.AppointmentId">Approve</a>
                                 <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
                                 <a class="alert-danger btn" asp-controller="Schedules" asp-action="Decline" asp-route-id="@appointment.AppointmentId">Decline</a>
+                            </div>
+                        </td>
+                    }
+                    else if (appointment.Status == AppointmentStatus.Expired.ToString())
+                    {
+                        <td class="text-dark">
+                            @appointment.Status
+                        </td>
+                        <td>
+                            <div>
+                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
+                                <a class="alert-danger btn" asp-controller="Appointments" asp-action="ClientDelete">Clear</a>
                             </div>
                         </td>
                     }

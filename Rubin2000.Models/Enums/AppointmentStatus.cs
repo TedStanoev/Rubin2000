@@ -5,5 +5,6 @@
         Approved = 10,
         Pending = 11,
         Declined = 20,
+        Expired = 30
     }
 }

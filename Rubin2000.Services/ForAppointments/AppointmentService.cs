@@ -19,6 +19,7 @@ namespace Rubin2000.Services.ForAppointments
         public AppointmentService(Rubin2000DbContext data)
             => this.data = data;
 
+
         public void ChangeAppointmentStatus(Appointment appointment, AppointmentStatus status)
         {
             this.data.Appointments.Remove(appointment);
@@ -45,6 +46,30 @@ namespace Rubin2000.Services.ForAppointments
             this.data.SaveChanges();
         }
 
+        public void CheckForExpired()
+        {
+            var expiredAppointments = this.data
+                                        .Appointments
+                                        .Where(a => a.DateAndTime.Date < DateTime.UtcNow.Date)
+                                        .ToList();
+
+            if (expiredAppointments.Count > 0)
+            {
+                this.data.Appointments.RemoveRange(expiredAppointments);
+
+                this.data.SaveChanges();
+
+                foreach (var appointment in expiredAppointments)
+                {
+                    appointment.Status = AppointmentStatus.Expired;
+                }
+
+                this.data.Appointments.AddRange(expiredAppointments);
+
+                this.data.SaveChanges();
+            }
+        }
+
         public void CreateAppointment(string scheduleId, string procedureId, string clientName, string creatorId, string description, DateTime date, DateTime time)
         {
             var dateAndTime = date + time.TimeOfDay;
@@ -63,6 +88,20 @@ namespace Rubin2000.Services.ForAppointments
             this.data.Appointments.Add(appointment);
 
             this.data.SaveChanges();
+        }
+
+        public void DeclineAppointment(string appointmentId, string appointmentDescription)
+        {
+            var appointment = this.GetAppointment(appointmentId);
+
+            var status = AppointmentStatus.Declined;
+
+            this.ChangeAppointmentStatus(appointment, status);
+
+            if (!string.IsNullOrWhiteSpace(appointmentDescription))
+            {
+                this.ChangeDescription(appointment, appointmentDescription);
+            }
         }
 
         public void EditAppointment(string appointmentId, string clientName, string description, DateTime date, DateTime time)
@@ -174,17 +213,35 @@ namespace Rubin2000.Services.ForAppointments
                         })
                         .ToList();
 
-        public IEnumerable<Appointment> GetUserAppointments(string userId)
+        public IEnumerable<UserAppointmentServiceModel> GetUserAppointments(string userId)
             => this.data.Appointments
-                .Include(a => a.Procedure)
-                .Include(a => a.Schedule)
-                .ThenInclude(s => s.Employee)
-                .Where(a => a.CreatorId == userId)
+                .Where(a => a.CreatorId == userId && a.IsDeletedToUser == false)
+                .OrderByDescending(a => a.DateAndTime)
+                .Select(a => new UserAppointmentServiceModel
+                {
+                    ProcedureName = a.Procedure.Name,
+                    AppointmentId = a.Id,
+                    Date = a.DateAndTime.ToString(DateViewFormat),
+                    Time = a.DateAndTime.ToShortTimeString(),
+                    Status = Enum.GetName<AppointmentStatus>(a.Status)
+                })
                 .ToList();
 
-        public void SetDeletedToUser(Appointment appointment)
+        public void SetDeletedToUser(string appointmentId, string userId)
         {
-            throw new NotImplementedException();
+            var appointment = this.GetAppointment(appointmentId);
+
+            this.data.Appointments.Remove(appointment);
+            this.data.SaveChanges();
+
+            appointment.IsDeletedToUser = true;
+
+            this.data.Appointments.Add(appointment);
+            this.data.SaveChanges();
         }
+
+        public bool BelongsToUser(string userId, string appointmentId)
+            => this.GetAppointment(appointmentId).CreatorId == userId;
+
     }
 }

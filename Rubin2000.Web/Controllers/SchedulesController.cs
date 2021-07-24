@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Rubin2000.Global;
 using Rubin2000.Models.Enums;
 using Rubin2000.Services.ForAppointments;
+using Rubin2000.Services.ForAppointments.Models;
 using Rubin2000.Services.ForClients;
 using Rubin2000.Services.ForEmployees;
 using Rubin2000.Services.ForProcedures;
@@ -59,13 +60,24 @@ namespace Rubin2000.Web.Controllers
             return View(appointments);
         }
 
-        public IActionResult All(string id)
+        public IActionResult All(string id, [FromQuery]int currentPage)
         {
             var employeeName = this.employeeService.GetEmployeeByScheduleId(id).Name;
-            var appointments = this.appointmentService.GetAppointmentsByScheduleId(id);
+            var allAppointments = this.appointmentService.GetAppointmentsByScheduleId(id);
+
+            var appointments = allAppointments.Skip((currentPage - 1) * AppointmentScheduleServiceModel.AppointmentsPerPage)
+                .Take(AppointmentScheduleServiceModel.AppointmentsPerPage);
 
             this.ViewBag.EmployeeName = employeeName;
             this.ViewBag.ScheduleId = id;
+            
+            if (currentPage == 0)
+            {
+                currentPage = 1;
+            }
+
+            this.ViewBag.CurrentPage = currentPage;
+            this.ViewBag.TotalAppointments = allAppointments.Count();
 
             return View(appointments);
         }
