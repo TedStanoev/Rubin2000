@@ -1,11 +1,11 @@
 ﻿@using Rubin2000.Services.ForEmployees.Models;
 @model IEnumerable<EmployeeServiceModel>
 <h1>Choose an employee:</h1>
-<table>
+<table class="table table-bordered">
     <tr>
-        <td>Name</td>
-        <td>Starts at</td>
-        <td>Ends at</td>
+        <td style="width: 300px">Name</td>
+        <td style="width: 100px">Starts at</td>
+        <td style="width: 100px">Ends at</td>
         <td></td>
     </tr>
     @foreach (var employee in Model)

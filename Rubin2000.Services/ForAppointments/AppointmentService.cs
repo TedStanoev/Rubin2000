@@ -247,6 +247,12 @@ namespace Rubin2000.Services.ForAppointments
         public bool BelongsToUser(string userId, string appointmentId)
             => this.GetAppointment(appointmentId).CreatorId == userId;
 
+        public void DeleteAppointment(string id)
+        {
+            var appointment = this.GetAppointment(id);
 
+            this.data.Appointments.Remove(appointment);
+            this.data.SaveChanges();
+        }
     }
 }

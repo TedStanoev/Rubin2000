@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Rubin2000.Services.ForAppointments;
 using Rubin2000.Services.ForAppointments.Models;
 using Rubin2000.Services.ForClients;
@@ -7,7 +9,6 @@ using Rubin2000.Services.ForEmployees;
 using Rubin2000.Services.ForProcedures;
 using Rubin2000.Services.ForSchedules;
 
-using static Rubin2000.Global.GeneralConstants;
 
 namespace Rubin2000.Web.Controllers
 {
@@ -71,9 +72,25 @@ namespace Rubin2000.Web.Controllers
 
         public IActionResult Approve(string id)
         {
-            appointmentService.ApproveAppointment(id);
+            this.appointmentService.ApproveAppointment(id);
 
             var scheduleId = scheduleService.GetScheduleIdByAppointmentId(id);
+
+            return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
+        }
+
+        public IActionResult Delete(string id)
+        {
+            var scheduleId = this.scheduleService.GetScheduleIdByAppointmentId(id);
+
+            try
+            {
+                this.appointmentService.DeleteAppointment(id);
+            }
+            catch (DbUpdateException)
+            {
+                return Problem("There was an error deleting the appointment. Please contact the web admin.");
+            }
 
             return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
         }
