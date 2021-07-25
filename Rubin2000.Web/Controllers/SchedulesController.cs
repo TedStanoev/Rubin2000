@@ -1,14 +1,11 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Rubin2000.Models.Enums;
 using Rubin2000.Services.ForAppointments;
 using Rubin2000.Services.ForAppointments.Models;
 using Rubin2000.Services.ForClients;
 using Rubin2000.Services.ForEmployees;
 using Rubin2000.Services.ForProcedures;
 using Rubin2000.Services.ForSchedules;
-using Rubin2000.Web.Models.Appointments;
-using Rubin2000.Web.Models.Employees;
 
 using static Rubin2000.Global.GeneralConstants;
 

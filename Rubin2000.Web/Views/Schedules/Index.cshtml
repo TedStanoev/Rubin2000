@@ -1,12 +1,21 @@
-﻿@using Rubin2000.Web.Models.Employees;
-@model IEnumerable<EmployeeScheduleViewModel>
+﻿@using Rubin2000.Services.ForEmployees.Models;
+@model IEnumerable<EmployeeServiceModel>
 <h1>Choose an employee:</h1>
-<ul>
+<table>
+    <tr>
+        <td>Name</td>
+        <td>Starts at</td>
+        <td>Ends at</td>
+        <td></td>
+    </tr>
     @foreach (var employee in Model)
     {
-    <li style="list-style-type: none;">
-        <a asp-controller="Schedules" asp-action="EmployeeSchedule" asp-route-id="@employee.ScheduleId">@employee.Name</a>
-    </li>
+        <tr>
+            <td>@employee.Name</td>
+            <td>@employee.StartsAt</td>
+            <td>@employee.EndsAt</td>
+            <td><a class="btn-outline-danger btn" asp-controller="Schedules" asp-action="EmployeeSchedule" asp-route-id="@employee.ScheduleId">View Schedule</a></td>
+        </tr>
     }
-</ul>
+</table>
 

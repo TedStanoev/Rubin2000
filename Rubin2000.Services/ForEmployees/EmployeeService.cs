@@ -1,6 +1,7 @@
 ﻿using Rubin2000.Data;
 using Rubin2000.Services.ForEmployees.Models;
 using Rubin2000.Services.ForOccupations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -63,8 +64,8 @@ namespace Rubin2000.Services.ForEmployees
                 {
                     Name = s.Employee.Name,
                     ScheduleId = s.Id,
-                    StartsAt = s.StartsAt.TimeOfDay.ToString(TimeViewFormat),
-                    EndsAt = s.EndsAt.TimeOfDay.ToString(TimeViewFormat)
+                    StartsAt = s.StartsAt.ToString(TimeViewFormat),
+                    EndsAt = s.EndsAt.ToString(TimeViewFormat)
                 })
                 .OrderBy(s => s.Name)
                 .ToList();
