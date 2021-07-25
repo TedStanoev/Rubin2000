@@ -10,16 +10,10 @@ namespace Rubin2000.Services.ForEmployees
 
         IEnumerable<EmployeeSelectServiceModel> GetEmployeesForSelect(string procedureId);
 
-        Employee GetEmployeeById(string id);
-
-        Employee GetEmployeeByScheduleId(string scheduleId);
-
-        IEnumerable<Employee> GetEmployees();
-
-        IEnumerable<Employee> GetEmployeesWithOccupation();
-
-        IEnumerable<Employee> GetEmployeesByProcedure(string procedureId);
+        IEnumerable<EmployeeServiceModel> GetAllEmployeesWithSchedule();
 
         bool EmployeeCanDoProcedure(string employeeId, string procedureId);
+
+        string GetEmployeeNameByScheduleId(string scheduleId);
     }
 }

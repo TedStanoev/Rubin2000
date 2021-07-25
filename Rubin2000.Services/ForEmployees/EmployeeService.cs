@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Rubin2000.Data;
-using Rubin2000.Models;
+﻿using Rubin2000.Data;
 using Rubin2000.Services.ForEmployees.Models;
 using Rubin2000.Services.ForOccupations;
-using Rubin2000.Services.ForSchedules;
 using System.Collections.Generic;
 using System.Linq;
+
+using static Rubin2000.Global.GeneralConstants;
 
 namespace Rubin2000.Services.ForEmployees
 {
@@ -26,7 +25,7 @@ namespace Rubin2000.Services.ForEmployees
                 .Where(p => p.Id == procedureId)
                 .Select(p => new
                 {
-                    Employees = p.Occupation.Employees
+                    p.Occupation.Employees
                 })
                 .FirstOrDefault();
 
@@ -38,36 +37,6 @@ namespace Rubin2000.Services.ForEmployees
                     })
                     .ToList();
         }
-
-        public IEnumerable<Employee> GetEmployees()
-            => this.data.Employees
-                .ToList();
-
-        public IEnumerable<Employee> GetEmployeesWithOccupation()
-            => this.data.Employees
-                .Include(e => e.Occupation)
-                .ToList();
-
-        public IEnumerable<Employee> GetEmployeesByProcedure(string procedureId)
-        {
-            var occupation = this.data.Occupations
-                .FirstOrDefault(o => o.Procedures.Any(p => p.Id == procedureId));
-
-            return this.GetEmployees()
-                    .Where(e => e.Occupation == occupation)
-                    .ToList();
-        }
-
-        public Employee GetEmployeeById(string id)
-            => this.data.Employees
-                .Where(e => e.Id == id)
-                .FirstOrDefault();
-
-        public Employee GetEmployeeByScheduleId(string scheduleId)
-            => this.data.Schedules
-                .Where(s => s.Id == scheduleId)
-                .Select(s => s.Employee)
-                .FirstOrDefault();
 
         public bool EmployeeExists(string id)
             => this.data.Employees
@@ -86,8 +55,24 @@ namespace Rubin2000.Services.ForEmployees
             }
 
             return false;
-
         }
 
+        public IEnumerable<EmployeeServiceModel> GetAllEmployeesWithSchedule()
+            => this.data.Schedules
+                .Select(s => new EmployeeServiceModel
+                {
+                    Name = s.Employee.Name,
+                    ScheduleId = s.Id,
+                    StartsAt = s.StartsAt.TimeOfDay.ToString(TimeViewFormat),
+                    EndsAt = s.EndsAt.TimeOfDay.ToString(TimeViewFormat)
+                })
+                .OrderBy(s => s.Name)
+                .ToList();
+
+        public string GetEmployeeNameByScheduleId(string scheduleId)
+            => this.data.Employees
+                .Where(e => e.ScheduleId == scheduleId)
+                .FirstOrDefault()
+                .Name;
     }
 }

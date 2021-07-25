@@ -1,8 +1,5 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Rubin2000.Global;
 using Rubin2000.Models.Enums;
 using Rubin2000.Services.ForAppointments;
 using Rubin2000.Services.ForAppointments.Models;
@@ -37,21 +34,14 @@ namespace Rubin2000.Web.Controllers
         public IActionResult Index()
         {
             var employeesViewModel = employeeService
-                .GetEmployeesWithOccupation()
-                .Select(e => new EmployeeScheduleViewModel
-                {
-                    Id = e.Id,
-                    Name = e.Name,
-                    ScheduleId = e.ScheduleId,
-                    Occupation = e.Occupation.Name
-                });
+                .GetAllEmployeesWithSchedule();
 
             return View(employeesViewModel);
         }
 
         public IActionResult EmployeeSchedule(string id)
         {
-            var employeeName = this.employeeService.GetEmployeeByScheduleId(id).Name;
+            var employeeName = this.employeeService.GetEmployeeNameByScheduleId(id);
             var appointments = this.scheduleService.GetEmployeeScheduleWithAppointments(id);
 
             this.ViewBag.EmployeeName = employeeName;
@@ -62,7 +52,7 @@ namespace Rubin2000.Web.Controllers
 
         public IActionResult All(string id, [FromQuery]int currentPage)
         {
-            var employeeName = this.employeeService.GetEmployeeByScheduleId(id).Name;
+            var employeeName = this.employeeService.GetEmployeeNameByScheduleId(id);
             var allAppointments = this.appointmentService.GetAppointmentsByScheduleId(id);
 
             var appointments = allAppointments.Skip((currentPage - 1) * AppointmentScheduleServiceModel.AppointmentsPerPage)
@@ -84,13 +74,9 @@ namespace Rubin2000.Web.Controllers
 
         public IActionResult Approve(string id)
         {
-            var appointment = appointmentService.GetAppointment(id);
+            appointmentService.ApproveAppointment(id);
 
-            var status = AppointmentStatus.Approved;
-
-            appointmentService.ChangeAppointmentStatus(appointment, status);
-
-            var scheduleId = appointment.ScheduleId;
+            var scheduleId = scheduleService.GetScheduleIdByAppointmentId(id);
 
             return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
         }

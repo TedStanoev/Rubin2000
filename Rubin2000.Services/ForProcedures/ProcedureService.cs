@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Rubin2000.Data;
-using Rubin2000.Models;
+﻿using Rubin2000.Data;
 using Rubin2000.Global;
 using System.Collections.Generic;
 using System.Linq;
+using Rubin2000.Services.ForProcedures.Models;
 
 namespace Rubin2000.Services.ForProcedures
 {
@@ -11,40 +10,44 @@ namespace Rubin2000.Services.ForProcedures
     {
         private readonly Rubin2000DbContext data;
 
-        public ProcedureService(Rubin2000DbContext data)
-        {
-            this.data = data;
-        }
+        public ProcedureService(Rubin2000DbContext data) 
+            => this.data = data;
 
-        public IEnumerable<Procedure> GetAllProcedures()
-            => this.data.Procedures
-                .Include(p => p.Occupation)
-                .Include(p => p.Category)
-                .ToList();
-
-        public IEnumerable<Procedure> GetHairProcedures()
+        public IEnumerable<ProcedureListServiceModel> GetHairProcedures()
             => this.data.Procedures
                 .Where(p => p.Occupation.Name.ToLower() == OccupationConstants.HairStyler)
-                .Include(p => p.Occupation)
-                .Include(p => p.Category)
+                .Select(p => new ProcedureListServiceModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    DiscountPercentage = p.PercantageDiscount ?? 0,
+                    CategoryName = p.Category.Name
+                })
+                .OrderBy(p => p.CategoryName)
+                .ThenBy(p => p.Name)
                 .ToList();
 
-        public IEnumerable<Procedure> GetNailsProcedures()
-        => this.data.Procedures
+        public IEnumerable<ProcedureListServiceModel> GetNailsProcedures()
+            => this.data.Procedures
                 .Where(p => p.Occupation.Name.ToLower() == OccupationConstants.Manicurist)
-                .Include(p => p.Occupation)
-                .Include(p => p.Category)
+                .Select(p => new ProcedureListServiceModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    DiscountPercentage = p.PercantageDiscount ?? 0,
+                    CategoryName = p.Category.Name
+                })
+                .OrderBy(p => p.CategoryName)
+                .ThenBy(p => p.Name)
                 .ToList();
 
-        public Procedure GetProcedure(string id)
+        public string GetProcedureName(string id)
             => this.data.Procedures
                 .Where(p => p.Id == id)
-                .FirstOrDefault();
-
-        public Procedure GetProcedureByName(string name)
-            => this.data.Procedures
-                .Where(p => p.Name == name)
-                .FirstOrDefault();
+                .FirstOrDefault()
+                .Name;
 
         public bool ProcedureExists(string id)
             => this.data.Procedures

@@ -4,6 +4,7 @@ using Rubin2000.Models;
 using Rubin2000.Global;
 
 using static Rubin2000.Models.DataConstants.EFAttributeConstants;
+using Rubin2000.Services.ForEmployees.Models;
 
 namespace Rubin2000.Web.Models.Appointments
 {
@@ -29,6 +30,6 @@ namespace Rubin2000.Web.Models.Appointments
         [Required]
         public string EmployeeId { get; set; }
 
-        public List<Employee> Employees { get; set; }
+        public List<EmployeeSelectServiceModel> Employees { get; set; }
     }
 }

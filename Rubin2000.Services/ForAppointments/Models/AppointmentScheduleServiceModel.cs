@@ -2,7 +2,7 @@
 {
     public class AppointmentScheduleServiceModel
     {
-        public const int AppointmentsPerPage = 2;
+        public const int AppointmentsPerPage = 15;
 
         public string AppointmentId { get; set; }
 

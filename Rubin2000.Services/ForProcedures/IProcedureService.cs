@@ -1,20 +1,17 @@
 ﻿using Rubin2000.Models;
+using Rubin2000.Services.ForProcedures.Models;
 using System.Collections.Generic;
 
 namespace Rubin2000.Services.ForProcedures
 {
     public interface IProcedureService
     {
-        IEnumerable<Procedure> GetAllProcedures();
+        IEnumerable<ProcedureListServiceModel> GetHairProcedures();
 
-        Procedure GetProcedure(string id);
-
-        Procedure GetProcedureByName(string name);
-
-        IEnumerable<Procedure> GetHairProcedures();
-
-        IEnumerable<Procedure> GetNailsProcedures();
+        IEnumerable<ProcedureListServiceModel> GetNailsProcedures();
 
         bool ProcedureExists(string id);
+
+        string GetProcedureName(string id);
     }
 }

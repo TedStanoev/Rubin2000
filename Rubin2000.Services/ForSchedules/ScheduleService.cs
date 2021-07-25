@@ -19,49 +19,34 @@ namespace Rubin2000.Services.ForSchedules
             this.data = data;
         }
 
-        public Schedule GetEmployeeScheduleByEmployeeId(string employeeId)
+        private Schedule GetEmployeeScheduleByEmployeeId(string employeeId)
             => this.data.Schedules
                 .Where(s => s.EmployeeId == employeeId)
                 .FirstOrDefault();
 
-        public IEnumerable<EmployeeScheduleAppointmentServiceModel> GetEmployeeScheduleWithAppointments(string scheduleId)
-        {
-            var appointmentsInSchedule = this.data.Schedules
-                .Where(s => s.Id == scheduleId)
-                .Select(s => new
-                {
-                    Appointments = s.Appointments
-                        .Where(a => a.DateAndTime.Date == DateTime.UtcNow.Date)
-                        .OrderBy(a => (int)a.Status)
-                        .ThenBy(a => a.DateAndTime)
-                        .Select(a => new
-                        {
-                            AppointmentId = a.Id,
-                            ProcedureName = a.Procedure.Name,
-                            Date = a.DateAndTime.Date.ToString(DateViewFormat),
-                            Time = a.DateAndTime.ToString(TimeViewFormat),
-                            CreatorId = a.CreatorId,
-                            CreatorName = a.Creator.FirstName,
-                            ClientName = a.ClientName,
-                            Status = a.Status.ToString()
-                        })
-                        .ToList()
-                })
-                .FirstOrDefault();
+        public string GetScheduleIdByEmployeeId(string employeeId)
+            => this.GetEmployeeScheduleByEmployeeId(employeeId).Id;
 
-            return appointmentsInSchedule.Appointments
-                    .Select(a => new EmployeeScheduleAppointmentServiceModel
-                    {
-                        AppointmentId = a.AppointmentId,
-                        ProcedureName = a.ProcedureName,
-                        Date = a.Date,
-                        Time = a.Time,
-                        ClientName = a.ClientName,
-                        CreatorId = a.CreatorId,
-                        CreatorName = a.CreatorName,
-                        Status = a.Status
-                    })
-                    .ToList();
-        }
+        public string GetScheduleIdByAppointmentId(string appointmentId)
+            => this.data.Appointments.FirstOrDefault(a => a.Id == appointmentId).ScheduleId;
+
+        public IEnumerable<EmployeeScheduleAppointmentServiceModel> GetEmployeeScheduleWithAppointments(string scheduleId)
+            => this.data.Appointments
+                .Where(a => a.ScheduleId == scheduleId)
+                .OrderBy(a => (int)a.Status)
+                .ThenBy(a => a.DateAndTime)
+                .Select(a => new EmployeeScheduleAppointmentServiceModel
+                {
+                    AppointmentId = a.Id,
+                    ProcedureName = a.Procedure.Name,
+                    Date = a.DateAndTime.Date.ToString(DateViewFormat),
+                    Time = a.DateAndTime.ToString(TimeViewFormat),
+                    CreatorId = a.CreatorId,
+                    CreatorName = a.Creator.FirstName,
+                    ClientName = a.ClientName,
+                    Status = a.Status.ToString(),
+                })
+                .ToList();
+
     }
 }

@@ -19,27 +19,33 @@ namespace Rubin2000.Services.ForAppointments
         public AppointmentService(Rubin2000DbContext data)
             => this.data = data;
 
+        private Appointment GetAppointment(string id)
+            => this.data.Appointments
+                .Where(a => a.Id == id)
+                .FirstOrDefault();
 
-        public void ChangeAppointmentStatus(Appointment appointment, AppointmentStatus status)
-        {
-            this.data.Appointments.Remove(appointment);
-
-            this.data.SaveChanges();
-
-            appointment.Status = status;
-
-            this.data.Appointments.Add(appointment);
-
-            this.data.SaveChanges();
-        }
-
-        public void ChangeDescription(Appointment appointment, string description)
+        private void ChangeDescription(Appointment appointment, string description)
         {
             this.data.Appointments.Remove(appointment);
 
             this.data.SaveChanges();
 
             appointment.Description = description;
+
+            this.data.Appointments.Add(appointment);
+
+            this.data.SaveChanges();
+        }
+
+        public void ChangeAppointmentStatus(string appointmentId, AppointmentStatus status)
+        {
+            var appointment = this.GetAppointment(appointmentId);
+
+            this.data.Appointments.Remove(appointment);
+
+            this.data.SaveChanges();
+
+            appointment.Status = status;
 
             this.data.Appointments.Add(appointment);
 
@@ -90,16 +96,22 @@ namespace Rubin2000.Services.ForAppointments
             this.data.SaveChanges();
         }
 
+        public void ApproveAppointment(string appointmentId)
+        {
+            var status = AppointmentStatus.Approved;
+
+            this.ChangeAppointmentStatus(appointmentId, status);
+        }
+
         public void DeclineAppointment(string appointmentId, string appointmentDescription)
         {
-            var appointment = this.GetAppointment(appointmentId);
-
             var status = AppointmentStatus.Declined;
 
-            this.ChangeAppointmentStatus(appointment, status);
+            this.ChangeAppointmentStatus(appointmentId, status);
 
             if (!string.IsNullOrWhiteSpace(appointmentDescription))
             {
+                var appointment = this.GetAppointment(appointmentId);
                 this.ChangeDescription(appointment, appointmentDescription);
             }
         }
@@ -127,14 +139,6 @@ namespace Rubin2000.Services.ForAppointments
             this.data.SaveChanges();
         }
 
-        public IEnumerable<Appointment> GetAllAppointments()
-            => this.data.Appointments
-                .ToList();
-
-        public Appointment GetAppointment(string id)
-            => this.data.Appointments
-                .Where(a => a.Id == id)
-                .FirstOrDefault();
 
         public AppointmentEditServiceModel GetAppointmentForEdit(string id)
             => this.data.Appointments
@@ -242,6 +246,7 @@ namespace Rubin2000.Services.ForAppointments
 
         public bool BelongsToUser(string userId, string appointmentId)
             => this.GetAppointment(appointmentId).CreatorId == userId;
+
 
     }
 }

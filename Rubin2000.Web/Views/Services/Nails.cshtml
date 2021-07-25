@@ -1,5 +1,5 @@
-﻿@using Rubin2000.Web.Models.Procedures;
-@model IEnumerable<ProcedureListViewModel>
+﻿@using Rubin2000.Services.ForProcedures.Models
+@model IEnumerable<ProcedureListServiceModel>
 <h1>Nail prices:</h1>
 <ul>
     @foreach (var category in Model.Select(m => m.CategoryName).Distinct().OrderBy(c => c))

@@ -11,56 +11,18 @@ namespace Rubin2000.Web.Controllers
 {
     public class PricesController : Controller
     {
-        private readonly IProcedureService procedureService;
         private readonly ICategoryService categoryService;
 
-        public PricesController(IProcedureService procedureService, ICategoryService categoryService)
+        public PricesController(ICategoryService categoryService)
         {
-            this.procedureService = procedureService;
             this.categoryService = categoryService;
         }
 
         public IActionResult Index()
         {
-            var allProcedures = procedureService.GetAllProcedures();
-            var allProcedureCategories = categoryService.GetAllProcedureCategories();
+            var categoriesWithProcedures = categoryService.GetAllCategoriesWithProcedures();
 
-            var categoryViewModelList = new List<CategoryViewModel>();
-
-            foreach (var category in allProcedureCategories)
-            {
-                var categoryViewModel = new CategoryViewModel
-                {
-                    Name = category.Name,
-                    OccupationName = OccupationConstants.HairStyler
-                };
-
-                foreach (var procedure in allProcedures)
-                {
-                    if (procedure.Category.Name == category.Name)
-                    {
-                        categoryViewModel.Procedures.Add(new ProcedureListViewModel
-                        {
-                            Id = procedure.Id,
-                            Name = procedure.Name,
-                            Price = procedure.Price,
-                            DiscountPercentage = procedure.PercantageDiscount ?? 0,
-                            CategoryName = procedure.Category.Name,
-                            OccupationName = procedure.Occupation.Name
-                        });
-
-                        categoryViewModel.OccupationName = procedure.Occupation.Name;
-                    }
-                }
-
-                categoryViewModelList.Add(categoryViewModel);
-            }
-
-            categoryViewModelList = categoryViewModelList
-                .OrderBy(c => c.OccupationName)
-                .ToList();
-
-            return View(categoryViewModelList);
+            return View(categoriesWithProcedures);
         }
     }
 }

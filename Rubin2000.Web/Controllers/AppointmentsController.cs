@@ -54,9 +54,9 @@ namespace Rubin2000.Web.Controllers
 
             var appointmentViewModel = new AppointmentInputViewModel
             {
-                ProcedureName = procedureService.GetProcedure(id).Name,
+                ProcedureName = procedureService.GetProcedureName(id),
                 Employees = employeeService
-                    .GetEmployeesByProcedure(id)
+                    .GetEmployeesForSelect(id)
                     .ToList()
             };
 
@@ -107,14 +107,14 @@ namespace Rubin2000.Web.Controllers
             if (!this.ModelState.IsValid)
             {
                 appointment.Employees = employeeService
-                    .GetEmployeesByProcedure(id)
+                    .GetEmployeesForSelect(id)
                     .ToList();
 
                 return View(appointment);
             }
 
             var employeeScheduleId = scheduleService
-                .GetEmployeeScheduleByEmployeeId(appointment.EmployeeId).Id;
+                .GetScheduleIdByEmployeeId(appointment.EmployeeId);
 
             appointmentService.CreateAppointment(employeeScheduleId, id,
                 appointment.ClientName, this.userService.GetUserId(this.User), appointment.Description, appointmentDate, appointmentTime);
@@ -143,11 +143,9 @@ namespace Rubin2000.Web.Controllers
         [HttpPost]
         public IActionResult EmployeeDecline(DeclineAppointmentViewModel appointmentModel)
         {
-            var appointment = appointmentService.GetAppointment(appointmentModel.Id);
+            appointmentService.DeclineAppointment(appointmentModel.Id, appointmentModel.Description);
 
-            appointmentService.DeclineAppointment(appointment.Id, appointmentModel.Description);
-
-            var scheduleId = appointment.ScheduleId;
+            var scheduleId = scheduleService.GetScheduleIdByAppointmentId(appointmentModel.Id);
 
             return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
         }
