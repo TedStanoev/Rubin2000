@@ -1,5 +1,4 @@
 ﻿@using Rubin2000.Services.ForSchedules.Models;
-@using Rubin2000.Models.Enums;
 @model IEnumerable<EmployeeScheduleAppointmentServiceModel>
 
 <h1>
@@ -24,7 +23,8 @@
                 <td style="width: 200px">Created By</td>
                 <td style="width: fit-content"></td>
             </tr>
-            @foreach (var appointment in Model.Where(a => CommonMethods.IsAppointmentApproved(a.Status)))
+            @foreach (var appointment in Model.Where(a => CommonMethods.IsAppointmentApproved(a.Status)
+                                                        && DateTime.Parse(a.Date) == DateTime.UtcNow.Date))
             {
                 <tr>
                     <td>@appointment.Time</td>

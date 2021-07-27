@@ -48,5 +48,23 @@ namespace Rubin2000.Services.ForSchedules
                 })
                 .ToList();
 
+        public IEnumerable<EmployeeScheduleAppointmentServiceModel> GetEmployeeScheduleForToday(string scheduleId)
+            => this.data.Appointments
+                .Where(a => a.ScheduleId == scheduleId
+                    && a.DateAndTime.Date == DateTime.UtcNow.Date)
+                .OrderBy(a => (int)a.Status)
+                .ThenBy(a => a.DateAndTime)
+                .Select(a => new EmployeeScheduleAppointmentServiceModel
+                {
+                    AppointmentId = a.Id,
+                    ProcedureName = a.Procedure.Name,
+                    Date = a.DateAndTime.Date.ToString(DateViewFormat),
+                    Time = a.DateAndTime.ToString(TimeViewFormat),
+                    CreatorId = a.CreatorId,
+                    CreatorName = a.Creator.FirstName,
+                    ClientName = a.ClientName,
+                    Status = a.Status.ToString(),
+                })
+                .ToList();
     }
 }

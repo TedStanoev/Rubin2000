@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Rubin2000.Models;
 using Rubin2000.Models.Enums;
 using System;
@@ -14,6 +16,12 @@ namespace Rubin2000.Data.DataSeeding
             SeedProcedures(builder);
             SeedEmployees(builder);
             SeedSchedules(builder);
+        }
+
+        public static void SeedUsers(ModelBuilder builder, IServiceProvider services)
+        {
+            var userManager = services.GetRequiredService<UserManager<AppUser>>();
+            var roleManager = services.GetRequiredService<RoleManager<AppUser>>();
         }
 
         private static void SeedEmployees(ModelBuilder builder)

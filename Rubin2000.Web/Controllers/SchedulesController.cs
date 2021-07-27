@@ -8,7 +8,7 @@ using Rubin2000.Services.ForClients;
 using Rubin2000.Services.ForEmployees;
 using Rubin2000.Services.ForProcedures;
 using Rubin2000.Services.ForSchedules;
-
+using Rubin2000.Web.Models.Appointments;
 
 namespace Rubin2000.Web.Controllers
 {

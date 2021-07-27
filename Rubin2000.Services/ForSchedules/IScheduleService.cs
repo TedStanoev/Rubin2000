@@ -8,6 +8,8 @@ namespace Rubin2000.Services.ForSchedules
     {
         IEnumerable<EmployeeScheduleAppointmentServiceModel> GetEmployeeScheduleWithAppointments(string scheduleId);
 
+        IEnumerable<EmployeeScheduleAppointmentServiceModel> GetEmployeeScheduleForToday(string scheduleId);
+
         string GetScheduleIdByEmployeeId(string employeeId);
 
         string GetScheduleIdByAppointmentId(string appointmentId);

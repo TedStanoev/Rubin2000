@@ -93,7 +93,7 @@ namespace Rubin2000.Web.Controllers
                 this.ModelState.AddModelError(nameof(appointment.Time), ErrorConstants.InvalidTime);
             }
 
-            if (appointmentDate == DateTime.UtcNow.Date && appointmentTime.TimeOfDay <= DateTime.UtcNow.TimeOfDay)
+            if (appointmentDate == DateTime.UtcNow.Date && appointmentTime.TimeOfDay <= DateTime.Now.TimeOfDay)
             {
                 this.ModelState.AddModelError(nameof(appointment.Time), ErrorConstants.InvalidTimePassed);
             }
