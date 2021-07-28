@@ -1,7 +1,7 @@
 ﻿using Rubin2000.Models.Enums;
 using System;
 
-using static Rubin2000.Global.GeneralConstants;
+using static Rubin2000.Global.FormatConstants;
 
 namespace Rubin2000.Global
 {

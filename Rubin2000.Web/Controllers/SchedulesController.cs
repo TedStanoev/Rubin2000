@@ -1,5 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Rubin2000.Services.ForAppointments;
@@ -8,10 +8,12 @@ using Rubin2000.Services.ForClients;
 using Rubin2000.Services.ForEmployees;
 using Rubin2000.Services.ForProcedures;
 using Rubin2000.Services.ForSchedules;
-using Rubin2000.Web.Models.Appointments;
+
+using static Rubin2000.Global.WebConstants;
 
 namespace Rubin2000.Web.Controllers
 {
+    [Authorize(Roles = AdminRole)]
     public class SchedulesController : Controller
     {
         private readonly IEmployeeService employeeService;
@@ -72,7 +74,14 @@ namespace Rubin2000.Web.Controllers
 
         public IActionResult Approve(string id)
         {
-            this.appointmentService.ApproveAppointment(id);
+            try
+            {
+                this.appointmentService.ApproveAppointment(id);
+            }
+            catch (DbUpdateException)
+            {
+                return Problem("There was an error approving the appointment. Please contact the web admin.");
+            }
 
             var scheduleId = scheduleService.GetScheduleIdByAppointmentId(id);
 

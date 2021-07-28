@@ -9,5 +9,7 @@ namespace Rubin2000.Services.ForClients
         AppUser GetUserById(string id);
 
         string GetUserId(ClaimsPrincipal user);
+
+        bool IsAdministrator(ClaimsPrincipal user);
     }
 }

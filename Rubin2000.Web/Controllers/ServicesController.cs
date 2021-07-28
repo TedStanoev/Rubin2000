@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Rubin2000.Services.ForProcedures;
-using Rubin2000.Web.Models.Procedures;
-using System.Linq;
 
 namespace Rubin2000.Web.Controllers
 {

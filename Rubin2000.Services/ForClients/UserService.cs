@@ -4,6 +4,8 @@ using Rubin2000.Models;
 using System.Linq;
 using System.Security.Claims;
 
+using static Rubin2000.Global.WebConstants;
+
 namespace Rubin2000.Services.ForClients
 {
     public class UserService : IUserService
@@ -24,5 +26,9 @@ namespace Rubin2000.Services.ForClients
 
         public string GetUserId(ClaimsPrincipal user)
             => this.userManager.GetUserId(user);
+
+        public bool IsAdministrator(ClaimsPrincipal user)
+            => user.IsInRole(AdminRole);
+        
     }
 }

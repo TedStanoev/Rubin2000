@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using static Rubin2000.Global.GeneralConstants;
+using static Rubin2000.Global.FormatConstants;
 
 namespace Rubin2000.Services.ForEmployees
 {

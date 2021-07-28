@@ -16,15 +16,14 @@ using Rubin2000.Services.ForAppointments;
 using Rubin2000.Services.ForEmployees;
 using Rubin2000.Services.ForClients;
 using Rubin2000.Services.ForSchedules;
+using Rubin2000.Web.Infrastructure;
 
 namespace Rubin2000.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) 
+            => this.Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -33,7 +32,7 @@ namespace Rubin2000.Web
             services.AddDbContext<Rubin2000DbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<AppUser, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<Rubin2000DbContext>()
@@ -58,9 +57,10 @@ namespace Rubin2000.Web
                 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.PrepareDatabase();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,7 +69,6 @@ namespace Rubin2000.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();

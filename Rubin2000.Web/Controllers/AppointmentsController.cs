@@ -43,15 +43,20 @@ namespace Rubin2000.Web.Controllers
 
         public IActionResult Info(string id)
         {
+            var userId = this.userService.GetUserId(this.User);
+
+            if (!this.appointmentService.BelongsToUser(userId, id) && !this.userService.IsAdministrator(this.User))
+            {
+                return Unauthorized();
+            }
+
             var appointmentInfoModel = this.appointmentService.GetAppointmentInfo(id);
 
             return View(appointmentInfoModel);
         }
 
-        [Authorize]
         public IActionResult MakeAppointment(string id)
         {
-
             var appointmentViewModel = new AppointmentInputViewModel
             {
                 ProcedureName = procedureService.GetProcedureName(id),
@@ -63,7 +68,6 @@ namespace Rubin2000.Web.Controllers
             return View(appointmentViewModel);
         }
 
-        [Authorize]
         [HttpPost]
         public IActionResult MakeAppointment(AppointmentInputViewModel appointment, string id)
         {
@@ -124,6 +128,8 @@ namespace Rubin2000.Web.Controllers
 
         public IActionResult ClientDecline(string id)
         {
+
+
             return View(new DeclineAppointmentViewModel { Id = id});
         }
 
@@ -137,12 +143,26 @@ namespace Rubin2000.Web.Controllers
 
         public IActionResult EmployeeDecline(string id)
         {
+            var userId = this.userService.GetUserId(this.User);
+
+            if (!this.appointmentService.BelongsToUser(userId, id))
+            {
+                return Unauthorized();
+            }
+
             return View(new DeclineAppointmentViewModel { Id = id });
         }
 
         [HttpPost]
         public IActionResult EmployeeDecline(DeclineAppointmentViewModel appointmentModel)
         {
+            var userId = this.userService.GetUserId(this.User);
+
+            if (!this.appointmentService.BelongsToUser(userId, appointmentModel.Id))
+            {
+                return Unauthorized();
+            }
+
             appointmentService.DeclineAppointment(appointmentModel.Id, appointmentModel.Description);
 
             var scheduleId = scheduleService.GetScheduleIdByAppointmentId(appointmentModel.Id);
@@ -152,6 +172,13 @@ namespace Rubin2000.Web.Controllers
 
         public IActionResult Edit(string id)
         {
+            var userId = this.userService.GetUserId(this.User);
+
+            if (!this.appointmentService.BelongsToUser(userId, id) && !this.userService.IsAdministrator(this.User))
+            {
+                return Unauthorized();
+            }
+
             var appointment = this.appointmentService.GetAppointmentForEdit(id);
 
             if (DateTime.Parse(appointment.Date).Date < DateTime.UtcNow.Date)
@@ -165,6 +192,13 @@ namespace Rubin2000.Web.Controllers
         [HttpPost]
         public IActionResult Edit(AppointmentEditServiceModel appointment, string id)
         {
+            var userId = this.userService.GetUserId(this.User);
+
+            if (!this.appointmentService.BelongsToUser(userId, id) && !this.userService.IsAdministrator(this.User))
+            {
+                return Unauthorized();
+            }
+
             if (!procedureService.ProcedureExists(appointment.ProcedureId))
             {
                 this.ModelState.AddModelError(nameof(appointment.ProcedureName), ErrorConstants.InvalidProcedure);
