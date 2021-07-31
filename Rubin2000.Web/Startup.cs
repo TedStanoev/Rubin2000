@@ -17,6 +17,7 @@ using Rubin2000.Services.ForEmployees;
 using Rubin2000.Services.ForClients;
 using Rubin2000.Services.ForSchedules;
 using Rubin2000.Web.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Rubin2000.Web
 {
@@ -37,7 +38,10 @@ namespace Rubin2000.Web
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<Rubin2000DbContext>()
                 .AddDefaultUI();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
             services.AddRazorPages();
 
             services.Configure<IdentityOptions>(options =>

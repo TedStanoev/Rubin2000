@@ -42,7 +42,7 @@ namespace Rubin2000.Web.Controllers
         }
 
         public IActionResult Info(string id)
-        {
+        { 
             var userId = this.userService.GetUserId(this.User);
 
             if (!this.appointmentService.BelongsToUser(userId, id) && !this.userService.IsAdministrator(this.User))
