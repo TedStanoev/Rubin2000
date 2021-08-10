@@ -1,38 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using Rubin2000.Services.ForCategories;
-using Rubin2000.Services.ForCategories.Models;
-using System;
+using Rubin2000.Services.ForProcedures;
+using Rubin2000.Web.Models.Categories;
+using Rubin2000.Web.Models.Procedures;
+using Rubin2000.Global;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Rubin2000.Web.Controllers
 {
     public class PricesController : Controller
     {
         private readonly ICategoryService categoryService;
-        private readonly IMemoryCache cache;
 
-        public PricesController(ICategoryService categoryService, IMemoryCache cache)
+        public PricesController(ICategoryService categoryService)
         {
             this.categoryService = categoryService;
-            this.cache = cache;
         }
 
         public IActionResult Index()
         {
-            const string pricesCacheKey = "PricesCache";
-
-            var categoriesWithProcedures = this.cache.Get<IEnumerable<CategoryWithProceduresServiceModel>>(pricesCacheKey);
-
-            if (categoriesWithProcedures == null)
-            {
-                categoriesWithProcedures = categoryService.GetAllCategoriesWithProcedures();
-
-                var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(30));
-
-                this.cache.Set(pricesCacheKey, categoriesWithProcedures, cacheOptions);
-            }
+            var categoriesWithProcedures = categoryService.GetAllCategoriesWithProcedures();
 
             return View(categoriesWithProcedures);
         }
