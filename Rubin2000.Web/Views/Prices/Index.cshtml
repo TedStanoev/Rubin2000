@@ -1,18 +1,24 @@
 ﻿@using Rubin2000.Services.ForCategories.Models
 @model IEnumerable<CategoryWithProceduresServiceModel>
-<h1>All prices:</h1>
-<div>
+<h1 class="display-4 font-italic text-danger">All prices:</h1>
+<div class="container">
     @foreach (var category in Model)
     {
-        <h3>@category.Name</h3>
-        <ul>
-            @foreach (var procedure in category.Procedures)
-            {
-                <li style="list-style-type: none;">
-                    <h3>@procedure.Name</h3>
-                    <p>Price: @procedure.Price</p>
-                </li>
-            }
-        </ul>
+    <div class="card flex-wrap">
+        <div class="card-body flex-wrap">
+            <h3 class="card-title text-center text-danger font-italic">@category.Name</h3>
+            <ul class="list-group list-group-horizontal flex-wrap">
+                @foreach (var procedure in category.Procedures)
+                {
+                    <li class="list-group-item" style="list-style-type: none;">
+                        <div class="flex-wrap">
+                            <h4 class="card-subtitle text-muted">@procedure.Name</h4>
+                            <p class="card-text font-weight-bold">Price: @procedure.Price</p>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
     }
 </div>

@@ -51,6 +51,8 @@ namespace Rubin2000.Web
                 options.Password.RequiredUniqueChars = 0;
             });
 
+            services.AddMemoryCache();
+
             services.AddTransient<IOccupationService, OccupationService>();
             services.AddTransient<IProcedureService, ProcedureService>();
             services.AddTransient<ICategoryService, CategoryService>();

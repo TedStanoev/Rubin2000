@@ -1,6 +1,8 @@
-﻿<h1>Choose a service:</h1>
-<div>
-    <a asp-controller="Services" asp-action="Hair">Hair</a>
-    <br />
-    <a asp-controller="Services" asp-action="Nails">Nails</a>
+﻿<div class="container">
+    <h1 class="font-italic text-danger text-center">Choose a service:</h1>
+    <div class="row row-cols-2">
+        <a class="col text-center bg-danger text-white font-weight-bold" asp-controller="Services" asp-action="Hair">HairStyles</a>
+        <br />
+        <a class="col text-center bg-danger text-white font-weight-bold" asp-controller="Services" asp-action="Nails">Nails</a>
+    </div>
 </div>
