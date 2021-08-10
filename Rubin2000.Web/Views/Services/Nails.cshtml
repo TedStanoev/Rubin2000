@@ -1,23 +1,20 @@
-﻿@using Rubin2000.Services.ForProcedures.Models
+﻿@using Rubin2000.Services.ForProcedures.Models;
 @model IEnumerable<ProcedureListServiceModel>
-<h1>Nail prices:</h1>
-<ul>
+<h1 class="font-italic text-center text-danger">Nail prices:</h1>
+<ul class="list-group bg-danger" style="list-style-type:none">
     @foreach (var category in Model.Select(m => m.CategoryName).Distinct().OrderBy(c => c))
     {
-        <li>
-            <h2>@category</h2>
-            <ul>
+        <li class="list-group-item list-group-item-danger">
+            <h2 class="text-center text-black font-weight-bold">@category</h2>
+            <div class="list-group list-group-horizontal flex-wrap">
                 @foreach (var procedure in Model.Where(p => p.CategoryName == category))
                 {
-                    <li style="list-style-type: none;">
-                        <h3>@procedure.Name</h3>
-                        <p>Price: @procedure.Price</p>
-                        <a class="badge-success" asp-controller="Appointments" asp-action="MakeAppointment" asp-route-id="@procedure.Id">
-                            Select service
-                        </a>
-                    </li>
+                    <a class="list-group-item list-group-item-action list-group-item-danger col-md-4 col-sm-4 border-danger" asp-controller="Appointments" asp-action="MakeAppointment" asp-route-id="@procedure.Id">
+                        <h3 class="text-center text-black">@procedure.Name</h3>
+                        <p class="text-center text-black font-weight-bold">Price: @procedure.Price</p>
+                    </a>
                 }
-            </ul>
+            </div>
         </li>
     }
 
