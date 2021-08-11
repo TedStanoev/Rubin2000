@@ -21,11 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pipeline\" />
-    <Folder Include="Routing\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Rubin2000.Web\Rubin2000.Web.csproj" />
   </ItemGroup>
 
