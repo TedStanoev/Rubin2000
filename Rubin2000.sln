@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubin2000.ConsoleUI", "Rubi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubin2000.Global", "Rubin2000.Global\Rubin2000.Global.csproj", "{C06EA4A9-E572-4639-9A63-DC79CFEA8F87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubin2000.WebTests", "Rubin2000.WebTests\Rubin2000.WebTests.csproj", "{DDA3ABD5-648F-4219-8381-40901A6EC818}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{C06EA4A9-E572-4639-9A63-DC79CFEA8F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C06EA4A9-E572-4639-9A63-DC79CFEA8F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C06EA4A9-E572-4639-9A63-DC79CFEA8F87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDA3ABD5-648F-4219-8381-40901A6EC818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDA3ABD5-648F-4219-8381-40901A6EC818}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDA3ABD5-648F-4219-8381-40901A6EC818}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDA3ABD5-648F-4219-8381-40901A6EC818}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
