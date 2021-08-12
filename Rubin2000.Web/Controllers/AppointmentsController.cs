@@ -128,21 +128,6 @@ namespace Rubin2000.Web.Controllers
 
         public IActionResult ClientDecline(string id)
         {
-
-
-            return View(new DeclineAppointmentViewModel { Id = id});
-        }
-
-        [HttpPost]
-        public IActionResult ClientDecline(DeclineAppointmentViewModel appointmentModel)
-        {
-            appointmentService.DeclineAppointment(appointmentModel.Id, appointmentModel.Description);
-
-            return Redirect($"/Appointments/MyAppointments");
-        }
-
-        public IActionResult EmployeeDecline(string id)
-        {
             var userId = this.userService.GetUserId(this.User);
 
             if (!this.appointmentService.BelongsToUser(userId, id))
@@ -150,11 +135,11 @@ namespace Rubin2000.Web.Controllers
                 return Unauthorized();
             }
 
-            return View(new DeclineAppointmentViewModel { Id = id });
+            return View(new DeclineAppointmentViewModel { Id = id});
         }
 
         [HttpPost]
-        public IActionResult EmployeeDecline(DeclineAppointmentViewModel appointmentModel)
+        public IActionResult ClientDecline(DeclineAppointmentViewModel appointmentModel)
         {
             var userId = this.userService.GetUserId(this.User);
 
@@ -165,9 +150,7 @@ namespace Rubin2000.Web.Controllers
 
             appointmentService.DeclineAppointment(appointmentModel.Id, appointmentModel.Description);
 
-            var scheduleId = scheduleService.GetScheduleIdByAppointmentId(appointmentModel.Id);
-
-            return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
+            return Redirect($"/Appointments/MyAppointments");
         }
 
         public IActionResult Edit(string id)

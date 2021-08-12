@@ -53,7 +53,7 @@
         }
     </div>
 
-    <a class="badge-info btn" asp-controller="Appointments" asp-action="MyAppointments">Back</a>
+    <a class="badge-info btn" asp-controller="Schedules" asp-action="EmployeeSchedule" asp-route-id="@Model.ScheduleId">Back</a>
     @if (DateTime.Parse(Model.Date).Date >= DateTime.UtcNow.Date)
     {
         @if (Model.Status != AppointmentStatus.Declined.ToString() && Model.Status != AppointmentStatus.Approved.ToString())

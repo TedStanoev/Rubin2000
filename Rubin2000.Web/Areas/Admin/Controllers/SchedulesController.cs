@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Rubin2000.Global;
 using Rubin2000.Services.ForAppointments;
 using Rubin2000.Services.ForAppointments.Models;
 using Rubin2000.Services.ForClients;
@@ -11,9 +12,10 @@ using Rubin2000.Services.ForSchedules;
 
 using static Rubin2000.Global.WebConstants;
 
-namespace Rubin2000.Web.Controllers
+namespace Rubin2000.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = AdminRole)]
+    [Area(AdminArea)]
     public class SchedulesController : Controller
     {
         private readonly IEmployeeService employeeService;
@@ -80,12 +82,12 @@ namespace Rubin2000.Web.Controllers
             }
             catch (DbUpdateException)
             {
-                return Problem("There was an error approving the appointment. Please contact the web admin.");
+                return Problem(ErrorConstants.OperationError);
             }
 
             var scheduleId = scheduleService.GetScheduleIdByAppointmentId(id);
 
-            return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
+            return Redirect($"/Admin/Schedules/EmployeeSchedule/{scheduleId}");
         }
 
         public IActionResult Delete(string id)
@@ -98,10 +100,10 @@ namespace Rubin2000.Web.Controllers
             }
             catch (DbUpdateException)
             {
-                return Problem("There was an error deleting the appointment. Please contact the web admin.");
+                return Problem(ErrorConstants.OperationError);
             }
 
-            return Redirect($"/Schedules/EmployeeSchedule/{scheduleId}");
+            return Redirect($"/Admin/Schedules/All/{scheduleId}");
         }
     }
 }

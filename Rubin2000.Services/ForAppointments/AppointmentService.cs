@@ -220,7 +220,8 @@ namespace Rubin2000.Services.ForAppointments
         public IEnumerable<UserAppointmentServiceModel> GetUserAppointments(string userId)
             => this.data.Appointments
                 .Where(a => a.CreatorId == userId && a.IsDeletedToUser == false)
-                .OrderByDescending(a => a.DateAndTime)
+                .OrderBy(a => (int)a.Status)
+                .ThenByDescending(a => a.DateAndTime)
                 .Select(a => new UserAppointmentServiceModel
                 {
                     ProcedureName = a.Procedure.Name,

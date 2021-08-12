@@ -5,5 +5,7 @@
         public const string WebTitle = "Salon Rubin 2000";
 
         public const string AdminRole = "Administrator";
+
+        public const string AdminArea = "Admin";
     }
 }
