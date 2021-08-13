@@ -1,5 +1,4 @@
 ﻿using MyTested.AspNetCore.Mvc;
-using Rubin2000.Models;
 using Rubin2000.Services.ForAppointments.Models;
 using Rubin2000.Web.Controllers;
 using Rubin2000.Web.Models.Appointments;
@@ -35,7 +34,20 @@ namespace Rubin2000.WebTests.Controllers
                 .Calling(c => c.Info(id))
                 .ShouldReturn()
                 .View(view => view
-                    .WithModelOfType<AppointmentInfoServiceModel>(m => m.AppointmentId == id));
+                    .WithModelOfType<AppointmentInfoServiceModel>(
+                        m => m.AppointmentId == id
+                        && m.ClientName == "ClientName"
+                        && m.Date == "03.02.2100"
+                        && m.Time == "18:00"
+                        && m.Status == "Pending"
+                        && m.Description == "SomeDescription"
+                        && m.EmployeeName == "EmployeeName"
+                        && m.EmployeeOccupation == "hairstyler"
+                        && m.Price == "10 BGN"
+                        && m.ProcedureName == "ProcedureName"
+                        && m.ProcedureTime == "One Hour"
+                        && m.UserFirstName == "UserFirstName"
+                        && m.UserLastName == "UserLastName"));
 
         [Theory]
         [InlineData("AppointmentId")]
@@ -130,15 +142,16 @@ namespace Rubin2000.WebTests.Controllers
                 .ShouldReturn()
                 .Redirect("/Appointments/MyAppointments");
 
-        [Fact]
-        public void PostClientDeclineWithIncorrectDataShouldReturnView()
+        [Theory]
+        [InlineData("AppointmentId")]
+        public void GetEditWithValidDataShouldReturnView(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser()
                     .AndAlso()
                     .WithData(Appointment()))
-                .Calling(c => c.ClientDecline(InvalidDecline()))
+                .Calling(c => c.Edit(id))
                 .ShouldReturn()
                 .View(view => view
-                    .WithModelOfType<DeclineAppointmentViewModel>());
+                    .WithModelOfType<AppointmentEditServiceModel>());
     }
 }
