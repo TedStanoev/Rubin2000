@@ -33,6 +33,8 @@ namespace Rubin2000.Services.ForAppointments
 
         bool BelongsToUser(string userId, string appointmentId);
 
+        bool AppointmentExists(string id);
+
         void DeleteAppointment(string id);
     }
 }

@@ -50,13 +50,26 @@ namespace Rubin2000.Web.Controllers
                 return Unauthorized();
             }
 
-            var appointmentInfoModel = this.appointmentService.GetAppointmentInfo(id);
+            try
+            {
+                var appointmentInfoModel = this.appointmentService.GetAppointmentInfo(id);
 
-            return View(appointmentInfoModel);
+                return View(appointmentInfoModel);
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+            
         }
 
         public IActionResult MakeAppointment(string id)
         {
+            if (!procedureService.ProcedureExists(id))
+            {
+                return NotFound();
+            }
+
             var appointmentViewModel = new AppointmentInputViewModel
             {
                 ProcedureName = procedureService.GetProcedureName(id),
@@ -128,6 +141,11 @@ namespace Rubin2000.Web.Controllers
 
         public IActionResult ClientDecline(string id)
         {
+            if (!this.appointmentService.AppointmentExists(id))
+            {
+                return NotFound();
+            }
+
             var userId = this.userService.GetUserId(this.User);
 
             if (!this.appointmentService.BelongsToUser(userId, id))
@@ -146,6 +164,11 @@ namespace Rubin2000.Web.Controllers
             if (!this.appointmentService.BelongsToUser(userId, appointmentModel.Id))
             {
                 return Unauthorized();
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return View(appointmentModel);
             }
 
             appointmentService.DeclineAppointment(appointmentModel.Id, appointmentModel.Description);

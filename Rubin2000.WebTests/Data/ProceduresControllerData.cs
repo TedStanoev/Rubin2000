@@ -6,10 +6,6 @@ namespace Rubin2000.WebTests.Data
 {
     public static class ProceduresControllerData
     {
-        public static IEnumerable<Procedure> Procedures()
-            => Enumerable.Range(0, 5)
-                .Select(p => new Procedure());
-
         public static IEnumerable<Procedure> ProceduresWithCategoryAndOccupation()
         {
             var category1 = new ProcedureCategory();

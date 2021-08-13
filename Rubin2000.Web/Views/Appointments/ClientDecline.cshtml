@@ -4,9 +4,10 @@
 <h1>Give us your reasons:</h1>
 <form class="col" method="post">
     <label asp-for="@Model.Description"></label>
-    <input type="text" asp-for="@Model.Description" value="I am sorry but I can't make it."/>
-    <span class="small text-danger field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+    <input type="text" asp-for="@Model.Description" value="I am sorry but I can't make it." />
 
     <button type="submit">Decline appointment</button>
+
+    <span asp-validation-for="@Model.Description" class="small text-danger"></span>
 </form>
 <a class="badge-danger btn" asp-controller="Appointments" asp-action="MyAppointments">Cancel</a>

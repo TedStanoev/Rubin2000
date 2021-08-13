@@ -19,13 +19,10 @@ namespace Rubin2000.Services.ForSchedules
             this.data = data;
         }
 
-        private Schedule GetEmployeeScheduleByEmployeeId(string employeeId)
+        public string GetScheduleIdByEmployeeId(string employeeId)
             => this.data.Schedules
                 .Where(s => s.EmployeeId == employeeId)
-                .FirstOrDefault();
-
-        public string GetScheduleIdByEmployeeId(string employeeId)
-            => this.GetEmployeeScheduleByEmployeeId(employeeId).Id;
+                .FirstOrDefault().Id;
 
         public string GetScheduleIdByAppointmentId(string appointmentId)
             => this.data.Appointments.FirstOrDefault(a => a.Id == appointmentId).ScheduleId;

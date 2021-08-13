@@ -21,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Rubin2000.Models\Rubin2000.Models.csproj" />
+    <ProjectReference Include="..\Rubin2000.Services\Rubin2000.Services.csproj" />
     <ProjectReference Include="..\Rubin2000.Web\Rubin2000.Web.csproj" />
   </ItemGroup>
 
