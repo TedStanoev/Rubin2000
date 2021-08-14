@@ -153,5 +153,51 @@ namespace Rubin2000.WebTests.Controllers
                 .ShouldReturn()
                 .View(view => view
                     .WithModelOfType<AppointmentEditServiceModel>());
+
+        [Theory]
+        [InlineData("AppointmentId")]
+        public void PostEditWithValidInputShouldRedirectToMyAppointments(string id)
+            => MyController<AppointmentsController>
+                .Instance(i => i.WithUser()
+                    .AndAlso()
+                    .WithData(Appointment()))
+                .Calling(c => c.Edit(ValidEditAppointment(), id))
+                .ShouldReturn()
+                .Redirect("/Appointments/MyAppointments");
+
+        [Theory]
+        [InlineData("AppointmentId")]
+        public void PostEditWithInvalidInputShouldReturnView(string id)
+            => MyController<AppointmentsController>
+                .Instance(i => i.WithUser()
+                    .AndAlso()
+                    .WithData(Appointment()))
+                .Calling(c => c.Edit(InvalidEditAppointment(), id))
+                .ShouldReturn()
+                .View(view => view
+                    .WithModelOfType<AppointmentEditServiceModel>(
+                        m => m.Employees.Count() == 1));
+
+        [Theory]
+        [InlineData("AppointmentId")]
+        public void UserDeleteWithOwnerUserShouldRedirectToMyAppointments(string id)
+            => MyController<AppointmentsController>
+                .Instance(i => i.WithUser()
+                    .AndAlso()
+                    .WithData(Appointment()))
+                .Calling(c => c.UserDelete(id))
+                .ShouldReturn()
+                .Redirect("/Appointments/MyAppointments");
+
+        [Theory]
+        [InlineData("AppointmentId")]
+        public void UserDeleteWithUserWhoIsNotOwnerShouldReturnUnauthorized(string id)
+            => MyController<AppointmentsController>
+                .Instance(i => i.WithUser(u => u.WithIdentifier("Invalid"))
+                    .AndAlso()
+                    .WithData(Appointment()))
+                .Calling(c => c.UserDelete(id))
+                .ShouldReturn()
+                .Unauthorized();
     }
 }

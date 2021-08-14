@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Rubin2000.Models;
 using Rubin2000.Models.Enums;
+using Rubin2000.Services.ForAppointments.Models;
 using Rubin2000.Web.Models.Appointments;
 using System;
 using System.Collections.Generic;
@@ -104,6 +105,30 @@ namespace Rubin2000.WebTests.Data
                 Time = "18:00",
                 Description = "Some description",
                 ClientName = "Emanuela",
+                EmployeeId = "EmployeeId"
+            };
+
+        public static AppointmentEditServiceModel ValidEditAppointment()
+            => new()
+            {
+                ProcedureId = "ProcedureId",
+                ProcedureName = "ProcedureName",
+                ClientName = "Aria",
+                Date = "2100-02-03",
+                Time = "18:00",
+                Description = "Some description",
+                EmployeeId = "EmployeeId"
+            };
+
+        public static AppointmentEditServiceModel InvalidEditAppointment()
+            => new()
+            {
+                ProcedureId = "ProcedureId",
+                ProcedureName = "ProcedureName",
+                ClientName = "Aria",
+                Date = "1989-02-03",
+                Time = "23:00",
+                Description = "Some description",
                 EmployeeId = "EmployeeId"
             };
 
