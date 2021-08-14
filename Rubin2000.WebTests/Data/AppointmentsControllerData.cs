@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Rubin2000.Models;
+﻿using Rubin2000.Models;
 using Rubin2000.Models.Enums;
 using Rubin2000.Services.ForAppointments.Models;
 using Rubin2000.Web.Models.Appointments;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 
 using static Rubin2000.Global.FormatConstants;
+using static Rubin2000.Global.WebTestConstants;
 
 namespace Rubin2000.WebTests.Data
 {
@@ -25,8 +24,8 @@ namespace Rubin2000.WebTests.Data
         public static Procedure ProcedureWithOccupationAndEmployee()
             => new()
             {
-                Id = "ProcedureId",
-                Name = "ProcedureName",
+                Id = ProcedureId,
+                Name = ProcedureName,
                 Duration = Duration.One_Hour,
                 Price = 10,
                 Occupation = new Occupation 
@@ -36,12 +35,12 @@ namespace Rubin2000.WebTests.Data
                     { 
                         new Employee
                         {
-                            Id = "EmployeeId",
+                            Id = EmployeeId,
                             Name = "EmployeeName",
                             Schedule = new Schedule
                             {
-                                Id = "ScheduleId",
-                                EmployeeId = "EmployeeId"
+                                Id = ScheduleId,
+                                EmployeeId = EmployeeId
                             }
                         } 
                     }
@@ -76,10 +75,10 @@ namespace Rubin2000.WebTests.Data
         public static Appointment Appointment()
             => new()
             {
-                Id = "AppointmentId",
-                Description = "SomeDescription",
+                Id = AppointmentId,
+                Description = Description,
                 Procedure = ProcedureWithOccupationAndEmployee(),
-                ScheduleId = "ScheduleId",
+                ScheduleId = ScheduleId,
                 Creator = User(),
                 ClientName = "ClientName",
                 Status = AppointmentStatus.Pending,
@@ -89,62 +88,62 @@ namespace Rubin2000.WebTests.Data
         public static AppointmentInputViewModel ValidInputForAppointment()
             => new()
             {
-                ProcedureName = "ProcedureName",
+                ProcedureName = ProcedureName,
                 Date = "2100-02-03",
                 Time = "18:00",
-                Description = "Some description",
+                Description = Description,
                 ClientName = "Emanuela",
-                EmployeeId = "EmployeeId"
+                EmployeeId = EmployeeId
             };
 
         public static AppointmentInputViewModel InvalidInputForAppointment()
             => new()
             {
-                ProcedureName = "ProcedureName",
+                ProcedureName = ProcedureName,
                 Date = "1990-02-03",
                 Time = "18:00",
-                Description = "Some description",
+                Description = Description,
                 ClientName = "Emanuela",
-                EmployeeId = "EmployeeId"
+                EmployeeId = EmployeeId
             };
 
         public static AppointmentEditServiceModel ValidEditAppointment()
             => new()
             {
-                ProcedureId = "ProcedureId",
-                ProcedureName = "ProcedureName",
+                ProcedureId = ProcedureId,
+                ProcedureName = ProcedureName,
                 ClientName = "Aria",
                 Date = "2100-02-03",
                 Time = "18:00",
-                Description = "Some description",
-                EmployeeId = "EmployeeId"
+                Description = Description,
+                EmployeeId = EmployeeId
             };
 
         public static AppointmentEditServiceModel InvalidEditAppointment()
             => new()
             {
-                ProcedureId = "ProcedureId",
-                ProcedureName = "ProcedureName",
+                ProcedureId = ProcedureId,
+                ProcedureName = ProcedureName,
                 ClientName = "Aria",
                 Date = "1989-02-03",
                 Time = "23:00",
-                Description = "Some description",
-                EmployeeId = "EmployeeId"
+                Description = Description,
+                EmployeeId = EmployeeId
             };
 
         public static DeclineAppointmentViewModel ValidDecline()
             => new()
             {
-                Id = "AppointmentId"
+                Id = AppointmentId
             };
 
         public static Employee Employee()
             => new() 
             { 
-                Id = "EmployeeId",
+                Id = EmployeeId,
                 Schedule = new Schedule
                 {
-                    Id = "ScheduleId"
+                    Id = ScheduleId
                 }
             };
     }

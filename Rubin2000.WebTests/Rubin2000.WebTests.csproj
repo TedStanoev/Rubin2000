@@ -26,8 +26,4 @@
     <ProjectReference Include="..\Rubin2000.Web\Rubin2000.Web.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\" />
-  </ItemGroup>
-
 </Project>

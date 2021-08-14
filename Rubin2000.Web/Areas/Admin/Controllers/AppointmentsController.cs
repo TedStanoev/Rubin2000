@@ -46,6 +46,11 @@ namespace Rubin2000.Web.Areas.Admin.Controllers
         {
             appointmentService.DeclineAppointment(appointmentModel.Id, appointmentModel.Description);
 
+            if (!this.ModelState.IsValid)
+            {
+                return View(appointmentModel);
+            }
+
             var scheduleId = scheduleService.GetScheduleIdByAppointmentId(appointmentModel.Id);
 
             return Redirect($"/Admin/Schedules/EmployeeSchedule/{scheduleId}");

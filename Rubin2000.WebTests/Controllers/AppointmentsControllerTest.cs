@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
+using static Rubin2000.Global.WebTestConstants;
 using static Rubin2000.WebTests.Data.AppointmentsControllerData;
+using static Rubin2000.WebTests.ModelComparing.ForAppointments;
 
 namespace Rubin2000.WebTests.Controllers
 {
@@ -25,7 +27,7 @@ namespace Rubin2000.WebTests.Controllers
                         m => m.Count() == 5));
 
         [Theory]
-        [InlineData("AppointmentId")]
+        [InlineData(AppointmentId)]
         public void InfoShouldReturnTheViewOfTheGivenAppointment(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser()
@@ -35,22 +37,10 @@ namespace Rubin2000.WebTests.Controllers
                 .ShouldReturn()
                 .View(view => view
                     .WithModelOfType<AppointmentInfoServiceModel>(
-                        m => m.AppointmentId == id
-                        && m.ClientName == "ClientName"
-                        && m.Date == "03.02.2100"
-                        && m.Time == "18:00"
-                        && m.Status == "Pending"
-                        && m.Description == "SomeDescription"
-                        && m.EmployeeName == "EmployeeName"
-                        && m.EmployeeOccupation == "hairstyler"
-                        && m.Price == "10 BGN"
-                        && m.ProcedureName == "ProcedureName"
-                        && m.ProcedureTime == "One Hour"
-                        && m.UserFirstName == "UserFirstName"
-                        && m.UserLastName == "UserLastName"));
+                        m => InfoModelCompare(m)));
 
         [Theory]
-        [InlineData("AppointmentId")]
+        [InlineData(AppointmentId)]
         public void InfoShouldReturnUnauthorizedWhenTheUserIsntAnAdminOrIsTheCreatorOfAppointment(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser(u => u.WithIdentifier("WrongUser"))
@@ -61,7 +51,7 @@ namespace Rubin2000.WebTests.Controllers
                 .Unauthorized();
 
         [Theory]
-        [InlineData("ProcedureId")]
+        [InlineData(ProcedureId)]
         public void GetMakeAppointmentShouldReturnView(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser()
@@ -75,7 +65,7 @@ namespace Rubin2000.WebTests.Controllers
                         && m.Employees.Count == 1));
 
         [Theory]
-        [InlineData("ProcedureId")]
+        [InlineData(ProcedureId)]
         public void PostMakeAppointmentWithValidInputShouldRedirectToMyAppointments(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser()
@@ -86,7 +76,7 @@ namespace Rubin2000.WebTests.Controllers
                 .Redirect("/Appointments/MyAppointments");
 
         [Theory]
-        [InlineData("ProcedureId")]
+        [InlineData(ProcedureId)]
         public void PostMakeAppointmentWithInvalidInputShouldReturnViewToMakeAppointment(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser()
@@ -98,7 +88,7 @@ namespace Rubin2000.WebTests.Controllers
                     .WithModelOfType<AppointmentInputViewModel>());
 
         [Theory]
-        [InlineData("AppointmentId")]
+        [InlineData(AppointmentId)]
         public void GetClientDeclineWithValidDataShouldReturnView(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser()
@@ -122,7 +112,7 @@ namespace Rubin2000.WebTests.Controllers
                 .NotFound();
 
         [Theory]
-        [InlineData("AppointmentId")]
+        [InlineData(AppointmentId)]
         public void GetClientDeclineWithInvalidOwnerShouldReturnUnauthorized(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser(u => u.WithIdentifier("WrongUser"))
@@ -143,7 +133,7 @@ namespace Rubin2000.WebTests.Controllers
                 .Redirect("/Appointments/MyAppointments");
 
         [Theory]
-        [InlineData("AppointmentId")]
+        [InlineData(AppointmentId)]
         public void GetEditWithValidDataShouldReturnView(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser()
@@ -155,7 +145,7 @@ namespace Rubin2000.WebTests.Controllers
                     .WithModelOfType<AppointmentEditServiceModel>());
 
         [Theory]
-        [InlineData("AppointmentId")]
+        [InlineData(AppointmentId)]
         public void PostEditWithValidInputShouldRedirectToMyAppointments(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser()
@@ -166,7 +156,7 @@ namespace Rubin2000.WebTests.Controllers
                 .Redirect("/Appointments/MyAppointments");
 
         [Theory]
-        [InlineData("AppointmentId")]
+        [InlineData(AppointmentId)]
         public void PostEditWithInvalidInputShouldReturnView(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser()
@@ -179,7 +169,7 @@ namespace Rubin2000.WebTests.Controllers
                         m => m.Employees.Count() == 1));
 
         [Theory]
-        [InlineData("AppointmentId")]
+        [InlineData(AppointmentId)]
         public void UserDeleteWithOwnerUserShouldRedirectToMyAppointments(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser()
@@ -190,7 +180,7 @@ namespace Rubin2000.WebTests.Controllers
                 .Redirect("/Appointments/MyAppointments");
 
         [Theory]
-        [InlineData("AppointmentId")]
+        [InlineData(AppointmentId)]
         public void UserDeleteWithUserWhoIsNotOwnerShouldReturnUnauthorized(string id)
             => MyController<AppointmentsController>
                 .Instance(i => i.WithUser(u => u.WithIdentifier("Invalid"))
