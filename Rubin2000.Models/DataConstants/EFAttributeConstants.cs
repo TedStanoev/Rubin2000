@@ -8,6 +8,6 @@
 
         public const int NameDefaultLength = 20;
 
-        public const int OccupationNameDefaultLength = 50;
+        public const int OccupationNameDefaultLength = 100;
     }
 }
