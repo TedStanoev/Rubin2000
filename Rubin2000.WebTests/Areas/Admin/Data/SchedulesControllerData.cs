@@ -1,4 +1,5 @@
 ﻿using Rubin2000.Models;
+using Rubin2000.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,29 @@ namespace Rubin2000.WebTests.Areas.Admin.Data
 {
     public static class SchedulesControllerData
     {
+        public static Appointment DeleteAppointment()
+            => new()
+            {
+                Id = AppointmentId,
+                Schedule = new Schedule
+                {
+                    Id = ScheduleId,
+                    Employee = new Employee()
+                },
+                ScheduleId = ScheduleId
+            };
+
+        public static Appointment ApproveAppointment()
+            => new()
+            {
+                Id = AppointmentId,
+                Schedule = new Schedule
+                {
+                    Id = ScheduleId,
+                    Employee = new Employee()
+                }
+            };
+
         public static Schedule Schedule()
             => new()
             {
@@ -22,15 +46,19 @@ namespace Rubin2000.WebTests.Areas.Admin.Data
                     .Select(a => new Appointment
                     {
                         ScheduleId = ScheduleId,
+                        Procedure = new Procedure(),
+                        Creator = new AppUser()
                     })
                     .ToList()
             };
 
-        public static IEnumerable<Appointment> AppointmentsWithSchedule()
+        public static IEnumerable<Appointment> Appointments()
             => Enumerable.Range(0, 2)
                 .Select(a => new Appointment
                 {
-                    ScheduleId = ScheduleId
+                    ScheduleId = ScheduleId,
+                    Procedure = new Procedure(),
+                    Creator = new AppUser()
                 });
 
         public static IEnumerable<Employee> EmployeesWithSchedules()

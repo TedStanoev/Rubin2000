@@ -76,6 +76,11 @@ namespace Rubin2000.Web.Areas.Admin.Controllers
 
         public IActionResult Approve(string id)
         {
+            if (!this.appointmentService.AppointmentExists(id))
+            {
+                return NotFound();
+            }
+
             try
             {
                 this.appointmentService.ApproveAppointment(id);
@@ -92,6 +97,12 @@ namespace Rubin2000.Web.Areas.Admin.Controllers
 
         public IActionResult Delete(string id)
         {
+
+            if (!this.appointmentService.AppointmentExists(id))
+            {
+                return NotFound();
+            }
+
             var scheduleId = this.scheduleService.GetScheduleIdByAppointmentId(id);
 
             try
