@@ -4,6 +4,8 @@ using Rubin2000.Models;
 using Rubin2000.Global;
 
 using static Rubin2000.Models.DataConstants.EFAttributeConstants;
+using static Rubin2000.Global.ErrorConstants;
+
 using Rubin2000.Services.ForEmployees.Models;
 
 namespace Rubin2000.Web.Models.Appointments
@@ -15,7 +17,7 @@ namespace Rubin2000.Web.Models.Appointments
 
         [Required]
         [Display(Name = "Name")]
-        [StringLength(NameDefaultLength, MinimumLength = 2, ErrorMessage = ErrorConstants.InvalidName)]
+        [StringLength(NameDefaultLength, MinimumLength = 2, ErrorMessage = InvalidName)]
         public string ClientName { get; set; }
 
         [Required]
@@ -24,7 +26,7 @@ namespace Rubin2000.Web.Models.Appointments
         [Required]
         public string Time { get; set; }
 
-        [MaxLength(DescriptionDefaultLength)]
+        [MaxLength(DescriptionDefaultLength, ErrorMessage = InvalidDescription)]
         public string Description { get; set; }
 
         [Required]

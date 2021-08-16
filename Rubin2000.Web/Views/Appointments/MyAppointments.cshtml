@@ -1,98 +1,125 @@
 ﻿@using Rubin2000.Services.ForAppointments.Models
 @using Rubin2000.Models.Enums
 @model IEnumerable<UserAppointmentServiceModel>
-<h1>These are my appointments:</h1>
-@if (!Model.Any())
-{
-    <h2><a asp-controller="Services" asp-action="Index">Make your first appointment!</a></h2>
-}
-else
-{
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <td>
-                    Procedure Name
-                </td>
-                <td>
-                    Date
-                </td>
-                <td>
-                    Time
-                </td>
-                <td>
-                    Status
-                </td>
-                <td></td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var appointment in Model)
+<div class="container">
+    <div class="card text-center border border-danger">
+        <div class="card-header bg-danger">
+            <h1 class="font-italic text-center text-white">These are my appointments:</h1>
+        </div>
+        <div class="card-body">
+            @if (!Model.Any())
             {
-                <tr>
-                    <td>
-                        @appointment.ProcedureName
-                    </td>
-                    <td>
-                        @appointment.Date
-                    </td>
-                    <td>
-                        @appointment.Time
-                    </td>
-                    @if (appointment.Status == AppointmentStatus.Approved.ToString())
-                    {
-                        <td class="text-success">
-                            @appointment.Status
-                        </td>
-                        <td>
-                            <div>
-                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                                <a class="alert-danger btn" asp-controller="Appointments" asp-action="ClientDecline" asp-route-id="@appointment.AppointmentId">Decline</a>
-                            </div>
-                        </td>
-                    }
-                    else if (appointment.Status == AppointmentStatus.Declined.ToString())
-                    {
-                        <td class="text-danger">
-                            @appointment.Status
-                        </td>
-                        <td>
-                            <div>
-                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                                <a class="alert-danger btn delete-warning" asp-controller="Appointments" asp-action="UserDelete" asp-route-id="@appointment.AppointmentId">Clear</a>
-                            </div>
-                        </td>
-                    }
-                    else if (appointment.Status == AppointmentStatus.Pending.ToString())
-                    {
-                        <td class="text-warning">
-                            @appointment.Status
-                        </td>
-                        <td>
-                            <div>
-                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                                <a class="alert-danger btn" asp-controller="Appointments" asp-action="ClientDecline" asp-route-id="@appointment.AppointmentId">Decline</a>
-                            </div>
-                        </td>
-                    }
-                    else if (appointment.Status == AppointmentStatus.Expired.ToString())
-                    {
-                        <td class="text-dark">
-                            @appointment.Status
-                        </td>
-                        <td>
-                            <div>
-                                <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">Info</a>
-                                <a class="alert-danger btn" asp-controller="Appointments" asp-action="UserDelete" asp-route-id="@appointment.AppointmentId">Clear</a>
-                            </div>
-                        </td>
-                    }
-                </tr>
+                <h2>
+                    <a class="btn btn-danger text-white font-weight-bolder"asp-controller="Services" asp-action="Index">Make your first appointment!</a>
+                </h2>
             }
-        </tbody>
-    </table>
-    <div>
-        <p>Note: If you want to choose another time or date for an approved appointment, please contact the salon via the <a asp-controller="Contacts" asp-action="Index">contacts</a> page.</p>
+            else
+            {
+                <table class="table table-bordered table-responsive-sm">
+                    <thead>
+                        <tr class="bg-danger">
+                            <td class="font-weight-bold text-white">
+                                Procedure Name
+                            </td>
+                            <td class="font-weight-bold text-white">
+                                Date
+                            </td>
+                            <td class="font-weight-bold text-white">
+                                Time
+                            </td>
+                            <td class="font-weight-bold text-white">
+                                Status
+                            </td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var appointment in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @appointment.ProcedureName
+                                </td>
+                                <td>
+                                    @appointment.Date
+                                </td>
+                                <td>
+                                    @appointment.Time
+                                </td>
+                                @if (appointment.Status == AppointmentStatus.Approved.ToString())
+                                {
+                                    <td class="badge-success text-white">
+                                        @appointment.Status
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">
+                                                <i class="bi bi-info-square-fill" style="font-size:larger"></i>
+                                            </a>
+                                            <a class="alert-danger btn" asp-controller="Appointments" asp-action="ClientDecline" asp-route-id="@appointment.AppointmentId">
+                                                <i class="bi bi-x-square-fill" style="font-size:larger"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                }
+                                else if (appointment.Status == AppointmentStatus.Declined.ToString())
+                                {
+                                    <td class="badge-danger text-white">
+                                        @appointment.Status
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">
+                                                <i class="bi bi-info-square-fill" style="font-size:larger"></i>
+                                            </a>
+                                            <a class="alert-danger btn delete-warning" asp-controller="Appointments" asp-action="UserDelete" asp-route-id="@appointment.AppointmentId">
+                                                <i class="bi bi-x-square-fill" style="font-size:larger"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                }
+                                else if (appointment.Status == AppointmentStatus.Pending.ToString())
+                                {
+                                    <td class="badge-warning text-white font-weight-bold">
+                                        @appointment.Status
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">
+                                                <i class="bi bi-info-square-fill" style="font-size:larger"></i>
+                                            </a>
+                                            <a class="alert-danger btn" asp-controller="Appointments" asp-action="ClientDecline" asp-route-id="@appointment.AppointmentId">
+                                                <i class="bi bi-x-square-fill" style="font-size:larger"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                }
+                                else if (appointment.Status == AppointmentStatus.Expired.ToString())
+                                {
+                                    <td class="badge-light text-black">
+                                        @appointment.Status
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="alert-warning btn" asp-controller="Appointments" asp-action="Info" asp-route-id="@appointment.AppointmentId">
+                                                <i class="bi bi-info-square-fill" style="font-size:larger"></i>
+                                            </a>
+                                            <a class="alert-danger btn" asp-controller="Appointments" asp-action="UserDelete" asp-route-id="@appointment.AppointmentId">
+                                                <i class="bi bi-trash-fill" style="font-size:larger"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            }
+        </div>
+        <div class="card-footer border-danger bg-white">
+            <p class="text-danger font-weight-bold">Note: If you want to choose another time or date for an approved appointment, please contact the salon via the <a asp-controller="Contacts" asp-action="Index">contacts</a> page.</p>
+        </div>
     </div>
-}
+</div>
 
