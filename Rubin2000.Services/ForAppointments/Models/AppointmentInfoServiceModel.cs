@@ -24,6 +24,8 @@
 
         public string ProcedureName { get; set; }
 
+        public string ProcedureCategoryName { get; set; }
+
         public string ProcedureTime { get; set; }
 
         public string Price { get; set; }

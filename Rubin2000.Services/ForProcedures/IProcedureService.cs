@@ -13,5 +13,7 @@ namespace Rubin2000.Services.ForProcedures
         bool ProcedureExists(string id);
 
         string GetProcedureName(string id);
+
+        string GetPrcedureCategoryName(string id);
     }
 }

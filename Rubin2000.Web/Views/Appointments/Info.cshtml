@@ -3,64 +3,123 @@
 @using Rubin2000.Models.Enums
 @model AppointmentInfoServiceModel
 
-<div>
-    <h1>Procedure: @Model.ProcedureName</h1>
-    <h2>Date: @Model.Date at @Model.Time</h2>
+<div class="container">
 
-    <div>
-        <h3>Client info:</h3>
-        <p>Name: @Model.ClientName</p>
-        <p>Phone Number: @Model.ClientPhoneNumber</p>
+    <div class="card text-center border border-danger">
+        <div class="card-body">
+            <h3 class="card-title text-danger">@Model.ProcedureCategoryName</h3>
+            <h3 class="card-text font-italic text-danger">@Model.ProcedureName</h3>
+        </div>
+        <div class="card-footer">
+            <h5 class="card-text text-danger">@Model.Date at @Model.Time</h5>
+        </div>
+    </div>
+    <div class="card text-center border border-danger">
+        <div class="card-header bg-danger text-white font-weight-bold">
+            Procedure Details:
+        </div>
+        <ul class="list-group list-group-horizontal list-group-flush">
+            <li class="list-group-item font-italic text-danger">Price: @Model.Price</li>
+            <li class="list-group-item font-italic text-danger">Duration: @Model.ProcedureTime</li>
+            @if (Model.EmployeeOccupation.ToLower() == OccupationConstants.HairStyler)
+            {
+                <li class="list-group-item font-italic text-danger">
+                    Hair Styler: @Model.EmployeeName
+                </li>
+            }
+            else
+            {
+                <li class="list-group-item font-italic text-danger">
+                    Manicurist: @Model.EmployeeName
+                </li>
+            }
+        </ul>
+        <div class="card-footer">
+            <h3 class="card-text text-danger">Client info:</h3>
+            <p class="card-text text-danger">Name: @Model.ClientName</p>
+            <p class="card-text text-danger">Phone Number: @Model.ClientPhoneNumber</p>
+        </div>
     </div>
 
-    <div>
-        <h3>Creator details:</h3>
-        <p>@Model.UserFirstName @Model.UserLastName</p>
+
+    <div class="card text-center">
+        <div class="card-header bg-danger">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="#">Active</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
     </div>
 
-    <div>
-        <h3>Procedure Details:</h3>
-        <p>Duration: @Model.ProcedureTime</p>
-        <p>Price: @Model.Price</p>
-        @if (Model.EmployeeOccupation.ToLower() == OccupationConstants.HairStyler)
-        {
-            <p>
-                Hair Styler: @Model.EmployeeName
-            </p>
-        }
-        else
-        {
-            <p>
-                Manicurist: @Model.EmployeeName
-            </p>
-        }
-        <h4>Description:</h4>
-        <article>@Model.Description</article>
-    </div>
 
-    <div>
-        @if (Model.Status == AppointmentStatus.Approved.ToString())
-        {
-            <h3>Status: <a class="text-success">@Model.Status</a></h3>
-        }
-        else if (Model.Status == AppointmentStatus.Declined.ToString())
-        {
-            <h3>Status: <a class="text-danger">@Model.Status</a></h3>
-        }
-        else if (Model.Status == AppointmentStatus.Pending.ToString())
-        {
-            <h3>Status: <a class="text-warning">@Model.Status</a></h3>
-        }
-    </div>
 
-    <a class="badge-info btn" asp-controller="Appointments" asp-action="MyAppointments">Back</a>
-    @if (DateTime.Parse(Model.Date).Date >= DateTime.UtcNow.Date)
-    {
-        @if (Model.Status != AppointmentStatus.Declined.ToString() && Model.Status != AppointmentStatus.Approved.ToString())
+    @*
+        <div>
+            <h3>Client info:</h3>
+            <p>Name: @Model.ClientName</p>
+            <p>Phone Number: @Model.ClientPhoneNumber</p>
+        </div>
+
+        <div>
+            <h3>Creator details:</h3>
+            <p>@Model.UserFirstName @Model.UserLastName</p>
+        </div>
+
+        <div>
+            <h3>Procedure Details:</h3>
+            <p>Duration: @Model.ProcedureTime</p>
+            <p>Price: @Model.Price</p>
+            @if (Model.EmployeeOccupation.ToLower() == OccupationConstants.HairStyler)
+            {
+                <p>
+                    Hair Styler: @Model.EmployeeName
+                </p>
+            }
+            else
+            {
+                <p>
+                    Manicurist: @Model.EmployeeName
+                </p>
+            }
+            <h4>Description:</h4>
+            <article>@Model.Description</article>
+        </div>
+
+        <div>
+            @if (Model.Status == AppointmentStatus.Approved.ToString())
+            {
+                <h3>Status: <a class="text-success">@Model.Status</a></h3>
+            }
+            else if (Model.Status == AppointmentStatus.Declined.ToString())
+            {
+                <h3>Status: <a class="text-danger">@Model.Status</a></h3>
+            }
+            else if (Model.Status == AppointmentStatus.Pending.ToString())
+            {
+                <h3>Status: <a class="text-warning">@Model.Status</a></h3>
+            }
+        </div>
+
+        <a class="badge-info btn" asp-controller="Appointments" asp-action="MyAppointments">Back</a>
+        @if (DateTime.Parse(Model.Date).Date >= DateTime.UtcNow.Date)
         {
-            <a class="badge-warning btn" asp-controller="Appointments" asp-action="Edit" asp-route-id="@Model.AppointmentId">Edit</a>
-        }
-    }
+            @if (Model.Status != AppointmentStatus.Declined.ToString() && Model.Status != AppointmentStatus.Approved.ToString())
+            {
+                <a class="badge-warning btn" asp-controller="Appointments" asp-action="Edit" asp-route-id="@Model.AppointmentId">Edit</a>
+            }
+        }*@
 
 </div>
 

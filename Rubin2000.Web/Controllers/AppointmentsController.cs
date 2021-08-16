@@ -73,6 +73,7 @@ namespace Rubin2000.Web.Controllers
             var appointmentViewModel = new AppointmentInputViewModel
             {
                 ProcedureName = procedureService.GetProcedureName(id),
+                CategoryName = procedureService.GetPrcedureCategoryName(id),
                 Employees = employeeService
                     .GetEmployeesForSelect(id)
                     .ToList()

@@ -168,6 +168,7 @@ namespace Rubin2000.Services.ForAppointments
             var appointment = this.GetAppointment(id);
             var user = (AppUser)this.data.Users.FirstOrDefault(u => u.Id == appointment.CreatorId);
             var procedure = this.data.Procedures.FirstOrDefault(p => p.Id == appointment.ProcedureId);
+            var category = this.data.ProcedureCategories.FirstOrDefault(pc => pc.Procedures.Any(p => p.Id == procedure.Id));
             var employee = this.data.Employees.FirstOrDefault(p => p.ScheduleId == appointment.ScheduleId);
             var occupationName = this.data.Occupations.FirstOrDefault(o => o.Id == employee.OccupationId).Name;
 
@@ -180,6 +181,7 @@ namespace Rubin2000.Services.ForAppointments
                 Description = appointment.Description,
                 ProcedureId = procedure.Id,
                 ProcedureName = procedure.Name,
+                ProcedureCategoryName = category.Name,
                 EmployeeName = employee.Name,
                 EmployeeOccupation = occupationName,
                 ScheduleId = employee.ScheduleId,

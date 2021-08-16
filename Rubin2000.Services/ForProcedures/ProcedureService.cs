@@ -43,6 +43,13 @@ namespace Rubin2000.Services.ForProcedures
                 .ThenBy(p => p.Name)
                 .ToList();
 
+        public string GetPrcedureCategoryName(string id)
+            => this.data.Procedures
+                .Where(p => p.Id == id)
+                .Select(p => p.Category)
+                .FirstOrDefault()
+                .Name;
+
         public string GetProcedureName(string id)
             => this.data.Procedures
                 .Where(p => p.Id == id)
