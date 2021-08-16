@@ -1,21 +1,30 @@
 ﻿@using Rubin2000.Services.ForProcedures.Models;
 @model IEnumerable<ProcedureListServiceModel>
-<h1 class="font-italic text-center text-danger">Hair prices:</h1>
-<ul class="list-group bg-danger" style="list-style-type:none">
-    @foreach (var category in Model.Select(m => m.CategoryName).Distinct().OrderBy(c => c))
-    {
-        <li class="list-group-item list-group-item-danger">
-            <h2 class="text-center text-black font-weight-bold">@category</h2>
-            <div class="list-group list-group-horizontal flex-wrap">
-                @foreach (var procedure in Model.Where(p => p.CategoryName == category))
-                {
-                        <a class="list-group-item list-group-item-action list-group-item-danger col-md-4 col-sm-4 border-danger" asp-controller="Appointments" asp-action="MakeAppointment" asp-route-id="@procedure.Id">
-                            <h3 class="text-center text-black">@procedure.Name</h3>
-                            <p class="text-center text-black font-weight-bold">Price: @procedure.Price</p>
-                        </a>
-                }
+    <div class="container">
+        <div class="card text-center border-danger">
+            <div class="card-header bg-danger">
+                <h1 class="font-italic text-center text-white">Hair Prices:</h1>
             </div>
-        </li>
-    }
 
-</ul>
+            <div class="card-body border-danger">
+                <ul class="list-group bg-danger" style="list-style-type:none">
+                    @foreach (var category in Model.Select(m => m.CategoryName).Distinct().OrderBy(c => c))
+                    {
+                        <li class="list-group-item list-group-item-danger">
+                            <h2 class="text-center text-black font-weight-bold">@category</h2>
+                            <div class="list-group list-group-horizontal flex-wrap">
+                                @foreach (var procedure in Model.Where(p => p.CategoryName == category))
+                                {
+                                    <a class="list-group-item list-group-item-action list-group-item-danger col-md-4 col-sm-4 border-danger" asp-controller="Appointments" asp-action="MakeAppointment" asp-route-id="@procedure.Id">
+                                        <h3 class="text-center text-black">@procedure.Name</h3>
+                                        <p class="text-center text-black font-weight-bold">Price: @procedure.Price</p>
+                                    </a>
+                                }
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>

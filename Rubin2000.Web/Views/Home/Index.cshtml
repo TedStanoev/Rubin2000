@@ -1,7 +1,26 @@
 ﻿<div class="container text-center">
-    <h1 class="display-4 font-italic text-danger">@WebTitle</h1>
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <div class="card text-center border-danger">
+            <div class="card-header bg-danger">
+                <h1 class="display-4 font-italic text-white">Hello, @this.User.Identity.Name!</h1>
+            </div>
+            <div class="card-body">
+                <a asp-controller="Appointments" asp-action="MyAppointments" class="btn btn-danger">Go to My Appointments</a>
+            </div>
+            <div class="card-footer text-muted bg-danger">
+            </div>
+        </div>
+    }
+    <div class="jumbotron bg-white border border-danger">
 
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <h1 class="display-4 font-italic text-danger">@WebTitle</h1>
+        <p class="lead text-danger font-italic">Welcome to Salon Rubin 2000! We offer hairstyle services and we care for your manicure, as well as your pedicure. A happy client is the best marketing. You can find us in Sofia, Drujba. For more info and to contact us, see our contacts page.</p>
+        <hr class="my-4">
+        <a class="btn btn-danger btn-lg" asp-controller="Prices" asp-action="Index" role="button">You can see our prices here.</a>
+    </div>
+
+    <div id="carouselExampleControls" class="carousel slide border border-danger" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="~/imgs/Hair1.jpg" class="d-flex mx-auto w-50" alt="Error">
@@ -27,10 +46,10 @@
     </div>
 
     <div class="card text-center border-danger">
-        <div class="card-header border-danger">
+        <div class="card-header bg-danger">
         </div>
         <div class="card-body">
-            <h5 class="card-title font-weight-bold text-danger ">Make an Appointment!</h5>
+            <h3 class="card-title font-weight-bold text-danger ">Make an Appointment!</h3>
 
             @if (!this.User.Identity.IsAuthenticated)
             {
@@ -41,9 +60,35 @@
                 </p>
             }
 
-            <a asp-controller="Services" asp-action="Index" class="btn btn-outline-danger">Click here</a>
+            <a class="btn btn-danger" asp-controller="Services" asp-action="Index">Click here</a>
         </div>
-        <div class="card-footer text-muted border-danger">
+        <div class="card-footer text-muted bg-danger">
+        </div>
+    </div>
+
+    <div class="card text-center">
+        </div>
+        <div class="card-body">
+            <div>
+                <h2 class="text-danger text-uppercase">Call us</h2>
+                <p class="text-danger">0885804169 (A1)</p>
+                <p class="text-danger">024168206 (Telenor)</p>
+            </div>
+
+            <div>
+                <h2 class="text-danger text-uppercase">Address:</h2>
+                <p class="text-danger">Sofia g.k. Drujba 1</p>
+                <p class="text-danger">Tirana Street 25 1592 BG</p>
+            </div>
+
+            <div>
+                <h2 class="text-danger text-uppercase">Opening hours:</h2>
+                <h2 class="text-danger">From 10:00 to 19:00</h2>
+            </div>
+
+        </div>
+        <div class="card-footer text-muted bg-danger">
+            <h3 class="text-white">Find us on <a href="https://www.facebook.com/SalonRubin2000/">Facebook</a>!</h3>
         </div>
     </div>
 </div>

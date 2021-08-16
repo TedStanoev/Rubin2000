@@ -1,8 +1,21 @@
 ﻿<div class="container">
     <h1 class="font-italic text-danger text-center">Choose a service:</h1>
-    <div class="row row-cols-2">
-        <a class="col text-center bg-danger text-white font-weight-bold" asp-controller="Services" asp-action="Hair">HairStyles</a>
-        <br />
-        <a class="col text-center bg-danger text-white font-weight-bold" asp-controller="Services" asp-action="Nails">Nails</a>
+    <div class="row">
+        <div class="col-sm-6">
+            <a class="card" style="text-decoration: none" asp-controller="Services" asp-action="Hair">
+                <btn class="btn btn-danger font-weight-bold" type="button">Hairstyles</btn><img src="/imgs/HairstyleServices.jpg" class="card-img border border-danger" width="200" height="580" alt="Hairstyle Service">
+
+            </a>
+        </div>
+        <div class="col-sm-6">
+            <a class="card" style="text-decoration: none" asp-controller="Services" asp-action="Nails">
+                <btn class="btn btn-danger font-weight-bold" type="button">Manicure/Pedicure</btn><img src="/imgs/ManicureServices.jpg" class="card-img border border-danger" width="200" height="580" alt="Manicure/Pedicure">
+
+            </a>
+            @*<div class="card">
+            <img src="/imgs/ManicureServices.jpg" class="card-img border border-danger" width="200" height="580" alt="Hairstyle Service">
+            <a href="#" class="btn btn-danger font-weight-bold">Manicure/Pedicure</a>
+        </div>*@
+        </div>
     </div>
 </div>
