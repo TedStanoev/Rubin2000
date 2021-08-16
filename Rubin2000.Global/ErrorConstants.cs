@@ -17,5 +17,7 @@
         public const string InvalidEmployee = "The employee is unavailable or is unable to perform the given service";
 
         public const string OperationError = "There was an error approving the appointment. Please contact the creator of this web application.";
+
+        public const string InvalidDescription = "Description can't be more than 200 characters.";
     }
 }
