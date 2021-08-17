@@ -16,6 +16,9 @@ namespace Rubin2000.Web.Models.Appointments
         public string ProcedureName { get; set; }
 
         [Required]
+        public string CategoryName { get; set; }
+
+        [Required]
         [Display(Name = "Name")]
         [StringLength(NameDefaultLength, MinimumLength = 2, ErrorMessage = InvalidName)]
         public string ClientName { get; set; }
