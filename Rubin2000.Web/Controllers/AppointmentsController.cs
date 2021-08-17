@@ -90,6 +90,8 @@ namespace Rubin2000.Web.Controllers
                 this.ModelState.AddModelError(nameof(appointment.ProcedureName), ErrorConstants.InvalidProcedure);
             }
 
+            appointment.CategoryName = procedureService.GetPrcedureCategoryName(id);
+
             if (!DateTime.TryParseExact(appointment.Date, "yyyy-MM-dd", null, DateTimeStyles.None, out DateTime appointmentDate))
             {
                 this.ModelState.AddModelError(nameof(appointment.Date), ErrorConstants.InvalidDate);

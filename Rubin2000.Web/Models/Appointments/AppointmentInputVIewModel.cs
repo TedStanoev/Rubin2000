@@ -15,7 +15,6 @@ namespace Rubin2000.Web.Models.Appointments
         [Required]
         public string ProcedureName { get; set; }
 
-        [Required]
         public string CategoryName { get; set; }
 
         [Required]

@@ -1,13 +1,18 @@
 ﻿@using Rubin2000.Web.Models.Appointments
 @model DeclineAppointmentViewModel
 
-<h1>Give us your reasons:</h1>
-<form class="col" method="post">
-    <label asp-for="@Model.Description"></label>
-    <input type="text" asp-for="@Model.Description" value="I am sorry but I can't make it." />
+    <div class="container">
+        <h1 class="text-center text-danger">Give us your reasons:</h1>
+        <form method="post">
+            <div class="form-group">
+                @*<label class="font-weight-bold" asp-for="@Model.Description"></label>*@
+                <textarea class="form-control text-danger text-center" rows="3" asp-for="@Model.Description" placeholder="I am sorry but I can't make it because...">
+                </textarea>
+                <span asp-validation-for="@Model.Description" class="font-weight-bolder text-danger"></span>
+            </div>
 
-    <button type="submit">Decline appointment</button>
-
-    <span asp-validation-for="@Model.Description" class="small text-danger"></span>
-</form>
-<a class="badge-danger btn" asp-controller="Appointments" asp-action="MyAppointments">Cancel</a>
+            <button type="submit" class="form-control btn btn-danger text-white font-weight-bold">Decline Appointment</button>
+        </form>
+        <br />
+        <a class="badge-danger btn" asp-controller="Appointments" asp-action="MyAppointments">Cancel</a>
+    </div>
