@@ -1,21 +1,30 @@
 ﻿@using Rubin2000.Services.ForEmployees.Models;
 @model IEnumerable<EmployeeServiceModel>
-<h1>Choose an employee:</h1>
-<table class="table table-bordered">
-    <tr>
-        <td style="width: 300px">Name</td>
-        <td style="width: 100px">Starts at</td>
-        <td style="width: 100px">Ends at</td>
-        <td></td>
-    </tr>
-    @foreach (var employee in Model)
-    {
-        <tr>
-            <td>@employee.Name</td>
-            <td>@employee.StartsAt</td>
-            <td>@employee.EndsAt</td>
-            <td><a class="btn-outline-danger btn" asp-controller="Schedules" asp-action="EmployeeSchedule" asp-route-id="@employee.ScheduleId">View Schedule</a></td>
-        </tr>
-    }
-</table>
+
+    <div class="container">
+        <div class="card border border-danger">
+            <div class="card-header bg-danger">
+                <h1 class="text-center text-white font-italic">Choose an employee:</h1>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-responsive-sm">
+                    <tr class="bg-danger">
+                        <td class="font-weight-bold text-white" style="width: 300px">Name</td>
+                        <td class="font-weight-bold text-white" style="width: 100px">Starts at</td>
+                        <td class="font-weight-bold text-white" style="width: 100px">Ends at</td>
+                        <td></td>
+                    </tr>
+                    @foreach (var employee in Model)
+                    {
+                        <tr>
+                            <td class="text-danger font-weight-bold">@employee.Name</td>
+                            <td class="text-danger font-weight-bold">@employee.StartsAt</td>
+                            <td class="text-danger font-weight-bold">@employee.EndsAt</td>
+                            <td><a class="btn btn-danger" asp-controller="Schedules" asp-action="EmployeeSchedule" asp-route-id="@employee.ScheduleId">View Schedule</a></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
 
