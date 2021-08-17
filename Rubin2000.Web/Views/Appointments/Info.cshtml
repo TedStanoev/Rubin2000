@@ -49,9 +49,12 @@
                 <li class="nav-item">
                     <a class="nav-link active text-dark" href="#">Status</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" asp-controller="Appointments" asp-action="Edit" asp-route-id="@Model.AppointmentId">Edit</a>
-                </li>
+                @if (Model.Status == AppointmentStatus.Pending.ToString())
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-controller="Appointments" asp-action="Edit" asp-route-id="@Model.AppointmentId">Edit</a>
+                    </li>
+                }
             </ul>
         </div>
         <div class="card-body">
@@ -66,6 +69,10 @@
             else if (Model.Status == AppointmentStatus.Pending.ToString())
             {
                 <h3 class="card-title text-warning">@Model.Status</h3>
+            }
+            else if (Model.Status == AppointmentStatus.Expired.ToString())
+            {
+                <h3 class="card-title text-dark">@Model.Status</h3>
             }
         </div>
     </div>
