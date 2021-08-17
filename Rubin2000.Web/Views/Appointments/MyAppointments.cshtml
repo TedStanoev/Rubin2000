@@ -37,13 +37,13 @@
                         @foreach (var appointment in Model)
                         {
                             <tr>
-                                <td>
+                                <td class="text-danger font-weight-bold">
                                     @appointment.ProcedureName
                                 </td>
-                                <td>
+                                <td class="text-danger font-weight-bold">
                                     @appointment.Date
                                 </td>
-                                <td>
+                                <td class="text-danger font-weight-bold">
                                     @appointment.Time
                                 </td>
                                 @if (appointment.Status == AppointmentStatus.Approved.ToString())
