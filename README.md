@@ -30,4 +30,18 @@ A web application for booking appointments to a beauty salon.
 
 # :camera_flash: Screenshots:
 
-![screenshot](/Tools/Images/Projectimages/Home-1.png)
+## Home Page
+![screenshot](/Tools/Images/ProjectImages/Home-1.png)
+![screenshot](/Tools/Images/ProjectImages/Home-2.png)
+## Services
+![screenshot](/Tools/Images/ProjectImages/Services.png)
+## Prices
+![screenshot](/Tools/Images/ProjectImages/ProcedureSelect.png)
+## Make an appointment
+![screenshot](/Tools/Images/ProjectImages/MakeAppointment.png)
+## View appointments
+![screenshot](/Tools/Images/ProjectImages/MyAppointments.png)
+## Schedule (Admin page)
+![screenshot](/Tools/Images/ProjectImages/AdminSchedule.png)
+
+
